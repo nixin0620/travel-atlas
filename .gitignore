@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.env
+.env.local
+.env.*.local
+my-travel/
+.preview-data/
+.guide-build/
+.cache/
+user-data/
+recovery/
+*.log
