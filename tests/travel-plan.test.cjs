@@ -106,3 +106,42 @@ test('existing regional aliases stay compatible without adding destination-speci
  assert.equal(trip.destinations[0].id,'banna');
  assert.equal(pack.journey.plan.cities[0].name,'西双版纳');
 });
+test('a new user cannot install an all-text package as a finished visual trip',()=>{
+ const temp=fs.mkdtempSync(path.join(os.tmpdir(),'travel-onboarding-'));
+ try {
+  const workspace=path.join(temp,'app');fs.mkdirSync(workspace);
+  fs.writeFileSync(path.join(workspace,'.travel-atlas-workspace.json'),JSON.stringify({app:'travel-atlas',version:1}));
+  fs.copyFileSync(path.join(root,'index.html'),path.join(workspace,'index.html'));
+  fs.writeFileSync(path.join(workspace,'travel-plan-seed.js'),'existing content');
+  const file=path.join(temp,'trip.json');fs.writeFileSync(file,JSON.stringify(fixture()));
+  assert.throws(()=>builder.install(file,workspace),/图文规划尚未完成/);
+  assert.equal(fs.readFileSync(path.join(workspace,'travel-plan-seed.js'),'utf8'),'existing content');
+  const report=builder.install(file,workspace,{allowIncomplete:true});
+  assert.equal(report.visualReady,false);assert.ok(report.missingPhotos.includes('城市：安顺'));
+  assert.equal(report.days,7);
+ } finally {fs.rmSync(temp,{recursive:true,force:true});}
+});
+test('photo readiness checks cover, city and place images independently',()=>{
+ const temp=fs.mkdtempSync(path.join(os.tmpdir(),'travel-visual-gate-'));
+ try {
+  fs.writeFileSync(path.join(temp,'fixture.jpg'),Buffer.from([255,216,255,217]));
+  const photo={file:'fixture.jpg',sourceURL:'https://example.com/photo',credit:'Synthetic fixture',license:'CC0',width:800,height:600};
+  const p=destinationFixture([{name:'杭州',countryCode:'CN'}],['']);p.cover=photo;p.cities[0].photo=photo;
+  let report=builder.compile(p,temp).report;assert.equal(report.visualReady,false);assert.deepEqual(report.missingPhotos,['地点：集成测试地点 0']);
+  p.places[0].photo=photo;report=builder.compile(p,temp).report;assert.equal(report.visualReady,true);assert.deepEqual(report.missingPhotos,[]);
+ } finally {fs.rmSync(temp,{recursive:true,force:true});}
+});
+test('a first trip without dates opens the map and keeps D1 and D2 separate',()=>{
+ const p=destinationFixture([{name:'杭州',countryCode:'CN'},{name:'苏州',countryCode:'CN'}],['','']);
+ const {map,pack,trip}=assertDestinationLinks(p),MapCore=require('../assets/app/travel-map-core.js'),Data=require('../assets/app/travel-map-data.js');
+ assert.deepEqual(Array.from(MapCore.tripDates(map.trip)),['plan-1','plan-2']);
+ assert.equal(MapCore.mapPlaces(map.places,{trip:map.trip}).length,2);
+ assert.deepEqual(MapCore.dayEntries(map.places,{trip:map.trip,date:'plan-2'}).map(e=>e.place.city),['苏州']);
+ assert.equal(MapCore.tripVisits(map.places[0],map.trip)[0].date,'');
+ const newPlace={...pack.imports.items[1].place,sourceId:'new-stop',name:'新的测试地点'};
+ const input={trip,state:pack.daily,catalog:[...pack.imports.items.map(i=>({place:i.place,choice:i.choice})),{place:newPlace,choice:'wish'}]};
+ const saved=Data.schedule(input,{tripId:trip.tripId,placeId:newPlace.sourceId,dayId:'plan-2',slot:'afternoon'},()=> 'new-entry');
+ assert.equal(saved.result.dayId,'plan-2');assert.ok(!saved.result.date);
+ assert.throws(()=>Data.schedule({...input,state:saved.state},{tripId:trip.tripId,placeId:newPlace.sourceId,dayId:'plan-2'},()=> 'duplicate'),/已经安排/);
+ assert.throws(()=>Data.schedule(input,{tripId:trip.tripId,placeId:newPlace.sourceId,dayId:'plan-1'},()=> 'wrong-city'),/城市/);
+});
