@@ -1,0 +1,4 @@
+interface:
+  display_name: "旅迹 Travel Atlas"
+  short_description: "启动旅行应用，整理交通住宿、每日行程、攻略、足迹与照片回忆"
+  default_prompt: "使用 $travel-atlas 为我启动旅迹旅行应用，保留已有数据并打开预览。"
