@@ -2,11 +2,12 @@
 'use strict';
 const minute=t=>/^([01]\d|2[0-3]):[0-5]\d$/.test(t||'')?Number(t.slice(0,2))*60+Number(t.slice(3)):null;
 const day=d=>{if(!/^\d{4}-\d{2}-\d{2}$/.test(d||''))return false;const t=new Date(d+'T12:00:00Z');return Number.isFinite(t.getTime())&&t.toISOString().slice(0,10)===d;};
+const visitDay=v=>v.date||v.dayId||'';
 const coord=p=>Boolean(p&&p.coordinateSystem==='WGS84'&&p.confirmed===true&&typeof p.source==='string'&&p.source.trim().length>0&&Number.isFinite(p.lat)&&Math.abs(p.lat)<=90&&Number.isFinite(p.lng)&&Math.abs(p.lng)<=180);
 function interval(v){const a=minute(v?.start),b=minute(v?.end);return a!==null&&b!==null&&a<b?[a,b]:null;}
 function route(places,date){
- if(!date||!day(date))return{segments:[],issues:[],entries:[],message:'选择具体日期后查看当日顺序。'};
- const entries=places.flatMap(p=>(p.visits||[]).filter(v=>v.date===date).map(v=>({place:p,visit:v}))).sort((a,b)=>(a.visit.order??0)-(b.visit.order??0));
+ if(!date||!day(date)&&!/^plan-[1-9]\d{0,2}$/.test(date))return{segments:[],issues:[],entries:[],message:'选择行程中的一天查看当日顺序。'};
+ const entries=places.flatMap(p=>(p.visits||[]).filter(v=>visitDay(v)===date).map(v=>({place:p,visit:v}))).sort((a,b)=>(a.visit.order??0)-(b.visit.order??0));
  const issues=[],blocked=new Set();
  entries.forEach((e,i)=>{if(!e.place.cityId||!Number.isFinite(e.visit.order)||entries.some((other,j)=>j!==i&&other.visit.order===e.visit.order)){blocked.add(i);issues.push({id:e.place.id,reason:'城市或现有安排顺序待确认'});}if(!interval(e.visit)){blocked.add(i);issues.push({id:e.place.id,reason:'开始与结束时间待补全，或结束不晚于开始'});}if(!coord(e.place)){blocked.add(i);issues.push({id:e.place.id,reason:'地图位置待确认'});}});
  for(let i=0;i<entries.length;i++)for(let j=i+1;j<entries.length;j++){const a=interval(entries[i].visit),b=interval(entries[j].visit);if(a&&b&&a[0]<b[1]&&b[0]<a[1]){blocked.add(i);blocked.add(j);issues.push({id:entries[i].place.id,reason:'与'+entries[j].place.name+'时间冲突'});issues.push({id:entries[j].place.id,reason:'与'+entries[i].place.name+'时间冲突'});}}
@@ -18,6 +19,7 @@ function filter(places,{city='',status='all',date=''}={}){return places.filter(p
 function confirm(place,candidate){if(candidate?.city&&!(candidate.city.replace(/市$/,'').includes(place.city.replace(/市$/,''))))throw Error('候选城市与当前地点不同，请调整搜索或核对城市后再确认。');if(!candidate||candidate.coordinateSystem!=='WGS84'||!Number.isFinite(candidate.lat)||Math.abs(candidate.lat)>90||!Number.isFinite(candidate.lng)||Math.abs(candidate.lng)>180||!(typeof candidate.source==='string'&&candidate.source.trim()))throw Error('候选尚无可用的 WGS84 位置，不能确认到当前底图。');return{...place,lat:candidate.lat,lng:candidate.lng,coordinateSystem:'WGS84',source:candidate.source,sourceURL:typeof candidate.sourceURL==='string'?candidate.sourceURL:'',address:candidate.address||place.address,confirmed:true,poiId:candidate.id,confirmedAt:new Date().toISOString()};}
 function validate(places){return Array.isArray(places)&&places.length<100&&places.every(p=>p&&typeof p.id==='string'&&typeof p.name==='string'&&typeof p.cityId==='string'&&typeof p.wish==='boolean'&&Array.isArray(p.visits)&&p.visits.length<30&&p.visits.every(v=>day(v.date)&&typeof v.start==='string'&&typeof v.end==='string'&&Number.isFinite(v.order)));}
 function tripDates(trip){
+ if(trip&&typeof trip.id==='string'&&trip.id.trim()&&!trip.startDate&&!trip.endDate&&Array.isArray(trip.days)&&trip.days.length>0&&trip.days.length<=366&&trip.days.every((d,i)=>d.date===''&&d.id==='plan-'+(i+1)))return trip.days.map(d=>d.id);
  if(!trip||typeof trip.id!=='string'||!trip.id.trim()||!day(trip.startDate)||!day(trip.endDate))throw Error('当前行程的日期范围不完整。');
  const start=Date.parse(trip.startDate+'T00:00:00Z'),end=Date.parse(trip.endDate+'T00:00:00Z');
  const count=(end-start)/86400000+1;
@@ -25,7 +27,8 @@ function tripDates(trip){
  return Array.from({length:count},(_,i)=>new Date(start+i*86400000).toISOString().slice(0,10));
 }
 function belongsToTrip(visit,trip){
- return Boolean(visit&&day(visit.date)&&visit.date>=trip.startDate&&visit.date<=trip.endDate&&
+ const inRange=day(visit?.date)?visit.date>=trip.startDate&&visit.date<=trip.endDate:visit?.date===''&&!trip.startDate&&!trip.endDate&&trip.days?.some(d=>d.date===''&&d.id===visit.dayId);
+ return Boolean(visit&&inRange&&
   (visit.tripId===undefined||visit.tripId===null||visit.tripId===''||visit.tripId===trip.id));
 }
 function tripVisits(place,trip){
@@ -33,17 +36,16 @@ function tripVisits(place,trip){
  return (place?.visits||[]).filter(visit=>belongsToTrip(visit,trip));
 }
 function mapPlaces(places,{city='',mode='all',date='',trip}={}){
- tripDates(trip);
+ const dates=tripDates(trip);
  if(mode!=='all'&&mode!=='day')throw Error('请选择全部地点或某日行程。');
- if(mode==='day'&&(!day(date)||date<trip.startDate||date>trip.endDate))return [];
+ if(mode==='day'&&!dates.includes(date))return [];
  return places.filter(place=>(!city||place.cityId===city)&&(mode==='all'?place.wish===true:
-  (place.visits||[]).some(visit=>belongsToTrip(visit,trip)&&visit.date===date)));
+  (place.visits||[]).some(visit=>belongsToTrip(visit,trip)&&visitDay(visit)===date)));
 }
 function dayEntries(places,{trip,date,city=''}={}){
- tripDates(trip);
- if(!day(date)||date<trip.startDate||date>trip.endDate)return [];
+ if(!tripDates(trip).includes(date))return [];
  return places.filter(place=>!city||place.cityId===city).flatMap(place=>(place.visits||[])
-  .filter(visit=>belongsToTrip(visit,trip)&&visit.date===date).map(visit=>({place,visit})))
+  .filter(visit=>belongsToTrip(visit,trip)&&visitDay(visit)===date).map(visit=>({place,visit})))
   .sort((a,b)=>(Number.isFinite(a.visit.order)?a.visit.order:Infinity)-(Number.isFinite(b.visit.order)?b.visit.order:Infinity));
 }
 function visitTarget(places,placeId,trip,date){
