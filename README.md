@@ -8,7 +8,7 @@
 
 把这句话发给 Codex：
 
-> 安装并启动 https://github.com/nixin0620/travel-atlas，带我开始使用。
+> 安装并启动 <https://github.com/nixin0620/travel-atlas>，带我开始使用。
 
 Codex 会读取仓库中的 skill，检查运行环境，并让你选择“先看示例旅行”或“开始自己的旅行”。已有数据会优先保留；无需再粘贴详细操作提示词。
 
