@@ -17,6 +17,28 @@ ROOT = Path(__file__).resolve().parents[1]
 MARKER = '.travel-atlas-workspace.json'
 
 
+def select_port(destination, requested=None, demo=False):
+    meta = json.loads((destination / MARKER).read_text())
+    saved = meta.get('port')
+    if saved is not None and (type(saved) is not int or not 1024 <= saved <= 65535):
+        raise ValueError('工作目录保存的端口无效，请核对目录标识；未更改浏览器数据。')
+    port = requested if requested is not None else saved or (8791 if demo else 8790)
+    if type(port) is not int or not 1024 <= port <= 65535:
+        raise ValueError('端口必须在 1024–65535 之间。')
+    return port
+
+
+def remember_port(destination, port):
+    marker = destination / MARKER
+    meta = json.loads(marker.read_text())
+    if meta.get('port') == port:
+        return
+    meta['port'] = port
+    temp = marker.with_suffix('.json.tmp')
+    temp.write_text(json.dumps(meta))
+    temp.replace(marker)
+
+
 def prepare(destination, demo=False):
     marker = destination / MARKER
     if destination.exists():
@@ -69,9 +91,7 @@ def main():
     args = parser.parse_args()
     if args.workspace is None:
         args.workspace = Path.cwd() / ('travel-demo' if args.demo else 'my-travel')
-    if args.port is None:
-        args.port = 8791 if args.demo else 8790
-    if not 1024 <= args.port <= 65535:
+    if args.port is not None and not 1024 <= args.port <= 65535:
         parser.error('端口必须在 1024–65535 之间。')
     destination = args.workspace.expanduser().resolve()
     try:
@@ -84,6 +104,14 @@ def main():
         print('示例体验：日期与住宿均为演示安排，未预订；已去过、回忆和照片保持为空。', flush=True)
     if args.prepare_only:
         return 0
+    try:
+        previous_port = json.loads((destination / MARKER).read_text()).get('port')
+        args.port = select_port(destination, args.port, args.demo)
+        if previous_port and previous_port != args.port:
+            print('注意：此目录上次使用端口 ' + str(previous_port) + '。更换端口会打开另一份浏览器存储；旧数据仍在原地址，需先导出备份后恢复。', flush=True)
+    except (OSError, ValueError) as error:
+        print(str(error), file=sys.stderr)
+        return 1
     url = 'http://127.0.0.1:' + str(args.port)
     try:
         with socket.socket() as probe:
@@ -99,13 +127,15 @@ def main():
             if health.get('service') != 'travel-guide-import-v1' or health.get('workspace') != expected:
                 raise ValueError()
         except Exception:
-            print('端口已被其他服务占用。请换一个 --port；未停止或修改该服务。', file=sys.stderr)
+            print('端口已被其他服务占用，未停止或修改该服务。已有数据时先核对原应用地址；新目录可指定其他 --port。', file=sys.stderr)
             return 1
+        remember_port(destination, args.port)
         print('旅迹已在运行：' + url + '/#route')
         if args.open:
             webbrowser.open(url + '/#route')
         return 0
-    print('预览：' + url + '/#route\n保持此终端运行；按 Ctrl+C 停止。', flush=True)
+    remember_port(destination, args.port)
+    print('预览：' + url + '/#route\n下次启动此目录会沿用该端口。数据保存在当前浏览器；通过「设置 → 数据与备份」导出到电脑。\n保持此终端运行；按 Ctrl+C 停止。', flush=True)
     if args.open:
         # Opening after the server answers avoids a first-load connection error.
         import threading
