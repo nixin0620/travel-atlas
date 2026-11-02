@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="旅行示例插画，非目的地实拍">
+<defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#f4eddd"/><stop offset="1" stop-color="#c9dacf"/></linearGradient><linearGradient id="hill" x2="0" y2="1"><stop stop-color="#287262"/><stop offset="1" stop-color="#103f36"/></linearGradient></defs>
+<path fill="url(#sky)" d="M0 0h1200v800H0z"/><circle cx="890" cy="200" r="75" fill="#c9a45e" opacity=".75"/>
+<path d="M0 570 260 220 460 480 650 270 960 620 1200 420v380H0Z" fill="#9ab3a0"/>
+<path d="m0 680 380-420 310 380 280-220 230 200v160H0Z" fill="url(#hill)"/>
+<path d="M0 720Q320 540 600 730T1200 660v140H0Z" fill="#0c382f"/>
+<path d="M510 800Q500 710 650 670T730 600" fill="none" stroke="#d5b773" stroke-width="5" opacity=".6"/>
+<text x="50" y="748" fill="#fff7df" font-family="system-ui,sans-serif" font-size="24" letter-spacing="5">TRAVEL ATLAS · 示例插画</text></svg>
