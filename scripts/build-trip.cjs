@@ -60,15 +60,20 @@ function compile(profile, base, tripId = 'travel-atlas-public-v1') {
     }
   });
   if (!plan.cover) warnings.push('缺少目的地封面图片');
+  const missingPhotos = [
+    ...(!plan.cover ? ['目的地封面'] : []),
+    ...plan.cities.filter(c=>!c.photo).map(c=>'城市：'+c.name),
+    ...items.filter(i=>!i.place.publicPhotos.length).map(i=>'地点：'+i.place.name)
+  ];
   const imports = Imports.validate({version:1,tripId,items,guides:[]},tripId);
   const journey = {version:2,tripId,initialized:true,transports:[],stays:[],plan};
   const daily = {version:1,entries,locations:{}};
   const result = {version:1, id:hash(JSON.stringify(profile)), tripId, journey, imports, daily,
-    report:{cities:plan.cities.length, days:plan.days.length, places:items.length, scheduled:entries.filter(e=>e.type!=='note').length, photos:items.filter(i=>i.place.publicPhotos.length).length, warnings}};
+    report:{cities:plan.cities.length, days:plan.days.length, places:items.length, scheduled:entries.filter(e=>e.type!=='note').length, photos:items.filter(i=>i.place.publicPhotos.length).length, visualReady:missingPhotos.length===0, missingPhotos, warnings}};
   if (Buffer.byteLength(JSON.stringify(result)) > 65000000) fail('内容包过大，请压缩图片');
   return result;
 }
-function install(profileFile, workspace) {
+function install(profileFile, workspace, {allowIncomplete=false} = {}) {
   const base = path.dirname(path.resolve(profileFile)), marker = path.join(workspace,'.travel-atlas-workspace.json');
   if (!fs.existsSync(marker) || JSON.parse(fs.readFileSync(marker)).app !== 'travel-atlas') fail('请先用 start.py 创建个人工作目录');
   if (JSON.parse(fs.readFileSync(marker)).demo) fail('个人内容不写入示例工作目录');
@@ -76,6 +81,7 @@ function install(profileFile, workspace) {
   if (!html.includes('travel-plan-import.js') || !html.includes('TravelPlanCore.clean')) fail('工作目录是旧版应用；先保留备份并升级应用，不要改写 HTML 拼接攻略');
   const seed = JSON.parse(html.match(/<script[^>]*id="journey-seed"[^>]*>([\s\S]*?)<\/script>/)[1]);
   const compiled = compile(JSON.parse(fs.readFileSync(profileFile,'utf8')),base,seed.tripId);
+  if (!compiled.report.visualReady && !allowIncomplete) fail('图文规划尚未完成，缺少图片：'+compiled.report.missingPhotos.join('、')+'。请补齐后再安装；仅在用户接受无图草稿时使用 --allow-incomplete。已有规划未修改。');
   const file = path.join(workspace,'travel-plan-seed.js');
   const content = '/* Generated researched content; applied through the native planner. */\nwindow.TravelPlanSeed = ' + JSON.stringify(compiled).replace(/</g,'\\u003c') + ';\n';
   if (fs.existsSync(file) && fs.readFileSync(file,'utf8') !== content && fs.statSync(file).size > 200) fs.copyFileSync(file,file + '.' + Date.now() + '.bak');
@@ -85,6 +91,6 @@ function install(profileFile, workspace) {
 }
 module.exports = {compile,install,cityKey};
 if (require.main === module) {
-  try {if(process.argv.length !== 4) fail('用法：node scripts/build-trip.cjs <trip.json> <个人工作目录>');console.log(JSON.stringify(install(process.argv[2],process.argv[3]),null,2));}
+  try {if(process.argv.length !== 4 && !(process.argv.length===5&&process.argv[4]==='--allow-incomplete')) fail('用法：node scripts/build-trip.cjs <trip.json> <个人工作目录> [--allow-incomplete]');console.log(JSON.stringify(install(process.argv[2],process.argv[3],{allowIncomplete:process.argv[4]==='--allow-incomplete'}),null,2));}
   catch(e){console.error(e.message);process.exitCode=1;}
 }
