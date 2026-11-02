@@ -77,6 +77,31 @@ class WorkspaceTest(unittest.TestCase):
             launcher.prepare(target, demo=True)
         self.assertEqual(list(target.iterdir()), [target / 'notes.txt'])
 
+    def test_relaunch_uses_the_saved_port_without_overwriting_configuration(self):
+        target = self.root / 'personal'
+        launcher.prepare(target)
+        self.assertEqual(launcher.select_port(target), 8790)
+        launcher.remember_port(target, 8937)
+        launcher.prepare(target)
+        self.assertEqual(launcher.select_port(target), 8937)
+        self.assertEqual(launcher.select_port(target, 8938), 8938)
+        meta = json.loads((target / launcher.MARKER).read_text())
+        self.assertEqual(meta['app'], 'travel-atlas')
+        self.assertFalse(meta['demo'])
+        self.assertEqual(meta['port'], 8937)
+
+    def test_demo_port_is_separate_and_invalid_saved_port_is_not_silently_reset(self):
+        target = self.root / 'demo'
+        launcher.prepare(target, demo=True)
+        self.assertEqual(launcher.select_port(target, demo=True), 8791)
+        launcher.remember_port(target, 8939)
+        self.assertEqual(launcher.select_port(target, demo=True), 8939)
+        meta = json.loads((target / launcher.MARKER).read_text())
+        meta['port'] = 'broken'
+        (target / launcher.MARKER).write_text(json.dumps(meta))
+        with self.assertRaises(ValueError):
+            launcher.select_port(target, demo=True)
+
 
 if __name__ == '__main__':
     unittest.main()
