@@ -1,0 +1,64 @@
+{
+  "version": 2,
+  "tripId": "travel-atlas-public-v1",
+  "initialized": true,
+  "transports": [],
+  "stays": [
+    {
+      "id": "demo-stay-1",
+      "city": "西双版纳",
+      "hotel": "示例住宿 · 未预订",
+      "checkIn": "2027-03-12",
+      "checkOut": "2027-03-15",
+      "room": "",
+      "platform": "",
+      "price": "",
+      "address": "",
+      "attachment": null,
+      "priceMode": "total",
+      "nightlyPrices": []
+    },
+    {
+      "id": "demo-stay-2",
+      "city": "普洱",
+      "hotel": "示例住宿 · 未预订",
+      "checkIn": "2027-03-15",
+      "checkOut": "2027-03-18",
+      "room": "",
+      "platform": "",
+      "price": "",
+      "address": "",
+      "attachment": null,
+      "priceMode": "total",
+      "nightlyPrices": []
+    },
+    {
+      "id": "demo-stay-3",
+      "city": "玉溪",
+      "hotel": "示例住宿 · 未预订",
+      "checkIn": "2027-03-18",
+      "checkOut": "2027-03-19",
+      "room": "",
+      "platform": "",
+      "price": "",
+      "address": "",
+      "attachment": null,
+      "priceMode": "total",
+      "nightlyPrices": []
+    },
+    {
+      "id": "demo-stay-4",
+      "city": "昆明",
+      "hotel": "示例住宿 · 未预订",
+      "checkIn": "2027-03-19",
+      "checkOut": "2027-03-21",
+      "room": "",
+      "platform": "",
+      "price": "",
+      "address": "",
+      "attachment": null,
+      "priceMode": "total",
+      "nightlyPrices": []
+    }
+  ]
+}
