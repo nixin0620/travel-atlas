@@ -63,3 +63,46 @@ test('city aliases match planner IDs and researched coordinates retain auditable
  const pack=builder.compile(p,__dirname),place=pack.imports.items[0].place;
  assert.equal(place.cityId,builder.cityKey('贵阳'));assert.equal(pack.journey.plan.cities[0].name,'贵阳');assert.equal(place.coordinateEvidence.matchMethod,'researched-reference');assert.equal(place.coordinateEvidence.poiId,place.poiId);assert.equal(place.coordinateEvidence.lat,place.lat);
 });
+function destinationFixture(cities, dates){
+ return {version:1,title:'跨目的地集成测试',cities,days:dates.map((date,i)=>({date,city:cities[i%cities.length].name,stops:[{placeId:'place-'+(i%cities.length),slot:'afternoon'}]})),places:cities.map((c,i)=>({id:'place-'+i,city:c.name,kind:'sight',name:'集成测试地点 '+i,address:c.name+' 测试地址',description:'仅用于数据关联测试，不是旅行推荐。',sources:[{title:'合成测试来源',url:'https://example.com/test-'+i,checkedAt:'2026-11-02'}]}))};
+}
+function assertDestinationLinks(profile){
+ const pack=builder.compile(profile,__dirname,'generic-test'),w=runtime(),s=w.TravelJourneyCore.clean(JSON.parse(JSON.stringify(pack.journey)),'generic-test'),trip=w.TripData.build(w.TravelJourneyCore.model(s),s);
+ assert.deepEqual(Array.from(trip.destinations,d=>d.countryCode),profile.cities.map(c=>c.countryCode));
+ assert.equal(pack.journey.transports.length,0);assert.equal(pack.journey.stays.length,0);
+ for(const e of pack.daily.entries){
+  assert.ok(w.DailyPlanCore.active(e,trip),e.place.city+' must belong to its native day');
+  assert.ok(trip.destinations.some(d=>d.id===e.place.cityId));
+  assert.equal(pack.imports.items.find(i=>i.sourceId===e.place.sourceId).choice,'wish');
+ }
+ const map=require('../assets/app/travel-map-data.js').snapshot({trip,state:pack.daily,catalog:pack.imports.items.map(i=>({place:i.place,city:i.city,choice:i.choice}))});
+ assert.equal(map.places.length,profile.places.length);
+ assert.equal(new Set(map.places.map(p=>p.sourceId)).size,profile.places.length);
+ return {pack,trip,map};
+}
+test('another domestic route supports returning cities across the year boundary',()=>{
+ const p=destinationFixture([{name:'成都市',countryCode:'CN'},{name:'乐山',countryCode:'CN'}],['2026-12-31','2027-01-01','2027-01-02']);
+ const {trip}=assertDestinationLinks(p);
+ assert.deepEqual(Array.from(trip.days,d=>d.date),p.days.map(d=>d.date));
+ assert.deepEqual(Array.from(trip.days,d=>d.city),['成都','乐山','成都']);
+ assert.equal(trip.totalNights,2);
+});
+test('overseas countries and accented or non-ASCII city names retain native map and daily links',()=>{
+ const p=destinationFixture([{name:'京都',countryCode:'JP'},{name:'São Paulo',countryCode:'BR'},{name:'Reykjavík',countryCode:'IS'}],['','','']);
+ const {trip}=assertDestinationLinks(p);
+ assert.deepEqual(Array.from(trip.days,d=>d.id),['plan-1','plan-2','plan-3']);
+ assert.ok(trip.destinations.every(d=>d.timezone!=='Asia/Shanghai'));
+});
+test('fullwidth names and repeated spaces normalize identically in compiler and native UI',()=>{
+ const p=destinationFixture([{name:'Ｎｅｗ　　Ｙｏｒｋ',countryCode:'US'}],['2028-02-28','2028-02-29','2028-03-01']);
+ const {trip,pack}=assertDestinationLinks(p);
+ assert.equal(trip.destinations[0].name,'New York');
+ assert.equal(pack.journey.plan.cities[0].name,'New York');
+ assert.equal(trip.destinations[0].id,builder.cityKey('New York'));
+});
+test('existing regional aliases stay compatible without adding destination-specific renderers',()=>{
+ const p=destinationFixture([{name:'西双版纳傣族自治州',countryCode:'CN'}],['']);
+ const {trip,pack}=assertDestinationLinks(p);
+ assert.equal(trip.destinations[0].id,'banna');
+ assert.equal(pack.journey.plan.cities[0].name,'西双版纳');
+});
