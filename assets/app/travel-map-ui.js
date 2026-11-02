@@ -3,7 +3,8 @@
   'use strict';
   const C = window.TravelMapCore;
   const E = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const shortDate = value => `${Number(value.slice(5,7))}/${Number(value.slice(8,10))}`;
+  const dayKey = value => value.date || value.dayId || value.id || '';
+  const shortDate = value => C.day(value) ? `${Number(value.slice(5,7))}/${Number(value.slice(8,10))}` : /^plan-\d+$/.test(value) ? 'D'+value.slice(5) : '日期未定';
   const slotNames = {morning:'上午',afternoon:'下午',evening:'晚上'};
   const kinds = {sight:'景点',food:'美食',experience:'体验',shopping:'购物',manual:'地点',transport:'交通',flight:'飞机',train:'火车',car:'驾车',bus:'大巴',other:'交通',stay:'住宿',hotel:'住宿'};
   let dialog, scheduleDialog, adapter, adapterPromise, observer, snapshot, resolver;
@@ -13,11 +14,11 @@
   let pendingRender=false, fitAfterResolution=false, feedback='',feedbackTimer;
   let adding=false,pickMode=false,chosen=-1,draftCity='',draftName='',saveAction='wish',saving=false,editExpected=null;
   const $ = id => document.getElementById('tm-'+id);
-  const visits = p => C.tripVisits(p,snapshot.trip).slice().sort((a,b)=>a.date.localeCompare(b.date)||a.order-b.order);
+  const visits = p => C.tripVisits(p,snapshot.trip).slice().sort((a,b)=>snapshot.days.findIndex(d=>dayKey(d)===dayKey(a))-snapshot.days.findIndex(d=>dayKey(d)===dayKey(b))||a.order-b.order);
   const located = p => adapter ? adapter.isLocated(p) : p.confirmed && ['WGS84','GCJ02'].includes(p.coordinateSystem);
   const locationState = p => located(p)?'matched':resolver?resolver.state(p,snapshot.trip.id):!adapter?'matching':'failed';
   const locationLabel = p => ({matching:'正在定位…',failed:'暂未定位',pending:'位置待确认'})[locationState(p)]||'位置待确认';
-  const rows = () => C.mapPlaces(snapshot.places,{city,mode,date,trip:snapshot.trip}).sort((a,b)=> mode==='day' ? visits(a).find(v=>v.date===date).order-visits(b).find(v=>v.date===date).order : 0);
+  const rows = () => C.mapPlaces(snapshot.places,{city,mode,date,trip:snapshot.trip}).sort((a,b)=> mode==='day' ? visits(a).find(v=>dayKey(v)===date).order-visits(b).find(v=>dayKey(v)===date).order : 0);
   const timeLabel = v => v.start && v.end ? `${v.start}—${v.end}` : v.start || (v.fixed&&v.label) || slotNames[v.slot] || '时间待定';
   function photoURL(value) {
     if(typeof value!=='string'||!value)return '';
@@ -28,11 +29,11 @@
   function refreshData(){
     const previous=snapshot,oldPlace=previous?.places.find(p=>p.id===selected);
     snapshot=window.TravelMapData.snapshot();
-    if(!snapshot?.trip||!snapshot.days?.length)throw Error('请先在每日行程中设置旅行日期。');
+    if(!snapshot?.trip||!snapshot.days?.length)throw Error('请先创建旅行规划或每日行程。');
     const nextPlace=snapshot.places.find(p=>p.id===selected),tripChanged=previous&&previous.trip.id!==snapshot.trip.id;
     if(tripChanged||(oldPlace&&(!nextPlace||oldPlace.name!==nextPlace.name||oldPlace.cityId!==nextPlace.cityId))){clearSearch();if(scheduleDialog?.open)scheduleDialog.close();}
     if(tripChanged)feedback='旅行已更新，地图已同步到当前行程。';
-    if(!snapshot.days.some(d=>d.date===date))date=snapshot.days[0].date;
+    if(!snapshot.days.some(d=>dayKey(d)===date))date=dayKey(snapshot.days[0]);
     if(city&&!snapshot.cities.some(c=>c.id===city))city='';
     adapter?.setCities?.(snapshot.cities);
   }
@@ -65,7 +66,7 @@
     $('date-picker').addEventListener('keydown',onDateKey);
     $('date-picker').addEventListener('toggle',()=>{if($('date-picker').open)revealDateOption($('date').contains(document.activeElement)?document.activeElement:$('date').querySelector('[aria-selected=true]'));});
     $('date-picker').addEventListener('focusout',e=>{if(e.relatedTarget&&!$('date-picker').contains(e.relatedTarget))$('date-picker').open=false;});
-    $('date').addEventListener('click',e=>{const option=e.target.closest('[data-tm-date]');if(!option)return;date=option.dataset.tmDate;if(city&&!snapshot.days.find(d=>d.date===date)?.cityIds.includes(city))city=snapshot.days.find(d=>d.date===date)?.cityId||'';$('date-picker').open=false;clearSearch();render(true);$('date-picker').querySelector('summary').focus({preventScroll:true});});
+    $('date').addEventListener('click',e=>{const option=e.target.closest('[data-tm-date]');if(!option)return;date=option.dataset.tmDate;if(city&&!snapshot.days.find(d=>dayKey(d)===date)?.cityIds.includes(city))city=snapshot.days.find(d=>dayKey(d)===date)?.cityId||'';$('date-picker').open=false;clearSearch();render(true);$('date-picker').querySelector('summary').focus({preventScroll:true});});
     scheduleDialog.querySelectorAll('[data-tm-schedule-close]').forEach(b=>b.addEventListener('click',()=>scheduleDialog.close()));
     $('schedule-form').addEventListener('submit',saveSchedule);
     observer=new ResizeObserver(()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{if(!dialog.open||!adapter)return;adapter.resize();if(!poiOpen)adapter.render(rows(),selected,{fit:true,city,labels:pinLabels()}).catch(()=>{});else if(chosen>=0)adapter.preview?.(candidates[chosen]);},180);});observer.observe($('map'));
@@ -93,8 +94,8 @@
     if(mode!=='day')$('date-picker').open=false;
     const focusedDate=document.activeElement?.dataset.tmDate;
     const dateCount=value=>C.dayEntries(snapshot.places,{trip:snapshot.trip,date:value,city}).length;
-    $('date-value').innerHTML=`<span>${shortDate(date)} · D${snapshot.days.findIndex(d=>d.date===date)+1}</span><small>${dateCount(date)} 处地点</small>`;
-    $('date').innerHTML=snapshot.days.map(d=>`<button type="button" role="option" data-tm-date="${E(d.date)}" aria-label="${E(d.date)} · ${dateCount(d.date)} 处地点" aria-selected="${d.date===date}" tabindex="${d.date===date?0:-1}"><span>${E(d.date)}</span><small>${dateCount(d.date)} 处地点</small><span class="tm-date-check" aria-hidden="true">${d.date===date?'✓':''}</span></button>`).join('');
+    $('date-value').innerHTML=`<span>${C.day(date)?shortDate(date)+' · ':''}D${snapshot.days.findIndex(d=>dayKey(d)===date)+1}${C.day(date)?'':' · 日期未定'}</span><small>${dateCount(date)} 处地点</small>`;
+    $('date').innerHTML=snapshot.days.map(d=>`<button type="button" role="option" data-tm-date="${E(dayKey(d))}" aria-label="${E(d.date||'第 '+d.day+' 天')} · ${dateCount(dayKey(d))} 处地点" aria-selected="${dayKey(d)===date}" tabindex="${dayKey(d)===date?0:-1}"><span>${E(d.date||'第 '+d.day+' 天')}</span><small>${dateCount(dayKey(d))} 处地点</small><span class="tm-date-check" aria-hidden="true">${dayKey(d)===date?'✓':''}</span></button>`).join('');
     if(focusedDate&&$('date-picker').open){const option=[...$('date').children].find(b=>b.dataset.tmDate===focusedDate);if(option){[...$('date').children].forEach(b=>b.tabIndex=b===option?0:-1);option.focus({preventScroll:true});revealDateOption(option);}}
     const known=list.filter(located).length,matching=list.filter(p=>locationState(p)==='matching').length,failed=list.filter(p=>locationState(p)==='failed').length,pending=list.length-known-matching-failed;
     $('count').textContent=[`${list.length} 个${mode==='all'?' My Pick 地点':'当天地点'}`,`${known} 处已定位`,matching?`${matching} 处正在定位`:null,pending?`${pending} 处待确认`:null,failed?`${failed} 处暂未定位`:null].filter(Boolean).join(' · ');
@@ -147,8 +148,8 @@
     }
     const p=rows().find(p=>p.id===selected);
     if(!p){$('detail').innerHTML=`<div class="tm-empty-detail"><h3>${mode==='day'?'留一点空白给旅行':'添加一个想去的地方'}</h3><p>${mode==='day'?'切换日期，或为这一天添加安排。':'搜索地点或直接在地图上选点。'}</p><button type="button" data-tm-add>＋ 添加地点</button></div>`;return;}
-    const all=visits(p),relevant=mode==='day'?all.filter(v=>v.date===date):all,v=relevant[0],photo=photoURL(p.photo);
-    $('detail').innerHTML=`<article class="tm-detail-content"><div class="tm-place-overview">${photo?`<div class="tm-photo"><img src="${E(photo)}" alt="${E(p.name)}" decoding="async"></div>`:''}<div><p class="tm-detail-meta">${E(kinds[p.kind]||'地点')} · ${E(p.city)}</p><h3>${E(p.name)}</h3><p class="tm-intro">${E(p.intro||'把这个地方留在旅行里，慢慢发现。')}</p></div></div><p class="tm-arrangement">${v?`已安排 · ${shortDate(v.date)} · ${E(timeLabel(v))}${relevant.length>1?` 等 ${relevant.length} 次安排`:''}`:'本次旅行尚未安排'}</p><div class="tm-detail-actions"><button type="button" class="tm-primary tm-main-action" ${v?'data-tm-view-day':'data-tm-arrange'}>${v?'查看日程':'安排到日程'} <span aria-hidden="true">→</span></button><button type="button" class="tm-edit-location" data-tm-search-open ${adapter?'':'disabled'}>${located(p)?'修改位置':'确认位置'}</button></div></article>`;
+    const all=visits(p),relevant=mode==='day'?all.filter(v=>dayKey(v)===date):all,v=relevant[0],photo=photoURL(p.photo);
+    $('detail').innerHTML=`<article class="tm-detail-content"><div class="tm-place-overview">${photo?`<div class="tm-photo"><img src="${E(photo)}" alt="${E(p.name)}" decoding="async"></div>`:''}<div><p class="tm-detail-meta">${E(kinds[p.kind]||'地点')} · ${E(p.city)}</p><h3>${E(p.name)}</h3><p class="tm-intro">${E(p.intro||'把这个地方留在旅行里，慢慢发现。')}</p></div></div><p class="tm-arrangement">${v?`已安排 · ${shortDate(dayKey(v))} · ${E(timeLabel(v))}${relevant.length>1?` 等 ${relevant.length} 次安排`:''}`:'本次旅行尚未安排'}</p><div class="tm-detail-actions"><button type="button" class="tm-primary tm-main-action" ${v?'data-tm-view-day':'data-tm-arrange'}>${v?'查看日程':'安排到日程'} <span aria-hidden="true">→</span></button><button type="button" class="tm-edit-location" data-tm-search-open ${adapter?'':'disabled'}>${located(p)?'修改位置':'确认位置'}</button></div></article>`;
     fitDetailPhoto(p);
   }
   function render(fit=false){
@@ -167,14 +168,14 @@
     if(!available.length){notify('当前行程还没有这个城市的日期，请先在交通与住宿中调整行程。');return;}
     editing={placeId:p.id,tripId:snapshot.trip.id};
     $('schedule-title').textContent='安排到日程 · '+p.name;
-    $('edit-day').innerHTML=available.map(d=>`<option value="${E(d.id)}">${E(d.date)}${d.cityName||d.city?' · '+E(d.cityName||d.city):''}</option>`).join('');
-    $('edit-day').value=available.find(d=>d.date===date)?.id||available[0].id;
+    $('edit-day').innerHTML=available.map(d=>`<option value="${E(d.id)}">${E(d.date||'第 '+d.day+' 天')}${d.cityName||d.city?' · '+E(d.cityName||d.city):''}</option>`).join('');
+    $('edit-day').value=available.find(d=>dayKey(d)===date)?.id||available[0].id;
     $('edit-start').value='';$('edit-end').value='';$('edit-slot').value='afternoon';$('form-status').textContent='';$('save').disabled=false;scheduleDialog.showModal();
   }
   async function saveSchedule(e){
     e.preventDefault();if(!editing)return;const request={...editing,dayId:$('edit-day').value,start:$('edit-start').value,end:$('edit-end').value,slot:$('edit-slot').value};
     $('save').disabled=true;
-    try{await window.TravelMapData.schedule(request);refreshData();date=snapshot.days.find(d=>d.id===request.dayId)?.date||date;mode='day';selected=request.placeId;city=snapshot.places.find(p=>p.id===selected)?.cityId||'';scheduleDialog.close();clearSearch();notify('已加入每日行程。');render(true);}
+    try{await window.TravelMapData.schedule(request);refreshData();date=dayKey(snapshot.days.find(d=>d.id===request.dayId)||{})||date;mode='day';selected=request.placeId;city=snapshot.places.find(p=>p.id===selected)?.cityId||'';scheduleDialog.close();clearSearch();notify('已加入每日行程。');render(true);}
     catch(error){$('form-status').textContent=error.message||'保存失败，请重试。';}finally{$('save').disabled=false;}
   }
   function openSearch(isNew){
@@ -189,7 +190,7 @@
     const b=e.target.closest('button');if(!b)return;
     if(b.hasAttribute('data-tm-close')){dialog.close();return;}
     if(b.hasAttribute('data-tm-sheet')){if(b.dataset.dragged)return;setSheet(!dialog.classList.contains('tm-sheet-expanded'));return;}
-    if(b.hasAttribute('data-tm-city')){city=b.dataset.tmCity;clearSearch();if(mode==='day'&&!snapshot.days.find(d=>d.date===date)?.cityIds.includes(city)&&city)date=snapshot.days.find(d=>d.cityIds.includes(city))?.date||date;setSheet(false);render(true);return;}
+    if(b.hasAttribute('data-tm-city')){city=b.dataset.tmCity;clearSearch();if(mode==='day'&&!snapshot.days.find(d=>dayKey(d)===date)?.cityIds.includes(city)&&city)date=dayKey(snapshot.days.find(d=>d.cityIds.includes(city))||{})||date;setSheet(false);render(true);return;}
     if(b.hasAttribute('data-tm-mode')){mode=b.dataset.tmMode;clearSearch();setSheet(false);render(true);return;}
     if(b.hasAttribute('data-tm-place')){select(b.dataset.tmPlace);return;}
     if(b.hasAttribute('data-tm-add')){openSearch(true);return;}
@@ -209,7 +210,7 @@
     }
     const p=rows().find(p=>p.id===selected);if(!p)return;
     if(b.hasAttribute('data-tm-arrange')){openSchedule(p);return;}
-    if(b.hasAttribute('data-tm-view-day')){const v=visits(p).find(v=>mode!=='day'||v.date===date);if(v){dialog.close();window.TravelMapData.openDay(v.dayId);}return;}
+    if(b.hasAttribute('data-tm-view-day')){const v=visits(p).find(v=>mode!=='day'||dayKey(v)===date);if(v){dialog.close();window.TravelMapData.openDay(v.dayId);}return;}
     if(b.hasAttribute('data-tm-search-open')){openSearch(false);return;}
   }
   async function onSearch(e){
@@ -220,7 +221,7 @@
     finally{if(current===epoch){searching=false;renderDetail();}}
   }
   async function open(context={}){
-    createUI();opener=document.activeElement;feedback='';city=context.cityId||'';date=context.date||'';mode='all';selected='';clearSearch();setSheet(false);
+    createUI();opener=document.activeElement;feedback='';city=context.cityId||'';date=context.date||context.dayId||'';mode='all';selected='';clearSearch();setSheet(false);
     if(!dialog.open){bodyOverflow=document.body.style.overflow;document.body.style.overflow='hidden';dialog.showModal();}dialog.scrollTop=0;render(true);
     if(!adapterPromise){$('map-network').textContent='正在加载地图…';adapterPromise=window.TravelMapProvider.create({element:'tm-map',onSelect:id=>{if(!poiOpen)select(id,true);},onPick,onStatus:text=>{$('map-network').textContent=text;}}).then(value=>{
       adapter=value;
