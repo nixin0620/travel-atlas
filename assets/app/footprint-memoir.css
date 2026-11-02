@@ -1,0 +1,247 @@
+/* A quiet paper atlas: all colors inherit the handbook's six semantic themes. */
+body #china-footprints.fp-memoir{padding-top:30px;--mm-soft:color-mix(in srgb,var(--hb-action) 7%,var(--hb-page))}
+body #china-footprints.fp-memoir .fp-header{margin-bottom:22px}
+body #china-footprints.fp-memoir .fp-next-places{display:none}
+body #china-footprints.fp-memoir .fp-heading-copy{grid-template-columns:minmax(0,1fr) auto}
+body #china-footprints.fp-memoir .fp-stats strong{font-size:44px;font-weight:400}
+body #china-footprints.fp-memoir .fp-reflection-detail{font-size:13px}
+#china-footprints .mm-navigation{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px;flex-wrap:wrap}
+#china-footprints .mm-modes{display:flex;gap:8px;flex-wrap:wrap}
+#china-footprints .mm-modes button{min-height:42px;padding:10px 20px;border:1px solid transparent;border-radius:var(--travel-control-radius,12px);background:var(--mm-soft);color:var(--hb-on-light);font:inherit;font-size:13px;cursor:pointer}
+#china-footprints .mm-modes button[aria-pressed=true]{background:var(--hb-action);color:var(--hb-on-dark);font-weight:650}
+#china-footprints .mm-map-key{display:flex;gap:16px;font-size:11px;color:var(--fp-muted);margin:0}
+#china-footprints .mm-map-key span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+#china-footprints .mm-map-key i{display:block;width:7px;height:7px;border-radius:50%;background:var(--hb-gold-ink)}
+#china-footprints .mm-map-key .mm-key-wish{background:none;border:1.5px solid var(--hb-action);width:9px;height:9px}
+#china-footprints .mm-map-key .mm-key-dim{background:var(--hb-line-light)}
+body[data-handbook-theme] #china-footprints.fp-memoir .fp-atlas{grid-template-columns:minmax(0,1fr) minmax(285px,32%);gap:24px}
+body #china-footprints.fp-memoir .fp-map-column{position:relative;align-self:stretch;display:flex;justify-content:center;overflow:visible}
+body[data-handbook-theme] #china-footprints.fp-memoir .fp-stage{width:100%;aspect-ratio:940/700;flex:none;align-self:center}
+body #china-footprints.fp-memoir .fp-map-toolbar{position:absolute;bottom:12px;left:0;z-index:8;padding:0}
+body #china-footprints.fp-memoir .fp-view-actions{display:flex;flex-wrap:wrap;max-width:240px;gap:4px;background:color-mix(in srgb,var(--hb-page) 94%,transparent);border:1px solid var(--hb-line-light);border-radius:var(--travel-control-radius);padding:3px}
+body[data-handbook-theme] #china-footprints.fp-memoir .fp-view-actions button{min-width:32px;min-height:32px;padding:5px 8px;font-size:11px}
+body #china-footprints.fp-memoir .fp-map-bottom{position:absolute;bottom:-22px;left:0;max-width:100%;z-index:8;background:var(--hb-card);border-radius:8px;padding:6px 10px}
+body #china-footprints.fp-memoir .fp-panel{padding:22px;min-height:390px;align-self:stretch}
+body #china-footprints.fp-memoir .fp-selected-title{margin-top:7px;gap:12px}
+body #china-footprints.fp-memoir .fp-selected-title b{font-size:30px;font-weight:500}
+body #china-footprints.fp-memoir .fp-selected-kicker{font-size:11px}
+body #china-footprints.fp-memoir .fp-city-context{display:block;flex:1}
+body #china-footprints.fp-memoir .fp-light-button{font-size:12px;padding:7px 10px;margin-top:12px;min-height:36px}
+#china-footprints .mm-city-dates{margin-top:9px;color:var(--hb-gold-ink);font-size:12px}
+#china-footprints .mm-date-line{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+#china-footprints .mm-date-line button{font:inherit;color:var(--fp-muted);border:0;padding:4px 0;background:none;cursor:pointer;font-size:11px;text-decoration:underline;text-underline-offset:3px}
+#china-footprints .mm-trip-tag{font-size:11px;color:var(--fp-muted);margin:5px 0 0}
+#china-footprints .mm-city-visit{display:flex;gap:8px;align-items:center;margin-top:10px;color:var(--fp-muted);font-size:11px}
+#china-footprints .mm-city-visit select{max-width:100%;min-width:0;flex:1;font:inherit;border:1px solid var(--fp-line);background:var(--hb-page);color:var(--fp-ink);padding:5px}
+body #china-footprints.fp-memoir .fpm-city-memory{margin-top:16px}
+body #china-footprints.fp-memoir .fpm-city-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start}
+/* Personal photos retain the whole frame, including portraits and collages. */
+body #china-footprints.fp-memoir .fpm-city-photos button{display:flex;align-items:center;justify-content:center;height:auto;min-height:0;aspect-ratio:4/3;overflow:hidden;padding:0}
+body #china-footprints.fp-memoir .fpm-city-photos button:first-child{grid-column:1/-1;height:auto;aspect-ratio:auto}
+body #china-footprints.fp-memoir .fpm-city-photos img{display:block;height:100%;width:100%;min-height:0;object-fit:contain;object-position:center}
+body #china-footprints.fp-memoir .fpm-city-photos button:first-child img{height:auto;max-height:360px}
+body #china-footprints.fp-memoir .fpm-city-memory-head{order:3;border-top:1px solid var(--fp-line);padding-top:14px;margin-top:16px;justify-content:flex-end}
+body #china-footprints.fp-memoir .fpm-city-memory-head h3{display:none}
+body #china-footprints.fp-memoir .fpm-city-memory-head button{color:var(--hb-action);font-size:12px;min-height:32px}
+body #china-footprints.fp-memoir .fpm-city-note{order:2;font:400 15px/1.9 Georgia,'Songti SC',serif;position:relative;padding-left:18px;margin:18px 0 0;white-space:pre-line;color:var(--fp-muted)}
+body #china-footprints.fp-memoir .fpm-city-note::before{content:'“';position:absolute;left:-4px;top:-13px;font:46px/1.2 Georgia,serif;color:color-mix(in srgb,var(--hb-action) 22%,transparent)}
+body #china-footprints.fp-memoir .fp-memory-entry{margin-top:24px;min-height:138px;background:none;display:flex;align-items:center;justify-content:center;padding:22px 12px}
+body #china-footprints.fp-memoir .fp-memory-entry small{font-size:11px;line-height:1.7}
+body #china-footprints.fp-memoir .fp-panel-actions{margin-top:18px;padding-top:12px}
+body #china-footprints.fp-memoir .fp-panel-actions .fp-add-city{color:var(--hb-on-light);background:none;border:1px solid var(--fp-line);padding:7px 10px;min-height:36px}
+body #china-footprints.fp-memoir .fp-panel-actions .fp-memory-tally{font-size:11px;min-height:36px}
+#china-footprints .mm-city-wish{color:var(--hb-action);border:0;background:none;padding:14px 0 0;font:inherit;font-size:12px;cursor:pointer}
+#china-footprints .mm-controls{padding:16px 20px;margin-bottom:18px;background:var(--mm-soft);border:1px solid var(--fp-line);border-radius:var(--travel-card-radius)}
+#china-footprints .mm-controls p{font-size:11px;color:var(--fp-muted);line-height:1.7;margin:9px 0 0}
+#china-footprints .mm-replay-tools{display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-size:12px}
+#china-footprints .mm-replay-tools label,#china-footprints .mm-trip-choice{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--fp-muted)}
+#china-footprints .mm-controls select{font:inherit;background:var(--hb-card);color:var(--fp-ink);border:1px solid var(--fp-line);border-radius:var(--travel-control-radius);padding:8px 12px;min-width:100px;max-width:100%}
+#china-footprints .mm-replay-tools button{font:inherit;cursor:pointer;border:0;background:var(--hb-action);color:var(--hb-on-dark);border-radius:var(--travel-control-radius);padding:9px 14px;min-width:82px}
+#china-footprints .mm-replay-tools button:disabled{opacity:.5;cursor:default}
+#china-footprints [data-mm-progress]{flex:1;min-width:110px;accent-color:var(--hb-action)}
+#china-footprints .mm-trip-choice[hidden],#china-footprints [data-mm-trip-note][hidden]{display:none!important}
+#china-footprints .mm-trip-choice[hidden]~.mm-stops{margin-top:0}
+#china-footprints .mm-stops{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+#china-footprints .mm-stops button{display:flex;align-items:center;gap:7px;min-height:36px;font:inherit;font-size:12px;color:var(--fp-ink);background:var(--hb-card);border:1px solid var(--fp-line);border-radius:var(--travel-control-radius);padding:6px 11px;cursor:pointer}
+#china-footprints .mm-stops button[aria-pressed=true]{border-color:var(--hb-action);background:var(--hb-action);color:var(--hb-on-dark)}
+#china-footprints .mm-stops small{font-size:10px;opacity:.7}
+#china-footprints .mm-stops span{color:var(--hb-gold-display)}
+#china-footprints .mm-route-line{fill:none;stroke:var(--hb-map-gold);stroke-width:2;stroke-dasharray:5 4;opacity:.8;pointer-events:none}
+#china-footprints .mm-route-number{fill:var(--hb-page);stroke:var(--hb-gold-display);stroke-width:1}
+#china-footprints .mm-route-label{text-anchor:middle;font:700 9px system-ui;fill:var(--hb-on-light)}
+body[data-handbook-theme] #china-footprints.fp-memoir .fp-city.mm-wished .fp-dot{fill:var(--hb-deep)!important;stroke:var(--hb-on-dark);stroke-width:1.7;r:4;opacity:1!important}
+body #china-footprints.fp-memoir .fp-city.mm-wished .fp-trip-ring{opacity:0}
+body #china-footprints.fp-memoir .fp-city.mm-route-city .fp-trip-ring{opacity:1;stroke:var(--hb-map-gold);stroke-width:1.3}
+body #china-footprints.fp-memoir .fp-city.mm-outside-trip:not(.is-selected){opacity:.25}
+body #china-footprints.fp-memoir[data-mm-mode=all] .fp-city:not(.is-visited) .fp-trip-ring{opacity:0}
+body[data-handbook-theme] #china-footprints.fp-memoir .fp-city.mm-time-hidden .fp-dot{fill:var(--hb-map-label)!important;stroke:none;filter:none;opacity:.2!important;r:1.7}
+body #china-footprints.fp-memoir .fp-city.mm-time-hidden :is(.fp-halo,.fp-beam,.fp-trip-ring){opacity:0!important;display:none}
+body #china-footprints.fp-memoir .fp-city.mm-time-hidden:not(.is-selected) .fp-city-name{opacity:0}
+body #china-footprints.fp-memoir .fpm-map-fan{display:none!important}
+body #china-footprints.fp-memoir .fp-return-footprints{display:none}
+#china-footprints .mm-wishes{display:flex;align-items:center;gap:24px;margin-top:26px;padding:22px 24px;background:var(--hb-card);border:1px solid var(--fp-line);border-radius:var(--travel-card-radius)}
+#china-footprints .mm-wish-intro{flex-shrink:0}
+#china-footprints .mm-wish-intro>span{font-size:9px;letter-spacing:.18em;color:var(--hb-gold-ink)}
+#china-footprints .mm-wish-intro h3{font:500 21px/1.4 Georgia,'Songti SC',serif;color:var(--hb-gold-ink);margin:6px 0}
+#china-footprints .mm-wish-intro p,#china-footprints .mm-wish-cities>p{margin:0;font-size:11px;line-height:1.7;color:var(--fp-muted)}
+#china-footprints .mm-wish-cities{display:flex;gap:8px;flex-wrap:wrap;flex:1;min-width:0}
+#china-footprints .mm-wish-cities button,#china-footprints .mm-add-wish{font:inherit;font-size:12px;display:flex;gap:10px;align-items:center;min-height:38px;background:var(--hb-page);color:var(--fp-ink);border:1px solid var(--fp-line);padding:9px 12px;border-radius:var(--travel-control-radius);cursor:pointer}
+#china-footprints .mm-wish-cities button i{font-style:normal;color:var(--hb-action)}
+#china-footprints .mm-wish-cities button span{opacity:.5}
+#china-footprints .mm-add-wish{background:none;border-style:dashed;white-space:nowrap;color:var(--fp-muted)}
+body #china-footprints.fp-memoir .fp-wish{border:0;padding:0;margin-top:12px}
+body #china-footprints.fp-memoir [data-fp-wish-read]{display:flex;align-items:center;justify-content:flex-end;gap:14px}
+body #china-footprints.fp-memoir .fp-wish-text{font-size:12px;line-height:1.7;max-width:650px;margin:0;color:var(--fp-muted)}
+body #china-footprints.fp-memoir .fp-wish-text.is-empty{display:none}
+body #china-footprints.fp-memoir .fp-wish-edit{font-size:11px;margin:0;min-height:24px}
+#china-footprints .mm-editor{padding:16px;margin-bottom:22px;border:1px solid var(--fp-line);border-radius:var(--travel-inset-radius);background:var(--hb-page-soft)}
+#china-footprints .mm-editor-head{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;margin-bottom:14px}
+#china-footprints .mm-editor-head select{max-width:65%;font-size:11px}
+#china-footprints .mm-date-fields,#china-footprints .mm-trip-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#china-footprints .mm-trip-fields{grid-template-columns:minmax(0,1fr) 90px;margin-top:12px}
+#china-footprints .mm-editor label{font-size:11px;display:flex;flex-direction:column;gap:5px;color:var(--fp-muted)}
+#china-footprints .mm-editor :is(input,select){width:100%;min-width:0;border:1px solid var(--fp-line);background:var(--hb-card);color:var(--fp-ink);border-radius:6px;min-height:36px;font:inherit;font-size:12px;padding:7px 9px;box-sizing:border-box}
+#china-footprints .mm-help{font-size:11px;margin:6px 0;color:var(--fp-muted);line-height:1.6}
+#china-footprints .mm-editor .mm-remove-visit{display:flex;flex-direction:row;align-items:center;margin-top:12px;gap:7px}
+#china-footprints .mm-remove-visit input{width:14px;min-height:14px}
+@media(max-width:1100px){#china-footprints .mm-map-key{gap:10px}body[data-handbook-theme] #china-footprints.fp-memoir .fp-atlas{gap:16px;grid-template-columns:minmax(0,1fr) minmax(265px,34%)}body #china-footprints.fp-memoir .fp-panel{padding:18px}.mm-navigation .mm-modes button{padding:10px 14px}}
+@media(max-width:760px){body #china-footprints.fp-memoir{padding:24px 16px 20px}body #china-footprints.fp-memoir .fp-heading-copy{display:block}body #china-footprints.fp-memoir .fp-stats{margin-top:16px;gap:20px}body #china-footprints.fp-memoir .fp-stats strong{font-size:34px}body #china-footprints.fp-memoir .fp-stats>div+div{padding-left:20px}body #china-footprints.fp-memoir .fp-header{margin-bottom:18px}#china-footprints .mm-navigation{gap:12px;margin-bottom:10px}#china-footprints .mm-modes{gap:5px;width:100%}#china-footprints .mm-modes button{padding:9px 8px;font-size:12px;flex:1;min-height:40px}#china-footprints .mm-map-key{font-size:10px}body[data-handbook-theme] #china-footprints.fp-memoir .fp-atlas{display:flex;flex-direction:column;gap:18px}body #china-footprints.fp-memoir .fp-map-column{width:100%;padding-bottom:36px}body[data-handbook-theme] #china-footprints.fp-memoir .fp-stage{width:100%;aspect-ratio:940/720}body #china-footprints.fp-memoir .fp-map-toolbar{bottom:0}body #china-footprints.fp-memoir .fp-panel{width:100%;min-height:0;padding:20px;box-sizing:border-box}body #china-footprints.fp-memoir .fp-memory-entry{min-height:105px;margin-top:18px}body #china-footprints.fp-memoir .fp-inset{width:45px;bottom:8px}body #china-footprints.fp-memoir .fp-compass{left:0;top:12px}#china-footprints .mm-controls{padding:13px}#china-footprints .mm-replay-tools{gap:10px}#china-footprints [data-mm-progress]{flex-basis:70%;order:2}#china-footprints [data-mm-step]{order:3;font-size:11px}#china-footprints .mm-trip-choice{flex-wrap:wrap}#china-footprints .mm-trip-choice select{min-width:0;flex:1}#china-footprints .mm-wishes{margin-top:20px;padding:18px;gap:14px;flex-wrap:wrap}#china-footprints .mm-wish-intro{width:100%}#china-footprints .mm-wish-cities{flex-basis:100%}#china-footprints .mm-add-wish{font-size:11px}#china-footprints .mm-date-fields{gap:8px}#china-footprints .mm-editor{padding:12px}#china-footprints .mm-editor-head{flex-wrap:wrap}#china-footprints .mm-editor-head select{max-width:100%}body #china-footprints.fp-memoir .fp-map-bottom{bottom:-12px;font-size:10px}}
+@media(prefers-reduced-motion:reduce){#china-footprints.fp-memoir *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+#china-footprints .mm-preview-note{font-size:11px;color:var(--fp-muted);margin:0 0 18px;padding:8px 12px;border:1px dashed var(--fp-line);border-radius:var(--travel-control-radius);line-height:1.6}
+#china-footprints .mm-preview-note a{color:var(--hb-action);text-underline-offset:3px;margin-left:8px}
+body[data-handbook-theme] #china-footprints.fp-memoir .fp-panel{gap:0}
+body #china-footprints.fp-memoir .fpm-city-note{font-size:14px;line-height:1.8}
+@media(min-width:761px){
+ body #china-footprints.fp-memoir .fp-panel{padding:20px}
+ body #china-footprints.fp-memoir .fp-selected-title b{line-height:1.2}
+ body #china-footprints.fp-memoir .fpm-city-memory{margin-top:12px}
+ body #china-footprints.fp-memoir .fpm-city-note{margin-top:12px;font-size:13px;line-height:1.7}
+ body #china-footprints.fp-memoir .fpm-city-memory-head{margin-top:10px;padding-top:8px;height:32px}
+ body #china-footprints.fp-memoir .fp-panel-actions{margin-top:10px;padding-top:8px}
+ #china-footprints .mm-trip-tag{line-height:1.5}
+}
+body #china-footprints.fp-memoir .fp-city.mm-wished :is(.fp-halo,.fp-beam){display:none}
+
+/* One-screen atlas. Map geometry and stored memories remain owned by the existing controllers. */
+body[data-handbook-theme] #china-footprints.fp-memoir{padding:22px var(--chapter-pad) 20px;scroll-margin-top:20px}
+#china-footprints .mm-workspace{height:calc(100dvh - 84px);min-height:420px;display:flex;flex-direction:column;gap:14px;min-width:0;overflow-anchor:none}
+body #china-footprints.fp-memoir .fp-header{margin:0;flex:none}
+body #china-footprints.fp-memoir .fp-heading-copy{column-gap:24px}
+body #china-footprints.fp-memoir .fp-eyebrow{margin:0 0 4px;font-size:9px}
+body #china-footprints.fp-memoir h2{font-size:clamp(24px,2.3vw,34px);line-height:1.35;margin:0}
+body #china-footprints.fp-memoir h2 em{display:inline}
+body #china-footprints.fp-memoir .fp-reflection-detail{margin:4px 0 0;font-size:11px;line-height:1.5}
+body #china-footprints.fp-memoir .fp-stats{gap:18px}
+body #china-footprints.fp-memoir .fp-stats>div{min-width:0;gap:3px}
+body #china-footprints.fp-memoir .fp-stats>div+div{padding-left:18px}
+body #china-footprints.fp-memoir .fp-stats strong{font-size:32px}
+body #china-footprints.fp-memoir .fp-stats span{font-size:10px}
+#china-footprints .mm-navigation{margin:0;gap:12px;flex:none}
+#china-footprints .mm-modes button{min-height:38px;padding:8px 16px;font-size:12px}
+#china-footprints .mm-controls{margin:0;padding:10px 14px;flex:none;max-height:145px;overflow:auto}
+#china-footprints .mm-controls p{margin-top:6px}
+body[data-handbook-theme] #china-footprints.fp-memoir .fp-atlas{flex:1;min-height:0;grid-template-columns:minmax(0,1fr) minmax(300px,32%);align-items:stretch;gap:20px;overflow:visible}
+body #china-footprints.fp-memoir .fp-map-column{min-height:0;min-width:0;display:block;padding:0;overflow:hidden;border-radius:var(--travel-card-radius)}
+body[data-handbook-theme] #china-footprints.fp-memoir .fp-stage{height:100%;width:100%;min-height:0;aspect-ratio:auto;align-self:stretch}
+body #china-footprints.fp-memoir .fp-map-tilt{inset:8px 0 44px}
+body #china-footprints.fp-memoir .fp-compass{top:16px;left:14px}
+body #china-footprints.fp-memoir .fp-map-toolbar{bottom:4px;left:0}
+body #china-footprints.fp-memoir .fp-inset{right:8px;bottom:48px;width:56px;height:82px}
+body #china-footprints.fp-memoir .fp-inset svg{height:64px}
+body #china-footprints.fp-memoir .fp-map-bottom{bottom:46px;font-size:11px;max-width:calc(100% - 80px)}
+body #china-footprints.fp-memoir .fp-map-bottom:has([data-fp-status]:empty){display:none}
+body[data-handbook-theme] #china-footprints.fp-memoir .fp-panel{height:100%;min-height:0;padding:18px;overflow:hidden;box-sizing:border-box;gap:0}
+#china-footprints .mm-memory-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--hb-line-light) transparent;scrollbar-gutter:stable;padding-right:5px}
+#china-footprints .mm-memory-scroll:focus-visible{outline:2px solid var(--hb-action);outline-offset:-2px;border-radius:8px}
+body #china-footprints.fp-memoir .fp-city-context{display:block;min-width:0}
+body #china-footprints.fp-memoir .fp-back-map{display:none}
+body #china-footprints.fp-memoir .fp-selected-title{margin-top:6px;gap:10px}
+body #china-footprints.fp-memoir .fp-selected-title b{font-size:30px}
+body #china-footprints.fp-memoir .mm-city-dates{margin:12px 0 0;padding-top:10px;border-top:1px solid var(--fp-line);font-size:12px;line-height:1.6}
+body #china-footprints.fp-memoir .fpm-city-memory{margin:12px 0 0;padding:0;display:flex;gap:12px}
+body #china-footprints.fp-memoir .fpm-city-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;order:0}
+body #china-footprints.fp-memoir .fpm-city-photos button,
+body #china-footprints.fp-memoir .fpm-city-photos button:first-child{position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:auto;aspect-ratio:3/2;padding:0;min-height:0;border:0;border-radius:10px;overflow:hidden;background:var(--hb-page-soft)}
+body #china-footprints.fp-memoir .fpm-city-photos[data-count] button:first-child{grid-column:1/-1;aspect-ratio:3/2}
+body #china-footprints.fp-memoir .fpm-city-photos img,
+body #china-footprints.fp-memoir .fpm-city-photos button:first-child img{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:contain;object-position:center}
+#china-footprints .fpm-album-count{position:absolute;bottom:8px;right:8px;font:500 10px/1.4 system-ui,sans-serif;color:var(--hb-on-dark);background:color-mix(in srgb,var(--hb-deep) 84%,transparent);padding:4px 8px;border-radius:6px}
+body #china-footprints.fp-memoir .fpm-city-photos .fpm-photo-empty{flex-direction:column;gap:8px;color:var(--fp-muted);font-size:12px;border:1px dashed var(--fp-line)}
+#china-footprints .fpm-photo-empty>span:first-child{font-size:24px;font-weight:300;color:var(--hb-action)}
+body #china-footprints.fp-memoir .fpm-city-memory-head{display:flex;align-items:flex-start;gap:12px;justify-content:space-between;margin:0;padding:0;border:0;height:auto;order:1}
+body #china-footprints.fp-memoir .fpm-city-note{order:0;flex:1;min-width:0;margin:0;padding:0 0 0 17px;font-size:13px;line-height:1.7;white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;overflow-wrap:anywhere}
+body #china-footprints.fp-memoir .fpm-city-note.is-empty{font:12px/1.7 system-ui,sans-serif;padding-left:0;opacity:.8}
+body #china-footprints.fp-memoir .fpm-city-note.is-empty::before{display:none}
+body #china-footprints.fp-memoir .fpm-city-note::before{font-size:36px;top:-6px;left:0}
+body #china-footprints.fp-memoir .fpm-city-memory-head button{order:1;flex:none;min-height:32px;padding:0 0 4px;font-size:11px}
+body #china-footprints.fp-memoir .fp-memory-entry{width:100%;aspect-ratio:3/2;min-height:0;margin:12px 0 0;padding:18px 12px;flex-direction:column;gap:8px;text-align:center;border:1px dashed var(--fp-line);background:var(--hb-page-soft)}
+body #china-footprints.fp-memoir .fp-memory-entry b{font-size:13px;font-weight:500}
+body #china-footprints.fp-memoir .fp-panel-actions{flex:none;order:2;justify-content:space-between;gap:8px;margin:12px 0 0;padding:10px 0 0;flex-wrap:nowrap}
+body #china-footprints.fp-memoir .fp-panel-actions :is(.fp-add-city,.fp-memory-tally){font-size:11px;min-height:36px;margin:0}
+body #china-footprints.fp-memoir .fp-panel-actions .fp-memory-tally{padding:6px 0}
+#china-footprints .mm-city-wish{padding-top:12px;padding-bottom:8px;font-size:11px}
+/* The same saved photos open in a bounded, keyboard-accessible album. */
+body #china-footprints .fpm-photo-viewer{width:min(960px,calc(100vw - 24px));height:min(780px,calc(100dvh - 32px));max-height:calc(100dvh - 32px);padding:16px;border-radius:16px;box-sizing:border-box;overflow:hidden;color:var(--hb-on-dark)}
+body #china-footprints .fpm-photo-viewer[open]{display:flex;flex-direction:column;gap:12px}
+#china-footprints .fpm-album-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex:none}
+#china-footprints .fpm-album-head strong{font-size:16px;font-weight:500}
+#china-footprints .fpm-album-head button{min-width:40px;min-height:40px;font:26px/1 system-ui;color:inherit}
+#china-footprints .fpm-album-stage{min-height:0;flex:1;display:flex;align-items:center;justify-content:center;position:relative;background:color-mix(in srgb,var(--hb-deep) 80%,black);border-radius:10px;overflow:hidden}
+#china-footprints .fpm-album-stage img{height:100%;width:100%;min-height:0;object-fit:contain}
+#china-footprints .fpm-album-stage button{position:absolute;z-index:1;top:calc(50% - 22px);left:10px;width:40px;min-height:44px;border-radius:10px;font:32px/1 system-ui;color:var(--hb-on-dark);background:color-mix(in srgb,var(--hb-deep) 75%,transparent)}
+#china-footprints .fpm-album-stage button:last-child{left:auto;right:10px}
+#china-footprints .fpm-album-stage button:disabled{opacity:.3;cursor:default}
+#china-footprints .fpm-album-caption{flex:none;max-height:100px;overflow:auto;font-size:12px;line-height:1.7;color:var(--hb-on-dark-muted)}
+#china-footprints .fpm-album-caption p{margin:6px 0 0;white-space:pre-line;overflow-wrap:anywhere}
+@media(max-width:1100px) and (min-width:761px){
+ body[data-handbook-theme] #china-footprints.fp-memoir .fp-atlas{grid-template-columns:minmax(0,1fr) 290px;gap:14px}
+ body[data-handbook-theme] #china-footprints.fp-memoir .fp-panel{padding:14px}
+ body #china-footprints.fp-memoir h2{font-size:25px}
+ body #china-footprints.fp-memoir .fp-stats{gap:12px}
+ body #china-footprints.fp-memoir .fp-stats>div+div{padding-left:12px}
+}
+@media(max-width:760px){
+ body[data-handbook-theme] #china-footprints.fp-memoir{padding:16px 12px;scroll-margin-top:12px}
+ #china-footprints .mm-workspace{height:calc(100svh - 62px);min-height:0;gap:10px}
+ body #china-footprints.fp-memoir .fp-heading-copy{display:flex;flex-wrap:wrap;align-items:center;gap:5px 14px}
+ body #china-footprints.fp-memoir .fp-eyebrow{display:none}
+ body #china-footprints.fp-memoir h2{font-size:23px;flex:1 0 100%;line-height:1.3}
+ body #china-footprints.fp-memoir .fp-reflection-detail{display:none}
+ body #china-footprints.fp-memoir .fp-stats{margin:0;gap:14px;display:flex}
+ body #china-footprints.fp-memoir .fp-stats>div{flex-direction:row;align-items:baseline;gap:5px}
+ body #china-footprints.fp-memoir .fp-stats>div+div{padding-left:14px}
+ body #china-footprints.fp-memoir .fp-stats strong{font-size:23px}
+ body #china-footprints.fp-memoir .fp-stats span{font-size:9px;max-width:none}
+ #china-footprints .mm-navigation{gap:7px}
+ #china-footprints .mm-modes button{min-height:34px;padding:6px 8px;font-size:11px}
+ #china-footprints .mm-map-key{margin-left:auto;gap:12px;font-size:9px}
+ #china-footprints .mm-controls{padding:8px 10px;max-height:110px}
+ body[data-handbook-theme] #china-footprints.fp-memoir .fp-atlas{display:grid;grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) minmax(220px,48%);gap:8px}
+ body #china-footprints.fp-memoir .fp-map-column{min-height:0;padding:0}
+ body #china-footprints.fp-memoir .fp-map-tilt{inset:0 0 32px}
+ body #china-footprints.fp-memoir .fp-compass{top:4px;left:4px;transform:scale(.8);transform-origin:top left}
+ body #china-footprints.fp-memoir .fp-inset{width:35px;height:49px;bottom:36px;right:4px}
+ body #china-footprints.fp-memoir .fp-inset svg{height:35px}
+ body #china-footprints.fp-memoir .fp-inset span{font-size:6px}
+ body #china-footprints.fp-memoir .fp-map-toolbar{bottom:0}
+ body[data-handbook-theme] #china-footprints.fp-memoir .fp-view-actions button{font-size:10px;min-height:28px;padding:3px 6px}
+ body[data-handbook-theme] #china-footprints.fp-memoir .fp-panel{padding:12px;min-height:0;scroll-margin-top:0}
+ body #china-footprints.fp-memoir .fp-selected-title b{font-size:24px}
+ body #china-footprints.fp-memoir .fp-selected-title{margin-top:2px}
+ body #china-footprints.fp-memoir .fp-panel-actions{margin-top:8px;padding-top:6px}
+ body #china-footprints.fp-memoir .fp-panel-actions :is(.fp-add-city,.fp-memory-tally){min-height:30px;font-size:10px}
+ body #china-footprints.fp-memoir .mm-city-dates{margin-top:8px;padding-top:7px}
+ body #china-footprints.fp-memoir .fpm-city-memory{margin-top:8px}
+ body #china-footprints.fp-memoir .fpm-city-photos[data-count="3"]{grid-template-columns:2fr 1fr;gap:6px}
+ body #china-footprints.fp-memoir .fpm-city-photos[data-count="3"] button:first-child{grid-column:1;grid-row:1/3;height:100%;aspect-ratio:auto}
+ body #china-footprints.fp-memoir .fpm-city-photos[data-count="2"]{grid-template-columns:2fr 1fr;align-items:start;gap:6px}
+ body #china-footprints.fp-memoir .fpm-city-photos[data-count="2"] button:first-child{grid-column:1}
+ #china-footprints .fpm-photo-viewer{padding:12px}
+}
+@media(max-width:760px) and (max-height:650px){
+ body #china-footprints.fp-memoir h2{font-size:18px}
+ body #china-footprints.fp-memoir .fp-stats strong{font-size:19px}
+ body[data-handbook-theme] #china-footprints.fp-memoir .fp-atlas{grid-template-rows:minmax(0,1fr) minmax(155px,40%)}
+ body #china-footprints.fp-memoir .fp-inset{width:25px;height:40px}
+ body #china-footprints.fp-memoir .fp-inset svg{height:28px}
+}

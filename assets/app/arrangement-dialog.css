@@ -1,0 +1,36 @@
+/* Shared arrangement shell: paper, quiet borders, one clear primary action. */
+body #trip-daily-content :is(#dp-library,#dp-edit-dialog,#dp-note-dialog){width:min(560px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:0;color:var(--hb-on-light);background:var(--hb-page);border:1px solid var(--hb-line-light);border-radius:var(--travel-panel-radius,20px);overflow:auto}
+body #trip-daily-content :is(#dp-library,#dp-edit-dialog,#dp-note-dialog) .dp-dialog-header{padding:24px 24px 0;background:transparent;border:0}
+body #trip-daily-content :is(#dp-library,#dp-edit-dialog,#dp-note-dialog) .dp-dialog-header h3{font-size:26px;color:var(--hb-on-light)}
+body #trip-daily-content :is(#dp-library,#dp-edit-dialog,#dp-note-dialog) .dp-dialog-body{padding:24px;display:grid;gap:20px}
+body #trip-daily-content .dp-arrangement-tabs{display:grid;grid-template-columns:1fr 1fr;padding:3px;border:1px solid var(--hb-line-light);border-radius:var(--travel-control-radius,12px);background:var(--hb-page-soft)}
+body #trip-daily-content .dp-arrangement-tabs button{min-height:48px;border:0;border-radius:var(--travel-control-radius,12px);background:transparent;color:var(--hb-on-light);font-weight:600}
+body #trip-daily-content .dp-arrangement-tabs [aria-selected=true]{background:var(--hb-action);color:var(--hb-on-dark)}
+body #trip-daily-content .dp-arrangement-tabs button{display:flex;align-items:center;justify-content:center;gap:8px}
+body #trip-daily-content .dp-arrangement-tabs svg{width:20px;height:20px}
+body #trip-daily-content #dp-library .dp-result button[data-dp-assigned=true]{background:var(--hb-card);color:var(--hb-on-light);border-color:var(--hb-line-light)}
+body #trip-daily-content .dp-library-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px}
+body #trip-daily-content #dp-library .dp-result{padding:18px 0;border:0;border-bottom:1px solid var(--hb-line-light);gap:16px;background:transparent;border-radius:0;align-items:center}
+body #trip-daily-content #dp-library .dp-result>div{min-width:0;overflow-wrap:anywhere}
+body #trip-daily-content #dp-library .dp-result b{font-size:16px}
+body #trip-daily-content #dp-library .dp-result p{margin-top:6px;color:var(--hb-on-light-muted);font-size:13px}
+body #trip-daily-content #dp-library .dp-result button{flex-shrink:0;min-height:44px}
+body #trip-daily-content #dp-library .dp-result button[data-dp-pick-source],body #trip-daily-content #dp-library .dp-result button[data-dp-online-place]{background:var(--hb-action);color:var(--hb-on-dark);border-color:var(--hb-action)}
+body #trip-daily-content .dp-custom-place{display:grid;gap:6px;text-align:left;padding:16px;min-height:64px;border:1px solid var(--hb-line-light);border-radius:var(--travel-control-radius,12px);color:var(--hb-on-light);background:var(--hb-card)}
+body #trip-daily-content .dp-custom-place span{font-size:12px;color:var(--hb-on-light-muted)}
+body #trip-daily-content .dp-change-place{justify-self:start;color:var(--hb-action);min-height:44px}
+body #trip-daily-content :is(#dp-library,#dp-edit-dialog,#dp-note-dialog) :is(input,textarea,select){background:var(--hb-card);color:var(--hb-on-light);border:1px solid var(--hb-line-light);border-radius:var(--travel-control-radius,12px);min-height:46px;max-width:100%}
+body #trip-daily-content .dp-precise{padding:12px 0;border-block:1px solid var(--hb-line-light)}
+body #trip-daily-content .dp-precise summary{cursor:pointer;color:var(--hb-on-light-muted);min-height:30px}
+body #trip-daily-content .dp-precise .dp-time-range{margin-top:12px}
+body #trip-daily-content :is(#dp-library,#dp-edit-dialog,#dp-note-dialog) button:focus-visible{outline:2px solid var(--hb-action);outline-offset:3px}
+body #trip-daily-content #dp-library-online:empty{display:none}
+body #trip-daily-content #dp-library .dp-result button[data-dp-pick-source][data-dp-assigned=true]{background:var(--hb-card);color:var(--hb-on-light);border-color:var(--hb-line-light)}
+@media(max-width:600px){
+ body #trip-daily-content :is(#dp-library,#dp-edit-dialog,#dp-note-dialog){width:calc(100vw - 20px);max-height:calc(100dvh - 20px)}
+ body #trip-daily-content :is(#dp-library,#dp-edit-dialog,#dp-note-dialog) .dp-dialog-header{padding:20px 16px 0}
+ body #trip-daily-content :is(#dp-library,#dp-edit-dialog,#dp-note-dialog) .dp-dialog-body{padding:20px 16px;gap:18px}
+ body #trip-daily-content .dp-library-heading{align-items:flex-start}
+ body #trip-daily-content .dp-library-heading button{font-size:12px;padding-inline:6px}
+ body #trip-daily-content #dp-library .dp-result{gap:10px}
+}

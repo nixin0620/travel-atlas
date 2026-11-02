@@ -1,0 +1,143 @@
+.lf-dialog{margin:auto;inset:0;width:min(780px,calc(100vw - 32px));max-height:88vh;padding:0;border:1px solid var(--hb-line-light);border-radius:24px;background:var(--hb-page);color:var(--hb-on-light);box-shadow:0 24px 90px #0005}.lf-dialog::backdrop{background:#031c17a8;backdrop-filter:blur(5px)}.lf-dialog header{display:flex;justify-content:space-between;align-items:center;padding:26px 30px;border-bottom:1px solid var(--hb-line-light);position:sticky;top:0;background:var(--hb-page);z-index:1}.lf-dialog h2{font-family:inherit;font-size:26px;line-height:1.3;margin:8px 0}.lf-dialog small{color:var(--hb-on-light-muted);font-size:12px}.lf-dialog header button{font-size:26px;line-height:1}.lf-body{padding:24px 30px}.lf-body p{font-size:14px;line-height:1.8;margin:0 0 18px}.lf-dialog button,.lf-dialog select{padding:10px 14px;font:inherit;font-size:13px;border:1px solid var(--hb-line-light);border-radius:10px;background:transparent;color:var(--hb-on-light);cursor:pointer}.lf-dialog button:disabled{opacity:.45;cursor:default}.lf-dialog button:focus-visible,.lf-dialog select:focus-visible{outline:3px solid var(--hb-accent);outline-offset:3px}.lf-dialog .lf-primary{background:var(--hb-on-light);color:var(--hb-page)}.lf-actions{display:flex;gap:10px;flex-wrap:wrap}.lf-structure{display:grid;gap:0;background:var(--hb-hover);border-radius:14px;margin:18px 0}.lf-structure>div{display:grid;grid-template-columns:130px 1fr;gap:14px;padding:12px 18px;border-bottom:1px solid var(--hb-line-light);font-size:13px}.lf-structure>div:last-child{border:0}.lf-structure span{color:var(--hb-on-light-muted)}.lf-dialog .lf-notice{border-left:3px solid var(--hb-accent);padding:10px 14px;background:#e3b76d18}.lf-preview{margin:22px 0;padding:20px;background:#fff8;border-radius:14px;border:1px solid var(--hb-line-light)}.lf-preview h3{font-size:17px;margin:0 0 15px}.lf-compare{display:grid;grid-template-columns:1fr 1fr;gap:18px}.lf-compare b{font-size:14px}.lf-compare p{font-size:13px;color:var(--hb-on-light-muted);margin-top:5px}.lf-preview label{display:block;margin:12px 0;font-size:14px}.lf-dialog .lf-fine{font-size:12px;line-height:1.8;color:var(--hb-on-light-muted);margin-top:16px}.lf-history{margin:24px 0;border-top:1px solid var(--hb-line-light);padding-top:18px}.lf-history summary{font-size:14px;cursor:pointer;margin-bottom:15px}.lf-history [data-lf-history-list]{max-height:220px;overflow:auto;margin-top:10px}.lf-history [data-lf-history-list] button,.lf-history [data-lf-drafts] button{display:block;text-align:left;margin:6px 0;font-size:12px;overflow-wrap:anywhere;max-width:100%}.lf-dialog [hidden]{display:none!important}@media(max-width:600px){.lf-dialog header{padding:18px 20px}.lf-body{padding:20px}.lf-compare{grid-template-columns:1fr}.lf-structure>div{grid-template-columns:100px 1fr;gap:6px}}
+
+/* A quiet, clickable status line shared by the rail footer and mobile More. */
+.guide-rail-footer .lf-shortcut,.guide-mobile-more-panel .lf-shortcut{display:flex;align-items:center;gap:7px;width:100%;min-height:38px;margin:0;padding:7px 2px;border:0;border-radius:6px;background:transparent;color:var(--hb-on-dark-muted);text-align:left;font:500 11px/1.5 system-ui,sans-serif;cursor:pointer}
+.lf-shortcut [data-lf-label]{flex:1;min-width:0}
+.lf-shortcut .lf-shortcut-dot{flex:none;width:6px;height:6px;border-radius:50%;background:#91a39c}
+.lf-shortcut .lf-shortcut-settings{flex:none;font-size:14px;opacity:.7}
+.lf-shortcut[data-state="saved"] .lf-shortcut-dot{background:#94c7ad}
+.lf-shortcut[data-state="pending"] .lf-shortcut-dot{background:#e3b276}
+.lf-shortcut[data-state="error"] .lf-shortcut-dot{background:#efb396}
+.guide-rail-footer .lf-shortcut[data-state="error"],.guide-mobile-more-panel .lf-shortcut[data-state="error"]{color:#ffd8bd;background:#efb39614;padding-inline:6px}
+.guide-rail-footer .lf-shortcut[data-state="pending"],.guide-mobile-more-panel .lf-shortcut[data-state="pending"]{color:#f1d29c}
+.guide-rail-footer .lf-shortcut:hover,.guide-mobile-more-panel .lf-shortcut:hover{background:#ffffff0b;color:var(--hb-on-dark)}
+.guide-mobile-more-panel .lf-shortcut{padding:9px 8px;min-height:40px;font-size:12px}
+.lf-shortcut:focus-visible{outline:2px solid var(--hb-accent);outline-offset:2px}
+
+/* One data center, with the connection details out of the planning surface. */
+.lf-dialog{width:min(680px,calc(100vw - 28px));max-height:88dvh;overflow:auto;overscroll-behavior:contain}
+.lf-dialog .lf-tabs{display:flex;gap:22px;padding:0 30px;border-bottom:1px solid var(--hb-line-light)}
+.lf-dialog .lf-tabs button{border:0;border-radius:0;background:transparent;padding:14px 0;font-size:14px;color:var(--hb-on-light-muted);border-bottom:2px solid transparent}
+.lf-dialog .lf-tabs button[aria-selected=true]{border-bottom-color:var(--hb-on-light);color:var(--hb-on-light);font-weight:650}
+.lf-save-overview{display:flex;gap:12px;align-items:flex-start;margin:2px 0 20px}
+.lf-save-overview .lf-shortcut-dot{width:8px;height:8px;border-radius:50%;background:#849c91;flex-shrink:0;margin-top:9px}
+.lf-save-overview h3{font:650 18px/1.5 system-ui,sans-serif;margin:0 0 7px}
+.lf-dialog .lf-save-overview p{font-size:13px;color:var(--hb-on-light-muted);margin:0}
+.lf-dialog[data-state=saved] .lf-save-overview .lf-shortcut-dot{background:#3f8368}
+.lf-dialog[data-state=pending] .lf-save-overview .lf-shortcut-dot,.lf-dialog[data-state=disconnected] .lf-save-overview .lf-shortcut-dot{background:#ba8e42}
+.lf-dialog[data-state=error] .lf-save-overview .lf-shortcut-dot{background:#b36848}
+.lf-dialog .lf-details,.lf-dialog .lf-history,.lf-dialog .lf-legacy{border-top:1px solid var(--hb-line-light);padding-top:14px;margin:24px 0 0;font-size:13px}
+.lf-dialog .lf-details summary,.lf-dialog .lf-history summary,.lf-dialog .lf-legacy summary{cursor:pointer;font-size:13px;line-height:1.6;padding:4px 0;margin-bottom:10px}
+.lf-dialog .lf-details p{font-size:12px;overflow-wrap:anywhere}
+.lf-dialog .lf-notice{margin-top:14px}
+.lf-dialog .lf-legacy{margin:0 24px 24px}
+.lf-dialog .lf-legacy p{font-size:12px;line-height:1.7;color:var(--hb-on-light-muted)}
+.lf-dialog .tb-primary{background:var(--hb-on-light);color:var(--hb-page)}
+.lf-dialog .tb-card{background:#ffffff50;border-color:var(--hb-line-light)}
+.lf-dialog .tb-intro{font-size:13px;color:var(--hb-on-light-muted)}
+.lf-dialog .tb-body{padding:20px 30px}
+.lf-shortcut .lf-shortcut-copy{display:grid;gap:3px;flex:1;min-width:0}
+.lf-shortcut .lf-shortcut-copy b{font-size:12px;font-weight:500;color:var(--hb-on-dark,var(--hb-on-dark))}
+.lf-shortcut .lf-shortcut-copy small{display:flex;align-items:center;gap:6px;font-size:10px;color:inherit}
+.guide-rail-footer .lf-shortcut,.guide-mobile-more-panel .lf-shortcut{min-height:54px}
+.lf-shortcut[data-state=disconnected] .lf-shortcut-dot{background:#e3b276}
+.guide-rail-footer .lf-shortcut[data-state=disconnected]{color:#f1d29c}
+.guide-rail-footer .guide-rail-tools{justify-content:flex-end}
+.guide-mobile-more-panel>[data-guide-storage-slot]{border:0;margin:0;padding:0}
+@media(max-width:600px){.lf-dialog header{padding:18px 20px}.lf-dialog h2{font-size:23px}.lf-dialog .lf-tabs{padding:0 20px}.lf-dialog .tb-body{padding:18px 20px}.lf-dialog .lf-legacy{margin-inline:20px}.lf-dialog .lf-actions button{min-height:42px}.lf-save-overview h3{font-size:17px}}
+
+/* Connection review: concrete differences, one choice and one confirmation. */
+.lf-dialog .lf-diff-review{border:1px solid var(--hb-line-light);border-radius:12px;background:#ffffff30;overflow:hidden}
+.lf-dialog .lf-diff-review>summary{padding:12px 14px;font-size:13px;cursor:pointer}
+.lf-dialog .lf-diff-review>summary>span{display:block;font-size:11px;line-height:1.6;color:var(--hb-on-light-muted);margin:5px 0 0 17px}
+.lf-dialog .lf-diff-review .lf-differences{border:0;border-top:1px solid var(--hb-line-light);border-radius:0;margin-bottom:0}
+.lf-dialog .lf-preview{padding:0;background:none;border:0;margin-top:12px}
+.lf-dialog .lf-preview>h3{font:650 15px/1.6 system-ui,sans-serif;margin:0 0 5px}
+.lf-dialog [data-lf-review-intro]{font-size:12px;color:var(--hb-on-light-muted);margin-bottom:14px}
+.lf-dialog .lf-differences{border:1px solid var(--hb-line-light);border-radius:12px;overflow:hidden;margin-bottom:22px;background:#ffffff30}
+.lf-dialog .lf-differences:empty{display:none}
+.lf-dialog .lf-diff-group{margin:0;padding:0;border:0;border-bottom:1px solid var(--hb-line-light);border-radius:0;background:none}
+.lf-dialog .lf-diff-group:last-child{border-bottom:0}
+.lf-dialog .lf-diff-group>summary{display:flex;align-items:center;justify-content:space-between;gap:12px;list-style:none;padding:12px 14px;cursor:pointer;font-size:12px}
+.lf-dialog .lf-diff-group>summary::-webkit-details-marker{display:none}
+.lf-dialog .lf-diff-group>summary>span:first-child{min-width:0}
+.lf-dialog .lf-diff-group>summary b{font-size:13px;font-weight:650}
+.lf-dialog .lf-diff-group>summary small{display:block;font-size:11px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:400px}
+.lf-dialog .lf-diff-group>summary>span:last-child{flex-shrink:0;color:var(--hb-on-light-muted);white-space:nowrap}
+.lf-dialog .lf-diff-group>summary>span:last-child:after{content:'⌄';display:inline-block;margin-left:10px}
+.lf-dialog .lf-diff-group[open]>summary>span:last-child:after{transform:rotate(180deg)}
+.lf-dialog .lf-diff-columns,.lf-dialog .lf-diff-row>div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.lf-dialog .lf-diff-columns{padding:10px 14px 6px;background:#173f3607;color:var(--hb-on-light-muted);font-size:11px}
+.lf-dialog .lf-diff-row{padding:10px 14px;border-top:1px solid #173f3614}
+.lf-dialog .lf-diff-row h4{font:600 12px/1.6 system-ui,sans-serif;margin:0 0 5px;overflow-wrap:anywhere}
+.lf-dialog .lf-diff-row p{font-size:12px;line-height:1.6;margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.lf-dialog .lf-choice-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0;border:0;margin:20px 0 0;min-width:0}
+.lf-dialog .lf-choice-cards legend{font-size:14px;font-weight:650;margin-bottom:12px}
+.lf-dialog .lf-choice-cards label{display:grid;grid-template-columns:18px minmax(0,1fr);align-content:start;gap:8px;padding:14px;margin:0;border:1px solid #173f3633;border-radius:12px;cursor:pointer;background:#ffffff40}
+.lf-dialog .lf-choice-cards label:has(input:checked){border-color:var(--hb-action);box-shadow:inset 0 0 0 1px var(--hb-action);background:#d8e5db80}
+.lf-dialog .lf-choice-cards input{appearance:auto;width:16px;height:16px;margin:3px 0 0;accent-color:var(--hb-action)}
+.lf-dialog .lf-choice-cards b{font-size:13px;font-weight:650;line-height:1.6}
+.lf-dialog .lf-choice-cards small{display:block;font-size:11px;line-height:1.7;margin-top:3px}
+.lf-dialog .lf-choice-cards .lf-totals{grid-column:1/-1}
+.lf-dialog .lf-totals{display:flex;flex-wrap:wrap;gap:5px 12px;margin:10px 0 0}
+.lf-dialog .lf-totals span{font-size:11px;color:var(--hb-on-light-muted);white-space:nowrap}
+.lf-dialog .lf-totals b{font-size:13px;font-weight:650;margin-right:3px;color:var(--hb-on-light)}
+.lf-dialog .lf-result{padding:14px 16px;margin-top:16px;border-radius:12px;background:#173f3608}
+.lf-dialog .lf-result>b{font-size:13px}
+.lf-dialog .lf-result p{font-size:12px;line-height:1.6;margin:9px 0 0;color:var(--hb-on-light-muted)}
+.lf-dialog .lf-review-actions{position:sticky;bottom:0;z-index:2;background:var(--hb-page);padding:12px 0;margin-top:12px}
+.lf-dialog .lf-review-actions .lf-primary{flex:1}
+.lf-dialog .lf-reassurance{font-size:11px;margin-top:4px}
+.lf-dialog header{z-index:3}
+.lf-shortcut[data-state=review] .lf-shortcut-dot{background:#e3b276}
+.guide-rail-footer .lf-shortcut[data-state=review]{color:#f1d29c}
+@media(max-width:540px){.lf-dialog .lf-choice-cards{grid-template-columns:1fr}.lf-dialog .lf-diff-group>summary small{max-width:175px}.lf-dialog .lf-review-actions{gap:8px}.lf-dialog .lf-review-actions button{font-size:12px;padding-inline:10px}.lf-dialog .lf-diff-row>div{gap:10px}}
+
+/* A lightweight entry; open a dialog only after choosing a specific task. */
+.lf-quick{position:fixed;z-index:420;width:min(288px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;padding:18px;border:1px solid var(--hb-line-light);border-radius:14px;background:var(--hb-page);color:var(--hb-on-light);box-shadow:0 12px 40px #001c2530;font:14px/1.5 system-ui,sans-serif}
+.lf-quick[hidden]{display:none!important}
+.lf-quick:focus{outline:none}
+.lf-quick-status{display:flex;align-items:flex-start;gap:9px;padding:0 0 14px;border-bottom:1px solid var(--hb-line-light)}
+.lf-quick-status .lf-shortcut-dot{width:7px;height:7px;border-radius:50%;background:#849c91;flex:none;margin-top:8px}
+.lf-quick-status b{font-size:14px;font-weight:600}
+.lf-quick-status p{margin:4px 0 0;color:var(--hb-on-light-muted);font-size:12px}
+.lf-quick[data-state=saved] .lf-shortcut-dot{background:#3f8368}
+.lf-quick:is([data-state=pending],[data-state=disconnected],[data-state=review]) .lf-shortcut-dot{background:#ba8e42}
+.lf-quick[data-state=error] .lf-shortcut-dot{background:#b36848}
+.lf-quick button{border:0;background:none;color:inherit;cursor:pointer;font:inherit;text-align:left}
+.lf-quick button:disabled{opacity:.5;cursor:wait}
+.lf-quick button:focus-visible,.lf-quick summary:focus-visible{outline:2px solid #99733e;outline-offset:3px}
+.lf-quick-actions{display:grid;gap:2px;padding:8px 0}
+.lf-quick-actions button{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:46px;padding:9px 8px;border-radius:7px}
+.lf-quick-actions small{display:block;color:var(--hb-on-light-muted);font-size:12px;margin-top:2px}
+.lf-quick-actions i{font:18px/1 system-ui;color:var(--hb-on-light-muted)}
+.lf-quick-actions button:hover,.lf-quick-footer button:hover{background:var(--hb-hover)}
+.lf-quick-footer{border-top:1px solid var(--hb-line-light);padding-top:8px;display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:0 12px}
+.lf-quick-footer>button,.lf-quick-footer summary{padding:8px 2px;min-height:40px;font-size:12px;color:var(--hb-on-light-muted);cursor:pointer}
+.lf-quick-footer summary{list-style:none;display:flex;justify-content:space-between;gap:8px}
+.lf-quick-footer summary::-webkit-details-marker{display:none}
+.lf-quick-footer details>div{display:grid}
+.lf-quick-footer details button{font-size:12px;min-height:40px;padding:7px 2px;white-space:nowrap}
+.lf-quick-feedback{font-size:12px;line-height:1.65;color:var(--hb-on-light-muted);margin:10px 0 0;padding-top:12px;border-top:1px solid var(--hb-line-light);overflow-wrap:anywhere}
+.lf-shortcut[aria-expanded=true] .lf-shortcut-settings{transform:rotate(180deg)}
+.lf-dialog{width:min(580px,calc(100vw - 28px));border-radius:18px}
+.lf-dialog header{padding:20px 24px}
+.lf-dialog h2{font:600 22px/1.4 system-ui,sans-serif;margin:0}
+.lf-dialog [data-lf-close]{width:44px;height:44px;flex:none;padding:0;font-size:25px}
+.lf-dialog .lf-body,.lf-dialog .tb-body{padding:24px}
+.lf-dialog .lf-save-overview{margin:0 0 22px}
+.lf-dialog .lf-settings{border-top:1px solid var(--hb-line-light);padding-top:18px}
+.lf-dialog .lf-folder-info{display:flex;align-items:baseline;gap:18px;margin-bottom:14px;font-size:13px}
+.lf-dialog .lf-folder-info span{flex:none;color:var(--hb-on-light-muted)}
+.lf-dialog .lf-folder-info b{font-weight:500;overflow-wrap:anywhere}
+.lf-dialog[data-view=save] .lf-history,.lf-dialog[data-view=history] :is(.lf-save-overview,.lf-settings,[data-lf-connect-actions]),.lf-dialog[data-state=review] .lf-settings{display:none}
+.lf-dialog[data-view=history] .lf-history{border:0;padding:0;margin:0}
+.lf-dialog[data-view=history] .lf-history>summary{display:none}
+.lf-dialog [data-lf-history-status]{color:#a05c3c;margin:12px 0 0;font-size:13px}
+.lf-dialog [data-lf-history-status]:empty{display:none}
+.lf-dialog[data-view=import] [data-lf-backup-card]:not([data-lf-backup-card=import]),.lf-dialog[data-view=share] [data-lf-backup-card]:not([data-lf-backup-card=share]),.lf-dialog[data-view=legacy] [data-lf-backup-content],.lf-dialog:not([data-view=legacy]):not([data-view=backup]) .lf-legacy{display:none}
+.lf-dialog:is([data-view=import],[data-view=share]) .tb-intro,.lf-dialog:is([data-view=import],[data-view=share]) .tb-card>h3{display:none}
+.lf-dialog:is([data-view=import],[data-view=share]) .tb-card{padding:0;border:0;background:none;margin:0}
+.lf-dialog[data-view=legacy] .lf-legacy{border:0;padding:20px 0;margin-block:0}
+.lf-dialog[data-view=legacy] .lf-legacy>summary{display:none}
+@media(max-width:600px){.lf-dialog header{padding:16px 20px}.lf-dialog h2{font-size:21px}.lf-dialog .lf-body,.lf-dialog .tb-body{padding:20px}.lf-quick{padding:16px}}

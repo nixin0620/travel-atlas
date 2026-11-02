@@ -1,0 +1,417 @@
+/* Footprints atlas: shared theme tokens, bounded map + independently scrolling memories. */
+/* The section owns the viewport budget, including its padding, attribution and wishes. */
+body[data-handbook-theme] #china-footprints.fp-world-ready{--fw-border:var(--hb-line-light);--fw-paper:var(--hb-card);height:calc(100dvh - 40px);min-height:0;box-sizing:border-box;display:flex;flex-direction:column;padding:16px var(--chapter-pad) 10px}
+body #china-footprints.fp-world-ready>.fp-attribution{flex:none;margin-top:5px;line-height:1.4}
+body #china-footprints.fp-world-ready>.fp-attribution :is(p,small,a){font-size:10px;line-height:1.4}
+#china-footprints.fp-world-ready .mm-workspace{height:auto;min-height:0;flex:1;gap:10px}
+body #china-footprints.fp-world-ready .fp-header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+body #china-footprints.fp-world-ready .fp-heading-copy{display:block}
+body #china-footprints.fp-world-ready h2{font-size:28px;letter-spacing:.03em}
+body #china-footprints.fp-world-ready :is(.fp-reflection-detail,.fp-stats,.mm-map-key,.fp-eyebrow){display:none}
+#china-footprints .fw-view-switch{display:flex;flex:none;padding:3px;background:var(--hb-page-soft);border:1px solid var(--fw-border);border-radius:10px;gap:2px}
+#china-footprints .fw-view-switch button{min-width:64px;min-height:36px;padding:7px 14px;border:0;border-radius:7px;font:500 13px/1.4 system-ui;color:var(--hb-on-light);background:none;cursor:pointer}
+#china-footprints .fw-view-switch button[aria-pressed=true]{background:var(--hb-deep);color:var(--hb-on-dark)}
+#china-footprints.fp-world-ready .mm-navigation{gap:8px 20px;flex-wrap:wrap}
+#china-footprints.fp-world-ready .mm-modes{width:auto}
+#china-footprints.fp-world-ready .mm-modes button{font-size:11px;padding:6px 12px;min-height:34px}
+#china-footprints .fw-statistics{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:11px;color:var(--hb-on-light)}
+#china-footprints .fw-statistics>span{display:flex;align-items:center;gap:5px;padding:5px 7px;border:1px solid var(--fw-border);border-radius:6px;background:var(--hb-card)}
+#china-footprints .fw-statistics b{font-weight:600;font-variant-numeric:tabular-nums}
+#china-footprints .fw-statistics small{font-size:10px;color:var(--hb-on-light-muted);margin-left:4px}
+#china-footprints .fw-statistics i{width:7px;height:7px;border-radius:50%;box-sizing:border-box;display:inline-block}
+#china-footprints .fw-key-visited{background:var(--hb-gold-display)}
+#china-footprints .fw-key-wish{border:1.5px solid var(--hb-action)}
+#china-footprints .fw-key-trip{background:var(--hb-action)}
+body[data-handbook-theme] #china-footprints.fp-world-ready .fp-atlas{grid-template-columns:minmax(0,1fr) minmax(280px,31%);gap:14px;flex:1 1 0;min-height:0}
+body #china-footprints.fp-world-ready .fp-map-column{position:relative;background:color-mix(in srgb,var(--hb-card) 40%,transparent)}
+body #china-footprints.fp-world-ready .fp-panel{border-radius:14px;padding:16px;box-shadow:none}
+body #china-footprints.fp-world-ready .fp-selected-title b{font-size:28px}
+body #china-footprints.fp-world-ready .fp-selected-title small{font-size:11px}
+body #china-footprints.fp-world-ready .fp-selected-kicker{font-size:11px}
+body #china-footprints.fp-world-ready .mm-date-line>button,body #china-footprints.fp-world-ready .mm-trip-tag{display:none}
+body #china-footprints.fp-world-ready .mm-city-dates{font-size:11px;margin-top:10px;padding-top:8px}
+body #china-footprints.fp-world-ready .fpm-city-photos[data-count="3"]{grid-template-columns:1.5fr 1fr;grid-template-rows:1fr 1fr;gap:6px;height:clamp(170px,27vh,280px)}
+body #china-footprints.fp-world-ready .fpm-city-photos[data-count="3"] button{aspect-ratio:auto;height:100%}
+body #china-footprints.fp-world-ready .fpm-city-photos[data-count="3"] button:first-child{grid-column:1;grid-row:1/3;aspect-ratio:auto;height:100%}
+body #china-footprints.fp-world-ready .fpm-city-photos[data-count="3"] button:first-child img{object-fit:cover}
+body #china-footprints.fp-world-ready .fpm-city-photos[data-count="2"]{grid-template-columns:1.5fr 1fr;grid-template-rows:minmax(0,1fr);gap:6px;align-items:stretch;height:clamp(155px,26vh,260px)}
+body #china-footprints.fp-world-ready .fpm-city-photos[data-count="2"] button{grid-column:auto;aspect-ratio:auto;height:100%}
+body #china-footprints.fp-world-ready .fpm-city-photos[data-count="2"] button:first-child{grid-column:1;grid-row:1;aspect-ratio:auto;height:100%}
+body #china-footprints.fp-world-ready .fpm-city-photos[data-count="1"] button:first-child{aspect-ratio:4/3;max-height:290px}
+body #china-footprints.fp-world-ready .fpm-city-photos img{object-fit:cover}
+/* Full image in a neutral frame for a single photo, including a collage uploaded as one file. */
+body #china-footprints.fp-world-ready .fpm-city-photos[data-count="1"] img{object-fit:contain}
+body #china-footprints.fp-world-ready .fpm-city-photos button{background:var(--hb-card);border:1px solid var(--fw-border)}
+body #china-footprints.fp-world-ready .fpm-city-note{font-size:12px;-webkit-line-clamp:2;line-height:1.7}
+body #china-footprints.fp-world-ready .fpm-city-memory-head{display:block}
+body #china-footprints.fp-world-ready .fpm-city-memory-head button{display:block;margin:10px 0 0 auto;padding:7px 10px;border:1px solid var(--fw-border);border-radius:7px;font-size:11px}
+body #china-footprints.fp-world-ready .fp-memory-entry,body #china-footprints.fp-world-ready .fpm-photo-empty{aspect-ratio:4/3;max-height:210px;color:var(--hb-on-light-muted);background:var(--hb-page-soft)}
+body #china-footprints.fp-world-ready .fp-memory-entry i{font-size:32px;color:var(--hb-on-light-muted)}
+body #china-footprints.fp-world-ready .fp-panel-actions{border-top:1px solid var(--fw-border);font-size:11px;gap:8px}
+body #china-footprints.fp-world-ready .fp-light-button{margin-top:12px;font-size:12px;min-height:38px;border-radius:8px}
+body #china-footprints.fp-world-ready .mm-wishes{margin:0;flex:none;gap:12px;padding:10px 14px;min-height:72px;box-sizing:border-box;border-radius:12px}
+#china-footprints.fp-world-ready .mm-wish-intro h3{font-size:19px;margin:0}
+#china-footprints.fp-world-ready .mm-wish-intro{flex:none}
+#china-footprints.fp-world-ready .mm-wish-cities{flex-wrap:nowrap;gap:8px;align-items:stretch;justify-content:flex-start;overflow-x:auto;scrollbar-width:thin}
+#china-footprints .fw-wish-card{display:flex;min-width:0;flex:0 0 128px;box-sizing:border-box;position:relative;background:var(--hb-page);border:1px solid var(--fw-border);border-radius:8px}
+#china-footprints .fw-wish-card>button:first-child{padding:8px 16px 8px 8px;border:0;background:none;gap:6px;min-width:0;flex:1;justify-content:flex-start}
+#china-footprints .fw-wish-card button span{opacity:1;min-width:0}
+#china-footprints .fw-wish-card b{display:block;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100px}
+#china-footprints .fw-wish-card small{display:block;font-size:10px;font-weight:400;color:var(--hb-on-light-muted);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:95px}
+#china-footprints .fw-wish-card button.fw-remove{position:absolute;right:0;top:0;padding:0;width:22px;min-height:24px;font-size:14px;border:0;background:none;color:var(--hb-on-light-muted);justify-content:center}
+#china-footprints .fw-view-all{display:flex;align-items:center;justify-content:center;gap:6px;flex:none;margin-left:auto;padding:10px;min-height:42px;border:1px solid var(--fw-border);border-radius:var(--travel-control-radius);background:var(--hb-page);color:var(--hb-on-light);font:500 11px system-ui;cursor:pointer}
+#china-footprints .fw-view-all small{font-size:10px}
+#china-footprints.fp-world-ready .mm-add-wish{padding:10px;min-height:42px;font-size:11px;border-style:solid;flex:none;margin-left:auto}
+#china-footprints.fp-world-ready .mm-wishes>[hidden]{display:none!important}
+body #china-footprints.fp-world-ready .fp-wish{display:none}
+/* Original China SVG and the world SVG have separate, retained view boxes. */
+#china-footprints[data-atlas-view=world] .fp-map-column>:not(.fw-stage):not(.mm-replay-player){display:none!important}
+#china-footprints .fw-stage{position:absolute;inset:0;overflow:hidden;border-radius:14px}
+#china-footprints .fw-stage>svg{width:100%;height:100%;touch-action:pan-y;--fw-dot-scale:1}
+#china-footprints .fw-stage path{fill:color-mix(in srgb,var(--hb-map-mid) 38%,var(--hb-page));stroke:var(--hb-page);stroke-width:.6;cursor:pointer;transition:fill .2s}
+#china-footprints .fw-stage path.is-visited{fill:var(--hb-map-mid)}
+#china-footprints .fw-stage path:hover{fill:var(--hb-map-top)}
+#china-footprints .fw-point{transform:scale(var(--fw-dot-scale));cursor:pointer}
+#china-footprints .fw-dot{fill:var(--hb-action);stroke:var(--hb-on-dark);stroke-width:1.5}
+#china-footprints .fw-halo{fill:var(--hb-gold-display);opacity:0}
+#china-footprints .fw-trip{fill:none;stroke:var(--hb-action);stroke-width:2;opacity:0}
+#china-footprints .fw-city.is-trip .fw-trip{opacity:1}
+#china-footprints .fw-city.is-wish .fw-dot{fill:var(--hb-page);stroke:var(--hb-action);stroke-width:2}
+#china-footprints .fw-city.is-visited .fw-dot{fill:var(--hb-gold-display);stroke:var(--hb-page);stroke-width:1.3}
+#china-footprints .fw-city.is-visited .fw-halo{opacity:.2}
+#china-footprints .fw-city.is-selected .fw-trip{opacity:1;stroke:var(--hb-gold-display);stroke-width:2}
+#china-footprints .fw-hit{fill:transparent}
+#china-footprints .fw-city text{font:500 12px system-ui;fill:var(--hb-on-light);paint-order:stroke;stroke:var(--hb-page);stroke-width:3px;stroke-linejoin:round;display:none;pointer-events:none}
+#china-footprints .fw-city:is(.is-selected,:hover,:focus-visible) text{display:block}
+#china-footprints .fw-map-controls{position:absolute;left:12px;bottom:26px;display:flex;flex-direction:column;border:1px solid var(--fw-border);border-radius:9px;overflow:hidden;background:var(--hb-card)}
+#china-footprints .fw-map-controls button{width:36px;min-height:36px;border:0;border-bottom:1px solid var(--fw-border);background:none;font-size:20px;color:var(--hb-on-light);cursor:pointer}
+#china-footprints .fw-map-controls button:last-child{border:0}
+#china-footprints .fw-map-controls button:disabled{opacity:.35;cursor:default}
+#china-footprints .fw-attribution{position:absolute;bottom:8px;right:12px;font-size:9px;color:var(--hb-on-light-muted)}
+/* Compact, native modal search: no thumbnails, filters, or extra confirmation step. */
+#china-footprints .fw-wish-dialog{width:min(470px,calc(100vw - 28px));max-height:calc(100dvh - 40px);box-sizing:border-box;padding:20px;border:1px solid var(--hb-line-light);border-radius:16px;background:var(--hb-card);color:var(--hb-on-light);overflow:hidden;box-shadow:0 24px 100px #0004}
+#china-footprints .fw-wish-dialog[open]{display:flex;flex-direction:column;gap:14px}
+#china-footprints .fw-wish-dialog::backdrop{background:color-mix(in srgb,var(--hb-deep) 55%,transparent);backdrop-filter:blur(3px)}
+#china-footprints .fw-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:16px}
+#china-footprints .fw-dialog-head h3{font:600 20px/1.4 system-ui;margin:0;color:inherit}
+#china-footprints .fw-dialog-head button{width:32px;min-height:32px;background:none;border:0;color:var(--hb-on-light-muted);font-size:25px;cursor:pointer}
+#china-footprints .fw-search{display:flex;align-items:center;gap:8px;border:1px solid var(--hb-line-light);border-radius:9px;padding:0 12px;flex:none;background:var(--hb-page)}
+#china-footprints .fw-search:focus-within{outline:2px solid var(--hb-action);outline-offset:0}
+#china-footprints .fw-search input{width:100%;min-width:0;border:0!important;box-shadow:none!important;outline:none!important;background:transparent;color:var(--hb-on-light);padding:11px 0;min-height:44px;font:14px/1.5 system-ui}
+#china-footprints .fw-results{min-height:80px;max-height:390px;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
+#china-footprints .fw-result{display:flex;align-items:center;gap:12px;padding:6px 0;border-bottom:1px solid var(--hb-line-light)}
+#china-footprints .fw-result>button:first-child{flex:1;min-width:0;text-align:left;min-height:44px;border:0;background:none;padding:4px 6px;color:var(--hb-on-light);cursor:pointer}
+#china-footprints .fw-result b{display:block;font-size:13px;font-weight:500}
+#china-footprints .fw-result small{display:block;font-size:11px;color:var(--hb-on-light-muted);margin-top:3px}
+#china-footprints .fw-wish-action{border:1px solid var(--hb-line-light);border-radius:7px;padding:6px 10px;min-height:32px;font:12px system-ui;background:var(--hb-card);color:var(--hb-gold-ink);cursor:pointer}
+#china-footprints .fw-wish-action[aria-pressed=true]{color:var(--hb-action);border-color:var(--hb-action);background:var(--hb-page-soft)}
+#china-footprints .fw-empty{font-size:12px;line-height:1.7;text-align:center;color:var(--hb-on-light-muted);padding:20px 10px}
+body[data-handbook-theme] #china-footprints .fw-wish-dialog footer{display:flex;align-items:center;justify-content:space-between;gap:12px;flex:none;margin:0;padding:0;min-height:36px;background:none!important;border:0;text-align:left;font-size:11px;color:var(--hb-on-light-muted)!important}
+body[data-handbook-theme] #china-footprints .fw-wish-dialog .fw-search input[type=search]:focus-visible{outline:none!important}
+#china-footprints [data-fw-done]{min-height:36px;min-width:78px;border:0;border-radius:7px;background:var(--hb-action);color:var(--hb-on-dark);font:13px system-ui;cursor:pointer}
+#china-footprints :is(.fw-view-switch,.fw-map-controls,.fw-wish-card,.fw-wish-dialog) button:focus-visible{outline:2px solid var(--hb-gold-display);outline-offset:-2px}
+#china-footprints .fw-wish-dialog button:disabled{opacity:.5;cursor:wait}
+body #china-footprints.fp-world-ready .fp-city.is-trip:not(.is-visited) .fp-trip-ring{opacity:1;stroke:var(--hb-on-dark);stroke-dasharray:2 2}
+@media(max-width:1150px){
+ #china-footprints.fp-world-ready .mm-wish-intro h3{font-size:17px}
+ #china-footprints .fw-statistics small{display:none}
+}
+@media(max-width:760px){
+ body #china-footprints.fp-world-ready h2{font-size:22px}
+ body[data-handbook-theme] #china-footprints.fp-world-ready{padding:10px 12px 6px}
+ #china-footprints.fp-world-ready .mm-workspace{gap:7px}
+ #china-footprints .fw-view-switch button{min-width:44px;padding:6px 9px;min-height:32px;font-size:12px}
+ #china-footprints.fp-world-ready .mm-navigation{gap:6px}
+ #china-footprints.fp-world-ready .mm-modes{width:auto;flex:1}
+ #china-footprints.fp-world-ready .mm-modes button{font-size:10px;padding:5px 8px;min-height:30px}
+ #china-footprints .fw-statistics{gap:5px;width:100%;font-size:10px}
+ #china-footprints .fw-statistics>span{padding:4px 6px}
+ body[data-handbook-theme] #china-footprints.fp-world-ready .fp-atlas{grid-template-columns:1fr;grid-template-rows:minmax(0,1.25fr) minmax(0,1fr);gap:8px}
+ body #china-footprints.fp-world-ready .fp-panel{padding:12px;min-height:0}
+ body #china-footprints.fp-world-ready .fp-selected-title b{font-size:23px}
+ body #china-footprints.fp-world-ready .fp-panel-actions{margin-top:6px;padding-top:5px}
+ body #china-footprints.fp-world-ready .fpm-city-photos[data-count="3"],body #china-footprints.fp-world-ready .fpm-city-photos[data-count="2"]{height:175px}
+ body #china-footprints.fp-world-ready .fpm-city-photos[data-count="1"] button:first-child{height:185px;aspect-ratio:auto}
+ body #china-footprints.fp-world-ready .mm-wishes{gap:8px;padding:9px;flex-wrap:wrap;min-height:0}
+ #china-footprints.fp-world-ready .mm-add-wish,#china-footprints .fw-view-all{min-height:32px;padding:5px 8px;font-size:10px;order:0;margin-left:auto}
+ #china-footprints.fp-world-ready .mm-wish-intro{display:block;width:auto;order:0}
+ #china-footprints.fp-world-ready .mm-wish-intro h3{font-size:16px}
+ #china-footprints.fp-world-ready .mm-wish-cities{order:1;width:100%;flex-basis:100%;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
+ #china-footprints .fw-wish-card{flex-basis:104px}
+ #china-footprints .fw-wish-card b{max-width:78px;font-size:11px}
+ #china-footprints .fw-wish-card small{max-width:78px;font-size:10px}
+ #china-footprints .fw-wish-card>button:first-child>span:first-child{display:none}
+ #china-footprints .fw-search input{font-size:16px}
+ #china-footprints .fw-wish-dialog{padding:16px;max-height:calc(100svh - 24px)}
+ #china-footprints .fw-results{max-height:55svh}
+}
+@media(max-width:360px){body #china-footprints.fp-world-ready h2{font-size:19px}}
+@media(prefers-reduced-motion:reduce){#china-footprints .fw-stage *{transition:none}}
+@media(max-width:760px){
+ #china-footprints .fw-wish-card svg{width:14px;height:14px;flex:none}
+ #china-footprints.fp-world-ready .mm-wishes{min-height:100px}
+ #china-footprints.fp-world-ready .mm-wishes[data-wish-count="0"]{min-height:54px}
+}
+
+#china-footprints .fw-wish-card svg{width:16px;height:16px;flex:none;fill:none;stroke:var(--hb-action);stroke-width:1.8}
+/* A compact city postcard in the mobile inspector keeps the photo visible alongside its context. */
+@media(max-width:760px){
+ body #china-footprints.fp-world-ready .fp-city-context{display:grid;grid-template-columns:minmax(0,1fr) 108px;gap:6px 10px;align-content:start;align-items:start}
+ body #china-footprints.fp-world-ready [data-fp-selected]{grid-column:1;grid-row:1;min-width:0}
+ body #china-footprints.fp-world-ready .fp-city-heading{gap:4px}
+ body #china-footprints.fp-world-ready .fp-selected-title{display:flex;flex-wrap:wrap;gap:3px 7px}
+ body #china-footprints.fp-world-ready .fp-selected-title b{font-size:21px}
+ body #china-footprints.fp-world-ready .fp-selected-title small{font-size:10px}
+ body #china-footprints.fp-world-ready .fp-selected-kicker{font-size:10px}
+ body #china-footprints.fp-world-ready .mm-city-dates{grid-column:1;grid-row:2;margin:0;padding-top:5px;font-size:10px}
+ body #china-footprints.fp-world-ready .fpm-city-memory{display:contents}
+ body #china-footprints.fp-world-ready .fpm-city-photos{grid-column:2;grid-row:1/5;min-width:0;margin:0}
+ body #china-footprints.fp-world-ready .fpm-city-photos[data-count="1"] button:first-child{height:134px;aspect-ratio:auto}
+ body #china-footprints.fp-world-ready .fpm-city-photos[data-count="2"],body #china-footprints.fp-world-ready .fpm-city-photos[data-count="3"]{height:134px;gap:4px;grid-template-columns:1fr 1fr}
+ body #china-footprints.fp-world-ready .fpm-city-photos[data-count="3"] button:first-child{grid-column:1/-1;grid-row:1;height:85px}
+ body #china-footprints.fp-world-ready .fpm-city-photos[data-count="3"] button:not(:first-child){grid-row:2;height:45px}
+ body #china-footprints.fp-world-ready .fpm-city-photos[data-count="2"] button{height:134px}
+ body #china-footprints.fp-world-ready .fpm-city-photos .fpm-album-count{font-size:8px;right:3px;bottom:3px;padding:2px 4px}
+ body #china-footprints.fp-world-ready .fpm-city-memory-head{grid-column:1;grid-row:3;margin:0;min-width:0}
+ body #china-footprints.fp-world-ready .fpm-city-note{font-size:10px;padding-left:10px;line-height:1.6;-webkit-line-clamp:2}
+ body #china-footprints.fp-world-ready .fpm-city-note::before{font-size:25px;top:-2px}
+ body #china-footprints.fp-world-ready .fpm-city-memory-head button{font-size:10px;margin:4px 0 0;padding:3px 6px;min-height:27px}
+ body #china-footprints.fp-world-ready .fp-memory-entry{grid-column:2;grid-row:1/5;height:134px;aspect-ratio:auto;margin:0;padding:8px;gap:5px;align-self:start}
+ body #china-footprints.fp-world-ready .fp-memory-entry b{font-size:10px}
+ body #china-footprints.fp-world-ready .fp-memory-entry small{display:none}
+ body #china-footprints.fp-world-ready .fp-memory-entry i{font-size:26px}
+ body #china-footprints.fp-world-ready .fpm-photo-empty{height:134px!important;aspect-ratio:auto!important;font-size:10px;padding:8px!important}
+ body #china-footprints.fp-world-ready .mm-city-wish{grid-column:1;grid-row:4;font-size:10px;padding:2px 0}
+ body #china-footprints.fp-world-ready .fp-light-button{font-size:10px;padding:5px;min-height:30px;margin-top:5px}
+}
+
+/* Country overview and drill-down share the existing map column and memory inspector. */
+#china-footprints[data-atlas-view=world] .fp-map-column>.fw-back-world:not([hidden]){display:block!important}
+#china-footprints .fw-stage path{fill:color-mix(in srgb,var(--hb-on-light-muted) 20%,var(--hb-page));stroke:var(--hb-page);stroke-width:.7;vector-effect:non-scaling-stroke}
+#china-footprints .fw-stage path.is-visited{fill:var(--hb-map-mid)}
+#china-footprints .fw-stage path.is-country-selected{stroke:var(--hb-gold-display);stroke-width:1.8}
+#china-footprints .fw-stage path:hover{fill:color-mix(in srgb,var(--hb-map-mid) 65%,var(--hb-page))}
+#china-footprints .fw-stage path.is-visited:hover{fill:var(--hb-map-top)}
+#china-footprints .fw-country-badge rect{fill:var(--hb-card);stroke:var(--fw-border);stroke-width:.8;opacity:.95}
+#china-footprints .fw-country-badge text{fill:var(--hb-on-light);font:600 12px system-ui;pointer-events:none}
+#china-footprints .fw-country-badge .fw-dot{fill:var(--hb-card);stroke:var(--hb-action);stroke-width:1.8}
+#china-footprints .fw-country-badge.is-visited .fw-dot{fill:var(--hb-gold-display);stroke:var(--hb-card)}
+#china-footprints .fw-country-badge:hover rect,#china-footprints .fw-country-badge:focus-visible rect{stroke:var(--hb-gold-display);stroke-width:2}
+#china-footprints[data-world-level=country] .fw-city text{display:block}
+#china-footprints .fw-back-world{position:absolute;z-index:4;top:10px;left:10px;border:1px solid var(--fw-border);border-radius:8px;background:var(--hb-card);color:var(--hb-on-light);padding:8px 11px;min-height:34px;font:12px system-ui;cursor:pointer;box-shadow:0 3px 10px #0000000a}
+#china-footprints .fp-panel>:is(.fw-overview,.fw-city-back,.mm-memory-scroll)[hidden],#china-footprints .fw-back-world[hidden]{display:none!important}
+#china-footprints .fw-overview{min-height:0;min-width:0;flex:1;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:1px 2px 8px}
+#china-footprints .fw-overview h3{font:600 21px/1.4 var(--font-display,serif);color:var(--hb-on-light);margin:0 0 14px}
+#china-footprints .fw-overview h4{font:600 12px/1.6 system-ui;color:var(--hb-on-light);margin:14px 0 8px}
+#china-footprints .fw-overview-totals{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:2px 0 16px;border-bottom:1px solid var(--fw-border);text-align:center}
+#china-footprints .fw-overview-totals b{display:block;color:var(--hb-on-light);font:500 30px/1.3 system-ui;font-variant-numeric:tabular-nums}
+#china-footprints .fw-overview-totals small{display:block;font:10px/1.5 system-ui;color:var(--hb-on-light-muted);margin-top:4px}
+#china-footprints .fw-country-count{font:12px/1.5 system-ui;color:var(--hb-gold-ink);margin:-7px 0 14px}
+#china-footprints .fw-summary-list{display:flex;flex-direction:column;gap:5px}
+#china-footprints .fw-summary-row{display:flex;align-items:center;flex:none;gap:10px;width:100%;min-height:60px;text-align:left;border:1px solid transparent;border-bottom-color:var(--fw-border);border-radius:7px;padding:7px 5px;background:none;color:var(--hb-on-light);cursor:pointer}
+#china-footprints .fw-summary-row:hover{background:var(--hb-page-soft)}
+#china-footprints .fw-summary-row img,#china-footprints .fw-row-placeholder{width:44px;height:44px;flex:none;border-radius:6px;object-fit:cover;background:var(--hb-page-soft)}
+#china-footprints .fw-row-placeholder{display:grid;place-items:center;font-size:23px;color:var(--hb-on-light-muted)}
+#china-footprints .fw-summary-row>span:not(.fw-row-placeholder){min-width:0;flex:1}
+#china-footprints .fw-summary-row b{display:block;font:600 12px/1.5 system-ui;overflow-wrap:anywhere}
+#china-footprints .fw-summary-row small{display:block;margin-top:3px;font:10px/1.5 system-ui;color:var(--hb-on-light-muted)}
+#china-footprints .fw-summary-row i{font:18px system-ui;color:var(--hb-on-light-muted);margin-left:auto}
+#china-footprints .fw-city-back{flex:none;align-self:flex-start;margin:0 0 10px;padding:4px 0;border:0;background:none;color:var(--hb-action);font:12px/1.5 system-ui;min-height:28px;cursor:pointer}
+#china-footprints .fw-find-country{border:1px solid var(--fw-border);border-radius:7px;padding:9px 12px;background:var(--hb-page);color:var(--hb-action);font:12px system-ui;cursor:pointer;width:100%;margin-top:12px}
+#china-footprints :is(.fw-summary-row,.fw-back-world,.fw-city-back,.fw-find-country):focus-visible{outline:2px solid var(--hb-gold-display);outline-offset:1px}
+@media(max-width:760px){
+ #china-footprints .fw-overview h3{font-size:17px;margin-bottom:9px}
+ #china-footprints .fw-overview-totals{padding-bottom:10px}
+ #china-footprints .fw-overview-totals b{font-size:25px}
+ #china-footprints .fw-summary-row{min-height:51px;padding:5px;gap:8px}
+ #china-footprints .fw-summary-row img,#china-footprints .fw-row-placeholder{width:36px;height:36px}
+ #china-footprints .fw-back-world{top:4px;left:4px;padding:6px 8px;font-size:10px;min-height:30px}
+ #china-footprints .fw-city-back{margin-bottom:5px;font-size:11px}
+}
+/* SVG focus uses a non-scaling boundary, never the browser's magnified box outline. */
+#china-footprints .fw-stage [role=button]{outline:none}
+#china-footprints .fw-stage path:focus-visible{stroke:var(--hb-gold-display);stroke-width:3;vector-effect:non-scaling-stroke}
+#china-footprints .fw-city:focus-visible .fw-trip{opacity:1;stroke:var(--hb-gold-display)}
+#china-footprints .fw-stage path:not(.is-visited):hover{fill:color-mix(in srgb,var(--hb-on-light-muted) 32%,var(--hb-page))}
+#china-footprints .fw-badge-leader{stroke:var(--hb-gold-display);stroke-width:1;vector-effect:non-scaling-stroke;opacity:.65}
+#china-footprints .fw-country-anchor{fill:var(--hb-gold-display);pointer-events:none}
+#china-footprints .fw-country-interest .fw-dot{fill:var(--hb-page);stroke:var(--hb-action);stroke-width:1.8}
+#china-footprints .fw-country-interest text{display:none;font:500 11px system-ui;fill:var(--hb-on-light);paint-order:stroke;stroke:var(--hb-page);stroke-width:3;pointer-events:none}
+#china-footprints .fw-country-interest:is(:hover,:focus-visible) text{display:block}
+@media(max-width:760px){
+ #china-footprints .fw-overview h4{margin:8px 0 4px;font-size:11px}
+ #china-footprints .fw-overview .fw-empty{padding:8px;margin:8px 0}
+ #china-footprints[data-world-level=overview] .fw-overview h3{display:inline-block;font-size:15px;margin:0 0 8px}
+ #china-footprints[data-world-level=overview] .fw-overview-totals{display:flex;gap:18px;padding-bottom:6px;text-align:left}
+ #china-footprints[data-world-level=overview] .fw-overview-totals span{display:flex;align-items:baseline;gap:5px}
+ #china-footprints[data-world-level=overview] .fw-overview-totals b{font-size:22px}
+ #china-footprints[data-world-level=overview] .fw-overview-totals small{font-size:9px}
+}
+
+
+
+/* Leave room for the fixed chapter menu on phones; no minimum block may extend this budget. */
+@media(max-width:700px){
+ body[data-handbook-theme] #china-footprints.fp-world-ready{height:calc(100svh - 88px - env(safe-area-inset-bottom))}
+}
+@media(max-width:760px) and (max-height:700px){
+ #china-footprints.fp-world-ready .mm-workspace{gap:5px}
+ body[data-handbook-theme] #china-footprints.fp-world-ready{padding-top:6px;padding-bottom:4px}
+ body #china-footprints.fp-world-ready .mm-wishes{min-height:0;padding:6px 8px;gap:5px}
+ #china-footprints.fp-world-ready .mm-wishes[data-wish-count="0"]{min-height:42px}
+ #china-footprints.fp-world-ready .mm-controls{max-height:72px;padding:6px 8px}
+ body #china-footprints.fp-world-ready .fp-panel{padding:8px;display:block;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+ #china-footprints.fp-world-ready .fp-panel>:is(.fw-overview,.mm-memory-scroll){overflow:visible}
+ #china-footprints .fw-wish-card>button:first-child{padding:5px 16px 5px 8px}
+ #china-footprints .fw-wish-card :is(b,small){line-height:1.4}
+ #china-footprints .fw-map-controls{bottom:20px;left:7px}
+ #china-footprints .fw-map-controls button{min-height:28px;width:30px;font-size:18px}
+ body #china-footprints.fp-world-ready .fp-panel-actions{margin-top:4px;padding-top:4px}
+ body #china-footprints.fp-world-ready .fp-panel-actions button{min-height:30px;padding:4px 6px;font-size:10px}
+}
+
+/* Range belongs to the heading; browsing mode and its scoped totals occupy the second row. */
+#china-footprints.fp-world-ready .mm-navigation{align-items:center;padding-bottom:5px;border-bottom:1px solid var(--fw-border)}
+#china-footprints.fp-world-ready .fw-statistics{margin-left:auto;gap:14px;font-size:11px;flex-wrap:nowrap}
+#china-footprints.fp-world-ready .fw-statistics>span{border:0;padding:0;background:none;white-space:nowrap;gap:5px}
+#china-footprints.fp-world-ready .fw-statistics b{font-size:17px;color:var(--hb-gold-ink)}
+#china-footprints.fp-world-ready .fw-stat-label{color:var(--hb-on-light-muted);font-size:10px}
+#china-footprints .fw-overview h3{padding-bottom:12px;border-bottom:1px solid var(--fw-border)}
+#china-footprints .fw-panel-caption{font:11px/1.5 system-ui;color:var(--hb-on-light-muted);margin:0 0 8px}
+#china-footprints .fw-itinerary-row em{flex:none;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--hb-action);color:var(--hb-on-dark);font:500 11px system-ui}
+#china-footprints .fw-trip-date{font:11px/1.7 system-ui;color:var(--hb-on-light-muted)}
+#china-footprints .fw-stage path.is-planned{fill:var(--hb-map-mid)}
+#china-footprints .fw-country-badge.is-planned .fw-dot{fill:var(--hb-action);stroke:var(--hb-card)}
+#china-footprints .fw-country-badge.is-planned .fw-country-anchor{fill:var(--hb-action)}
+#china-footprints .mm-stops>[hidden]{display:none!important}
+#china-footprints:not([data-mm-mode=trip]) .fp-trip-ring{display:none!important}
+#china-footprints[data-mm-mode=trip] .fp-city.mm-outside-trip :is(.fp-halo,.fp-beam){display:none!important}
+#china-footprints:not([data-panel=city]) .fp-city.is-selected .fp-city-name{opacity:0}
+@media(max-width:760px){
+ #china-footprints.fp-world-ready .fw-statistics{margin-left:0;width:100%;gap:10px;font-size:10px}
+ #china-footprints.fp-world-ready .fw-statistics b{font-size:15px}
+ #china-footprints.fp-world-ready .fw-stat-label{font-size:9px}
+ #china-footprints .fw-overview h3{font-size:16px;margin-bottom:8px;padding-bottom:7px}
+}
+
+/* On phones the entire inspector scrolls, so its controls cannot squeeze the list away. */
+@media(max-width:760px){
+ body #china-footprints.fp-world-ready .fp-panel{display:block;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+ #china-footprints.fp-world-ready .fp-panel>:is(.fw-overview,.mm-memory-scroll){overflow:visible}
+ #china-footprints .fw-overview h3{font-size:15px;margin-bottom:5px;padding-bottom:5px}
+ #china-footprints .mm-replay-tools{gap:6px}
+}
+
+/* City state is part of its heading. No separate ellipsis action. */
+body #china-footprints.fp-world-ready .fp-selected-title{justify-content:flex-start;align-items:center;gap:8px 12px}
+#china-footprints .fp-visit-status{position:relative;flex:none}
+#china-footprints .fp-state-chip{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:6px 10px;border:1px solid var(--hb-line-light);border-radius:var(--travel-control-radius,8px);background:var(--hb-page-soft);color:var(--hb-on-light-muted);font:500 12px/1.4 system-ui,sans-serif;white-space:nowrap;cursor:pointer;list-style:none}
+#china-footprints .fp-state-chip::-webkit-details-marker{display:none}
+#china-footprints .fp-state-chip.is-lit{border-color:transparent;background:color-mix(in srgb,var(--hb-gold-display) 17%,var(--hb-card));color:var(--hb-gold-ink)}
+#china-footprints .fp-state-chip:is(:hover,:focus-visible){border-color:var(--hb-gold-ink)}
+#china-footprints .fp-state-chip:focus-visible,#china-footprints .fp-state-popover button:focus-visible{outline:2px solid var(--hb-action);outline-offset:2px}
+#china-footprints .fp-state-chip:disabled{opacity:.6;cursor:wait}
+#china-footprints .fp-state-label{display:block;line-height:1}
+#china-footprints .fp-state-chevron{display:block;width:12px;height:12px;flex:0 0 12px;margin-left:2px;align-self:center;overflow:visible;transform-origin:center;transition:transform .15s ease}
+#china-footprints .fp-visit-status[open] .fp-state-chevron{transform:rotate(180deg)}
+#china-footprints .fp-state-popover{position:absolute;z-index:12;top:calc(100% + 5px);right:0;width:178px;padding:8px;border:1px solid var(--hb-line-light);border-radius:var(--travel-card-radius,12px);background:var(--hb-card);color:var(--hb-on-light);box-shadow:0 8px 24px #0002}
+#china-footprints .fp-state-current{display:block;padding:6px 9px;font:12px/1.5 system-ui;color:var(--hb-on-light-muted)}
+#china-footprints .fp-state-popover button{display:block;width:100%;min-height:40px;padding:8px 9px;border:0;border-radius:var(--travel-control-radius,8px);text-align:left;background:none;color:var(--hb-on-light);font:13px/1.5 system-ui;cursor:pointer}
+#china-footprints .fp-state-popover button:hover{background:var(--hb-page-soft)}
+#china-footprints .fp-state-popover p{margin:4px 9px;font:11px/1.6 system-ui;color:var(--hb-on-light-muted)}
+/* A small invitation replaces the empty photo-sized frame. */
+body #china-footprints.fp-world-ready .fp-memory-entry{aspect-ratio:auto;height:auto;min-height:88px;margin:18px 0 0;padding:14px;display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:12px;text-align:left;background:var(--hb-page-soft);border:1px dashed var(--hb-line-light);border-radius:var(--travel-inset-radius,10px)}
+body #china-footprints.fp-world-ready .fp-memory-entry i{font:300 24px/1 system-ui;color:var(--hb-action)}
+body #china-footprints.fp-world-ready .fp-memory-entry b{display:block;font:500 14px/1.5 system-ui;color:var(--hb-on-light)}
+body #china-footprints.fp-world-ready .fp-memory-entry small{display:block;margin-top:4px;font:11px/1.6 system-ui;color:var(--hb-on-light-muted)}
+body #china-footprints.fp-world-ready .fpm-city-photos[data-count="0"] .fpm-photo-empty{aspect-ratio:auto;min-height:58px;height:auto;flex-direction:row;padding:12px}
+body #china-footprints.fp-world-ready .fp-panel>.fp-map-bottom{position:static;flex:none;max-width:100%;margin:12px 0 0;padding:10px 12px;gap:4px 8px;border:0;border-radius:var(--travel-inset-radius,10px);background:var(--hb-page-soft)}
+body #china-footprints.fp-world-ready .fp-panel>.fp-map-bottom[hidden]{display:none}
+body #china-footprints.fp-world-ready .fp-panel>.fp-map-bottom p{flex:1;min-width:0;font:12px/1.6 system-ui;color:var(--hb-on-light)}
+body #china-footprints.fp-world-ready .fp-panel>.fp-map-bottom .fp-undo{font-size:12px;color:var(--hb-action);min-height:36px;padding:6px 8px}
+body #china-footprints.fp-world-ready .fp-panel>.fp-map-bottom .fp-undo:disabled{display:none}
+@media(min-width:761px){
+ body[data-handbook-theme] #china-footprints.fp-world-ready[data-panel="city"][data-memory-state="empty"] .fp-panel{align-self:start;height:auto;max-height:100%}
+ #china-footprints[data-panel="city"][data-memory-state="empty"] .mm-memory-scroll{flex:0 1 auto;min-height:220px}
+}
+@media(max-width:760px){
+ body #china-footprints.fp-world-ready[data-memory-state="empty"] .fp-city-context{grid-template-columns:minmax(0,1fr)}
+ body #china-footprints.fp-world-ready[data-memory-state="empty"] .fp-memory-entry{grid-column:1;grid-row:3;min-height:68px;margin-top:6px;padding:10px 12px}
+ #china-footprints .fp-state-chip{min-height:32px;padding:5px 8px;font-size:11px;gap:5px}
+ body #china-footprints.fp-world-ready .fp-panel>.fp-map-bottom{margin-top:8px;padding:7px 10px}
+ body #china-footprints.fp-world-ready .fp-panel>.fp-map-bottom p{font-size:11px}
+}
+
+/* Routine status is already visible in the city chip; keep error feedback only. */
+body #china-footprints.fp-world-ready .fp-panel>.fp-map-bottom[data-tone="quiet"]{display:none}
+
+/* Keep a wrapped status menu inside the full city heading, not a narrow chip. */
+body #china-footprints.fp-world-ready .fp-selected-title{position:relative;min-width:0}
+#china-footprints .fp-visit-status{position:static}
+#china-footprints .fp-state-popover{left:clamp(0px,var(--state-menu-left,0px),max(0px,calc(100% - 178px)));right:auto;width:min(178px,100%);box-sizing:border-box}
+#china-footprints [data-fp-selected]:focus-visible{outline:2px solid var(--hb-action);outline-offset:-2px;border-radius:6px}
+
+/* Playback is a compact transport over the map, keeping the viewport budget unchanged. */
+#china-footprints .mm-replay-player{position:absolute;z-index:10;bottom:12px;left:62px;right:14px;max-width:580px;padding:10px 14px;border:1px solid color-mix(in srgb,var(--hb-gold-display) 30%,transparent);border-radius:14px;background:color-mix(in srgb,var(--hb-deep) 94%,transparent);color:var(--hb-on-dark);box-shadow:0 4px 18px #0002}
+#china-footprints .mm-replay-player[hidden]{display:none}
+#china-footprints .mm-replay-caption{font:11px/1.5 system-ui;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#china-footprints .mm-replay-player .mm-replay-tools{display:flex;flex-wrap:nowrap;gap:8px}
+#china-footprints .mm-replay-player button{min-width:32px;min-height:34px;padding:4px 7px;background:none;color:inherit;border:1px solid #ffffff30;border-radius:7px;font:14px/1.4 system-ui}
+#china-footprints .mm-replay-player [data-mm-play]{min-width:70px;font-size:12px}
+#china-footprints .mm-replay-player [data-mm-progress]{order:0;flex:1 1 0;min-width:24px;width:0;accent-color:var(--hb-gold-display);padding:0;height:22px}
+#china-footprints .mm-replay-player [data-mm-step]{order:0;flex:none;font:11px/1.4 system-ui;font-variant-numeric:tabular-nums}
+#china-footprints[data-mm-mode=replay] .fp-inset{bottom:95px}
+#china-footprints[data-mm-mode=replay] .fp-map-tilt{bottom:44px}
+#china-footprints[data-mm-mode=replay] .fw-map-controls{bottom:92px}
+#china-footprints[data-mm-mode=replay] .fp-map-toolbar{bottom:95px}
+#china-footprints[data-mm-mode=replay] .fp-state-chevron{display:none}
+#china-footprints .mm-replay-intro>p{color:var(--hb-on-light-muted);font:12px/1.7 system-ui;margin:12px 0 18px}
+#china-footprints .mm-replay-intro fieldset{display:grid;gap:10px;border:0;padding:0;margin:0 0 22px;min-width:0}
+#china-footprints .mm-replay-intro label{display:flex;align-items:center;gap:10px;border:1px solid var(--hb-line-light);padding:14px 12px;border-radius:10px;cursor:pointer}
+#china-footprints .mm-replay-intro label:has(:checked){border-color:var(--hb-action);background:var(--hb-page-soft)}
+#china-footprints .mm-replay-intro input{width:15px;height:15px;flex:none;accent-color:var(--hb-action)}
+#china-footprints .mm-replay-intro b{display:block;font:600 13px/1.5 system-ui}
+#china-footprints .mm-replay-intro small{display:block;font:11px/1.7 system-ui;color:var(--hb-on-light-muted);margin-top:4px}
+#china-footprints :is(.mm-replay-intro,.mm-replay-finish)>button{display:block;width:100%;min-height:40px;border:0;border-radius:8px;background:var(--hb-action);color:var(--hb-on-dark);font:500 13px/1.5 system-ui;cursor:pointer;padding:8px 12px}
+#china-footprints .mm-replay-finish{text-align:center;padding:20px 0}
+#china-footprints .mm-replay-finish>span{display:inline-grid;place-items:center;width:40px;height:40px;border:1.5px solid var(--hb-action);border-radius:50%;font-size:22px;color:var(--hb-action)}
+#china-footprints .mm-replay-finish p{color:var(--hb-on-light-muted);font-size:13px;margin-bottom:24px}
+#china-footprints .mm-replay-finish button+button{margin-top:10px;background:var(--hb-page-soft);color:var(--hb-on-light)}
+body #china-footprints[data-mm-mode=replay] .fp-city .fp-halo{animation:none!important}
+body #china-footprints .fp-city.mm-replay-current .fp-dot{fill:var(--hb-map-gold)!important;r:4.5;stroke:#fff5d0;stroke-width:1.2;filter:url(#fp-city-glow)}
+body #china-footprints .fp-city.mm-replay-current .fp-halo{opacity:1;display:block;stroke:var(--hb-map-gold);r:12}
+#china-footprints[data-mm-mode=replay] .fw-city.is-selected .fw-dot{fill:var(--hb-map-gold);stroke:#fff5d0;stroke-width:1.2;r:5}
+#china-footprints[data-mm-mode=replay] .fw-city:not(.is-visited) .fw-dot{opacity:.2}
+@media(max-width:760px){
+ #china-footprints .mm-replay-player{left:8px;right:8px;bottom:8px;padding:7px 9px;border-radius:10px}
+ #china-footprints .mm-replay-player .mm-replay-tools{gap:5px}
+ #china-footprints .mm-replay-player button{min-width:30px;min-height:32px}
+ #china-footprints .mm-replay-player [data-mm-play]{min-width:62px}
+ #china-footprints .mm-replay-caption{font-size:10px;margin-bottom:2px}
+ #china-footprints .mm-replay-intro>p{margin:7px 0 10px}
+ #china-footprints .mm-replay-intro fieldset{gap:6px;margin-bottom:10px}
+ #china-footprints .mm-replay-intro label{padding:8px 10px}
+ #china-footprints .mm-replay-intro small{margin:0}
+ body #china-footprints.fp-world-ready[data-mm-mode=replay][data-memory-state=empty] .fp-panel{height:100%;max-height:100%;align-self:stretch}
+}
+#china-footprints .mm-replay-intro legend{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+body #china-footprints.fp-world-ready[data-mm-mode=replay][data-replay-started=true] .fp-map-toolbar{bottom:108px}
+body #china-footprints.fp-world-ready[data-mm-mode=replay][data-replay-started=true] .fp-inset{bottom:108px}
+body #china-footprints.fp-world-ready[data-mm-mode=replay][data-replay-started=true] .fp-map-tilt{bottom:44px}
+body #china-footprints.fp-world-ready[data-mm-mode=replay][data-replay-started=true] .fw-map-controls{bottom:108px}
+@media(max-width:760px){
+ body #china-footprints.fp-world-ready[data-mm-mode=replay][data-replay-started=true] .fp-inset{display:none}
+ body #china-footprints.fp-world-ready[data-mm-mode=replay][data-replay-started=true] .fp-map-toolbar,
+ body #china-footprints.fp-world-ready[data-mm-mode=replay][data-replay-started=true] .fw-map-controls{bottom:94px}
+}
+body #china-footprints.fp-world-ready[data-mm-mode=replay] .fp-panel-actions{display:none}
+@media(max-width:760px){
+ #china-footprints .mm-replay-intro fieldset{grid-template-columns:repeat(2,minmax(0,1fr));margin:8px 0}
+ #china-footprints .mm-replay-intro label{gap:6px;padding:8px 6px;min-height:44px}
+ #china-footprints .mm-replay-intro b{font-size:11px}
+ #china-footprints .mm-replay-intro small{font-size:9px;line-height:1.4}
+ #china-footprints .mm-replay-intro>p{font-size:11px;margin:4px 0}
+ #china-footprints .mm-replay-finish{padding:6px 0}
+ #china-footprints .mm-replay-finish>span{display:none}
+ #china-footprints .mm-replay-finish p{margin:6px 0 10px}
+}

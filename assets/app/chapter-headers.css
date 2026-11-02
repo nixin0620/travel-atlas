@@ -1,0 +1,121 @@
+/* A single header contract; page-specific controls live immediately below it. */
+:root{--chapter-pad:30px;--chapter-title:38px;--chapter-header-height:170px;}
+body[data-handbook-theme] main>:is(#route,#daily,#destinations,#booking){padding:0 0 var(--travel-chapter-gap)!important;background:var(--hb-deep)!important}
+body[data-handbook-theme] main>#route{padding-top:var(--travel-chapter-gap)!important}
+body main>#daily>.shell,body main>#booking>.pack-shell,body #place-first-guide.pg-main{padding:0 0 28px;border:1px solid var(--hb-line-light,#d6d9ce);border-radius:var(--travel-panel-radius);background:var(--hb-page,#f4efe5);color:var(--chapter-ink)}
+body main>#daily>.shell,body main>#booking>.pack-shell{width:calc(100% - 2 * var(--travel-page-gutter));max-width:1240px;margin-inline:auto}
+body :is(#route,#daily,#destinations,#booking) .travel-chapter-header{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:space-between;flex-wrap:nowrap;gap:24px;box-sizing:border-box;min-height:var(--chapter-header-height);margin:0;padding:28px var(--chapter-pad);background:var(--hb-page,#f4efe5);color:var(--chapter-ink);border:0;border-radius:var(--travel-panel-radius) var(--travel-panel-radius) 0 0;overflow:hidden}
+body #route #journey-app .travel-chapter-header::before{display:none}
+body :is(#route,#daily,#destinations,#booking) .travel-chapter-header .travel-chapter-heading{display:grid;grid-template-columns:46px minmax(0,1fr);align-items:start;gap:20px;flex:1;max-width:none;min-width:0;margin:0!important;opacity:1!important;transform:none!important;color:var(--chapter-ink)}
+body :is(#route,#daily,#destinations,#booking) .travel-chapter-header .section-no{font:italic 42px/1.1 Georgia,serif;letter-spacing:-.06em;min-width:0;margin:0;padding-top:3px;color:var(--hb-gold,#bb9450)}
+body :is(#route,#daily,#destinations,#booking) .travel-chapter-header .eyebrow{display:block!important;margin:0 0 7px;font:600 10px/1.4 system-ui,sans-serif;letter-spacing:.18em;color:var(--hb-gold,#b58c44)}
+body :is(#route,#daily,#destinations,#booking) .travel-chapter-header h2{margin:0 0 8px;font:500 var(--chapter-title)/1.2 'Songti SC','Noto Serif SC',Georgia,serif;letter-spacing:.015em;color:var(--chapter-ink);white-space:normal}
+body :is(#route,#daily,#destinations,#booking) .travel-chapter-header .section-heading>div>p:last-child{margin:0;font:400 14px/1.65 system-ui,sans-serif;color:var(--chapter-muted)!important}
+.travel-header-art{position:absolute;z-index:-1;right:10px;bottom:0;width:430px;height:155px;max-width:60%;color:var(--hb-action,#276a58);opacity:.14;pointer-events:none}
+body #place-first-guide .travel-chapter-header>.travel-header-art{width:430px;height:155px}
+body .travel-chapter-header :is(.jo-toolbar,.pg-toolbar-start){align-self:flex-start;flex:none;display:flex;gap:8px;margin:3px 0 0;padding:0;border:0;flex-wrap:wrap;max-width:370px;justify-content:flex-end}
+body #journey-app .travel-chapter-header .jo-toolbar>.jo-btn,body .travel-chapter-header .pg-button{min-height:40px;padding:8px 12px;font-size:12px;border-radius:var(--travel-control-radius);background:var(--hb-card,#faf8f2);color:var(--chapter-ink);border:1px solid var(--hb-line-light,#d6d9ce)}
+body #journey-app .travel-chapter-header #jo-manage-orders,body .travel-chapter-header .pg-primary{margin-left:0;background:var(--hb-action,#176257);border-color:var(--hb-action,#176257);color:var(--hb-on-dark,#fff9ed)}
+body .travel-chapter-header .pg-link{font-size:12px;color:var(--chapter-muted)}
+/* Legacy chapter styles used ID-specific typography and dark-surface overrides. */
+body[data-handbook-theme] :is(#route,#daily,#destinations,#booking){--chapter-ink:var(--hb-on-light,#173d36);--chapter-muted:var(--hb-on-light-muted,#6c7971)}
+body[data-handbook-theme] :is(#route,#daily,#destinations,#booking) .travel-chapter-header .section-heading{grid-template-columns:46px minmax(0,1fr)!important;gap:20px!important;align-items:start!important;max-width:none!important}
+body[data-handbook-theme] :is(#route,#daily,#destinations,#booking) .travel-chapter-header h2{font-size:var(--chapter-title)!important;color:var(--chapter-ink)!important;margin:0 0 8px!important}
+body[data-handbook-theme] :is(#route,#daily,#destinations,#booking) .travel-chapter-header .section-no{font:italic 42px/1.1 Georgia,serif!important;color:#ac813e!important}
+body[data-handbook-theme] :is(#route,#daily,#destinations,#booking) .travel-chapter-header .eyebrow{font:600 10px/1.4 system-ui,sans-serif!important;color:#9b783f!important;letter-spacing:.18em!important;margin:0 0 7px!important}
+body[data-handbook-theme] :is(#route,#daily,#destinations,#booking) .travel-chapter-header .section-heading>div>p:last-child{font-size:14px!important;color:var(--chapter-muted)!important;line-height:1.65!important;margin:0!important}
+body[data-handbook-theme] #route #journey-app #jo-check-costs span{color:var(--chapter-muted)!important;font-size:12px!important}
+body[data-handbook-theme] #route #journey-app .travel-chapter-header .section-heading>div>p:last-child{color:var(--chapter-muted)!important;font-size:14px!important;line-height:1.65!important}
+/* Costs are peer cards on the same paper surface, below the shared title. */
+body #journey-app .jo-hero-stats{display:grid;grid-template-columns:minmax(220px,1.25fr) minmax(0,3fr);gap:12px;min-width:0;margin:0 var(--chapter-pad);padding:0;color:var(--chapter-ink)}
+body #journey-app :is(.jo-trip-stat,.jo-cost-total,.jo-cost-part){min-width:0;min-height:88px;padding:16px 20px;background:var(--hb-card,#faf8f2);border:1px solid var(--hb-line-light,#d6d9ce);backdrop-filter:none;border-radius:var(--travel-inset-radius)}
+body #journey-app .jo-trip-stat{justify-content:flex-start;gap:14px}
+body #journey-app .jo-trip-stat svg{color:var(--hb-action,#176257);width:26px;height:26px}
+body #journey-app #jo-scale{color:var(--chapter-ink);font-size:14px;font-weight:600}
+body #journey-app #jo-date-range{font-size:11px;color:var(--chapter-muted)}
+body #journey-app #jo-check-costs{gap:12px}
+body #journey-app #jo-check-costs :is(.jo-cost-total,.jo-cost-part){min-width:0}
+body #journey-app #jo-check-costs span{font-size:12px;color:var(--chapter-muted)}
+body #journey-app #jo-check-costs :is(strong,.jo-cost-amount){font-size:23px;color:var(--chapter-ink)}
+body #journey-app .jo-route-tools{justify-content:flex-end;padding:12px var(--chapter-pad) 20px;min-height:48px}
+body #journey-app #jo-route-paper,body #journey-app .jo-manager-area{padding-inline:var(--chapter-pad)}
+/* Daily controls keep their existing city/date selection and event boundaries. */
+body #daily #trip-daily-content{padding:0 var(--chapter-pad)}
+body #daily #trip-daily-content :is(.dp-nav-heading,.dp-nav-label,.dp-navigation,.dp-date-pages){color:var(--chapter-ink)}
+body #daily #trip-daily-content .dp-top p{color:var(--chapter-muted)!important}
+body #daily #trip-daily-content .dp-nav-heading{margin:0;padding:0 0 16px;gap:12px;border-bottom:1px solid var(--hb-line-light)}
+body #daily #trip-daily-content #dp-trip-progress{color:var(--chapter-muted);border-color:var(--hb-line-light)}
+body #daily #trip-daily-content .dp-nav-heading .dp-button{color:var(--chapter-ink);background:var(--hb-card,#faf8f2);border-color:var(--hb-line-light);font-size:12px}
+body #daily #trip-daily-content .dp-segments{gap:8px;margin:16px 0 12px;padding:0 0 12px;border-color:var(--hb-line-light)}
+body #daily #trip-daily-content .dp-segment{flex:1;min-width:128px;min-height:66px;padding:12px 16px;background:var(--hb-page-soft,#e8ecdf);color:var(--chapter-ink);border:1px solid transparent;border-radius:var(--travel-control-radius)}
+body #daily #trip-daily-content .dp-segment b{font:600 15px/1.5 system-ui,sans-serif}
+body #daily #trip-daily-content .dp-segment small{font-size:11px;color:var(--chapter-muted)}
+body #daily #trip-daily-content .dp-segment[aria-pressed=true]{background:var(--hb-action,#176257);color:var(--hb-on-dark)}
+body #daily #trip-daily-content .dp-segment[aria-pressed=true] small{color:var(--hb-on-dark-muted)}
+body #daily #trip-daily-content .dp-segment::after{display:none}
+body #daily #trip-daily-content .dp-days{gap:6px;grid-template-columns:repeat(7,minmax(0,1fr))}
+body #daily #trip-daily-content .dp-day-button{min-height:64px;padding:8px 6px;background:var(--hb-card,#faf8f2);border:1px solid var(--hb-line-light);color:var(--chapter-muted);border-radius:var(--travel-control-radius)}
+body #daily #trip-daily-content .dp-day-button[aria-pressed=true]{background:var(--hb-action,#176257);color:var(--hb-on-dark);border-color:var(--hb-action)}
+body #daily #trip-daily-content .dp-day-button[aria-pressed=true] :is(b,small,span){color:inherit}
+body #daily #trip-daily-content .dp-date-pages button{color:var(--chapter-ink);border-color:var(--hb-line-light)}
+body #daily #trip-daily-content .dp-sheet{background:var(--hb-card,#faf8f2);border-radius:var(--travel-card-radius);margin-top:18px}
+/* Guide filters and preparation progress follow the same title baseline. */
+body #place-first-guide.pg-main>:not(.travel-chapter-header):not(dialog){margin-inline:var(--chapter-pad)}
+body #place-first-guide .pg-citybar{margin-top:0;padding-top:0;border-top:0}
+body #place-first-guide .pg-city-tabs{gap:8px}
+body #place-first-guide .pg-navigation{margin-bottom:16px}
+body #booking .packing-app{margin-inline:var(--chapter-pad)}
+body #booking .pack-overview{display:grid;grid-template-columns:1fr;gap:18px;padding:24px 28px;border-radius:var(--travel-card-radius)}
+body #booking .pack-overview>div:first-child{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--hb-line-dark);padding-bottom:14px}
+body #booking .pack-overview .pack-kicker{display:none}
+body #booking .pack-overview .pack-overview-copy h3{font:500 16px/1.5 system-ui,sans-serif!important;margin:0}
+body #booking .pack-overview>div:first-child>p:last-child{font-size:12px;margin:0;color:var(--hb-on-dark-muted)}
+body #booking .pack-readiness{gap:28px;border:0;padding:0}
+body #booking .pack-readiness>div+div{border-left:1px solid var(--hb-line-dark);padding-left:28px}
+body :is(#route,#daily,#destinations,#booking){scroll-margin-top:20px!important}
+.desktop-chapter-rail a[aria-current=location],#mobile-guide-menu a[aria-current=location]{color:var(--hb-on-dark)}
+#mobile-guide-menu a[aria-current=location]{background:var(--hb-surface);box-shadow:inset 3px 0 var(--hb-gold)}
+@media(max-width:1100px){
+ body .travel-chapter-header :is(.jo-toolbar,.pg-toolbar-start){max-width:220px}
+ body #journey-app .jo-hero-stats{grid-template-columns:minmax(185px,1.2fr) minmax(0,3fr)}
+ body #journey-app :is(.jo-trip-stat,.jo-cost-total,.jo-cost-part){padding:14px 12px}
+}
+@media(max-width:720px){
+ :root{--chapter-pad:16px;--chapter-title:29px;--chapter-header-height:150px}
+ body :is(#route,#daily,#destinations,#booking) .travel-chapter-header{padding:24px var(--chapter-pad) 20px;gap:16px;flex-wrap:wrap;align-items:flex-start;align-content:flex-start}
+ body :is(#route,#daily,#destinations,#booking) .travel-chapter-header .travel-chapter-heading{grid-template-columns:32px minmax(0,1fr);gap:12px;flex-basis:100%}
+ body #route #journey-app .travel-chapter-header .travel-chapter-heading{flex:1 1 100%!important}
+ body #route #journey-app .travel-chapter-header .jo-toolbar{flex:1 1 calc(100% - 44px);margin:0 0 0 44px!important;max-width:none;min-width:0;justify-content:flex-start}
+ body :is(#route,#daily,#destinations,#booking) .travel-chapter-header .section-no{font-size:32px}
+ body :is(#route,#daily,#destinations,#booking) .travel-chapter-header .eyebrow{font-size:9px;margin-bottom:7px}
+ body :is(#route,#daily,#destinations,#booking) .travel-chapter-header .section-heading>div>p:last-child{font-size:13px;line-height:1.6}
+ body .travel-chapter-header :is(.jo-toolbar,.pg-toolbar-start){margin:0 0 0 44px;max-width:none;justify-content:flex-start;gap:6px;flex:1;min-width:0}
+ body #journey-app .travel-chapter-header .jo-toolbar>.jo-btn{font-size:12px;padding:8px 9px;min-height:44px}
+ body .travel-chapter-header .pg-button{min-height:44px}
+ body[data-handbook-theme] :is(#route,#daily,#destinations,#booking) .travel-chapter-header .section-heading{grid-template-columns:32px minmax(0,1fr)!important;gap:12px!important}
+ body[data-handbook-theme] :is(#route,#daily,#destinations,#booking) .travel-chapter-header .section-no{font-size:32px!important}
+ body[data-handbook-theme] :is(#route,#daily,#destinations,#booking) .travel-chapter-header .eyebrow{font-size:9px!important}
+ body[data-handbook-theme] :is(#route,#daily,#destinations,#booking) .travel-chapter-header .section-heading>div>p:last-child{font-size:13px!important}
+ body[data-handbook-theme] #route #journey-app .travel-chapter-header .section-heading>div>p:last-child{font-size:13px!important}
+ body .travel-chapter-header>.travel-header-art,body #place-first-guide .travel-chapter-header>.travel-header-art{max-width:55%;width:220px;height:100px;opacity:.08;right:0}
+ body #journey-app .jo-hero-stats{display:flex;flex-direction:column;gap:8px}
+ body #journey-app .jo-trip-stat{min-height:64px;padding:12px 16px}
+ body #route #journey-app .jo-trip-stat{margin:0}
+ body #route #journey-app .jo-trip-stat svg{display:block;flex:none;width:22px;height:22px}
+ body #journey-app .jo-trip-stat>div{display:flex;gap:4px 14px;align-items:center;flex-wrap:wrap}
+ body #journey-app #jo-check-costs{gap:6px}
+ body #journey-app #jo-check-costs>div{padding:12px 10px;min-height:74px}
+ body #journey-app #jo-check-costs :is(strong,.jo-cost-amount){font-size:19px}
+ body #journey-app #jo-check-costs span{font-size:11px}
+ body #journey-app .jo-route-tools{padding-top:8px;padding-bottom:16px}
+ body #daily #trip-daily-content .dp-nav-heading{align-items:flex-start;gap:8px}
+ body #daily #trip-daily-content .dp-actions{gap:6px;flex-wrap:wrap}
+ body #daily #trip-daily-content .dp-segment{min-width:126px;flex:0 0 126px}
+ body #daily #trip-daily-content .dp-days{grid-template-columns:repeat(4,minmax(0,1fr))}
+ body #daily #trip-daily-content .dp-sheet{padding:18px 14px}
+ body #booking .pack-overview{padding:20px;gap:16px}
+ body #booking .pack-readiness{gap:18px;grid-template-columns:1fr}
+ body #booking .pack-readiness>div+div{border-left:0;border-top:1px solid var(--hb-line-dark);padding-left:0;padding-top:18px}
+ body #booking .pack-readiness .pack-progress+.pack-progress{border-left:0;padding-left:0}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}

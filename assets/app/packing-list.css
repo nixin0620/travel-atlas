@@ -1,0 +1,133 @@
+/* Chapter 06 shares the handbook's six semantic palettes. */
+#booking { --pack-page:var(--hb-page,var(--handbook-paper,#f4efe5));--pack-ink:var(--hb-on-light,var(--handbook-ink,#123c35));--pack-muted:var(--hb-on-light-muted,#526c64);--pack-deep:var(--hb-deep,var(--handbook-deep,#082f29));--pack-accent:var(--hb-accent,var(--handbook-accent,#e1b66e));--pack-action:var(--hb-action,var(--handbook-mid,#176657));--pack-line:var(--hb-line-light,rgba(18,60,53,.16)); }
+#booking .packing-app,#booking .packing-app * {box-sizing:border-box}
+#booking .packing-app {color:var(--pack-ink);font-family:Arial,"PingFang SC","Microsoft YaHei",sans-serif}
+#booking .packing-app button,#booking .packing-app input,#booking .packing-app select,#booking .packing-app textarea {font:inherit}
+#booking .packing-app button {cursor:pointer}
+#booking .packing-app button:disabled {cursor:default;opacity:.4}
+#booking .packing-app [hidden] {display:none!important}
+#booking .packing-app :focus-visible {outline:3px solid var(--pack-action);outline-offset:3px}
+#booking .pack-overview {display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,240px) auto;gap:28px;align-items:center;padding:30px 32px;border-radius:24px;background:var(--pack-deep);color:var(--hb-on-dark,#fff9ee);box-shadow:0 12px 32px rgba(0,0,0,.08)}
+#booking .pack-overview h3 {margin:6px 0 10px;font:600 clamp(20px,2.2vw,29px)/1.5 Georgia,"Songti SC",serif;color:var(--hb-on-dark,#fff9ee);overflow-wrap:anywhere}
+#booking .pack-overview p {margin:0;font-size:13px;color:var(--hb-on-dark-muted,#d4e1db)}
+#booking .pack-overview .pack-kicker,#booking .pack-kicker {margin:0;color:var(--pack-accent);font:700 10px/1.6 Arial,sans-serif;letter-spacing:.18em}
+#booking .pack-progress>div {display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+#booking .pack-progress strong {font:400 38px/1.2 Georgia,serif;color:var(--pack-accent)}
+#booking .pack-progress span {font-size:12px}
+#booking .pack-progress small {display:block;font-size:10px;color:var(--hb-on-dark-muted,#d4e1db);margin-top:5px}
+#booking .pack-progress progress {display:block;width:100%;height:6px;margin:12px 0;border:none;border-radius:8px;overflow:hidden;accent-color:var(--pack-accent);background:rgba(255,255,255,.18)}
+#booking .pack-progress progress::-webkit-progress-bar {background:rgba(255,255,255,.18);border-radius:8px}
+#booking .pack-progress progress::-webkit-progress-value {background:var(--pack-accent);border-radius:8px}
+#booking .pack-progress progress::-moz-progress-bar {background:var(--pack-accent)}
+#booking .pack-top-actions {display:flex;gap:9px;flex-wrap:wrap}
+#booking .pack-button {display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:1px solid transparent;border-radius:11px;background:var(--pack-action);color:var(--hb-on-dark,#fff9ee);padding:11px 17px;font-weight:600;white-space:nowrap}
+#booking .pack-button-gold {background:var(--pack-accent);color:var(--pack-deep)}
+#booking .pack-top-actions .pack-button:not(.pack-button-gold) {background:transparent;border-color:rgba(255,255,255,.32);color:var(--hb-on-dark,#fff9ee)}
+#booking .pack-toolbar {display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:20px 2px;font-size:12px}
+#booking .pack-filter {display:flex;align-items:center;gap:8px;min-height:40px;font-weight:600;cursor:pointer}
+#booking .packing-app input[type="checkbox"] {appearance:auto;-webkit-appearance:checkbox;position:static;opacity:1;display:inline-block;width:19px;height:19px;min-width:19px;accent-color:var(--pack-action);margin:0;cursor:pointer}
+#booking .pack-save {margin-left:auto;color:var(--pack-muted)}
+#booking .pack-link {padding:7px 4px;min-height:40px;border:0;background:transparent;color:var(--pack-action);font-size:12px;text-decoration:none;font-weight:600}
+#booking .pack-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}
+#booking .pack-category {min-width:0;border:1px solid var(--pack-line);border-radius:20px;background:color-mix(in srgb,var(--pack-page) 76%,white);box-shadow:0 5px 18px rgba(0,0,0,.025);overflow:hidden}
+#booking .pack-category-head {display:flex;align-items:center;gap:10px;padding:17px 18px;border-bottom:1px solid var(--pack-line);background:color-mix(in srgb,var(--pack-action) 5%,var(--pack-page))}
+#booking .pack-category-head h3 {margin:0;font:600 17px/1.5 Arial,"PingFang SC",sans-serif;color:var(--pack-ink);overflow-wrap:anywhere}
+#booking .pack-category-count {margin-left:auto;font-size:11px;color:var(--pack-muted);white-space:nowrap}
+#booking .pack-icon {display:inline-grid;place-items:center;flex:0 0 36px;width:36px;height:36px;min-height:36px;padding:0;border:1px solid transparent;border-radius:10px;color:var(--pack-muted);background:transparent;font-size:16px;letter-spacing:1px}
+#booking .pack-icon:hover,#booking .pack-drag:hover {background:color-mix(in srgb,var(--pack-action) 9%,transparent);color:var(--pack-ink)}
+#booking .pack-items {display:block;list-style:none;padding:4px 15px;margin:0;min-height:38px}
+#booking .pack-item {position:relative;display:flex;align-items:center;gap:4px;min-height:66px;margin:0;padding:10px 0;border-bottom:1px solid var(--pack-line);background:transparent;break-inside:avoid;transition:background .16s}
+#booking .pack-item:last-child {border-bottom:0}
+#booking .pack-item-label {display:flex;align-items:center;gap:11px;flex:1;min-width:0;padding:4px 0;cursor:pointer;color:var(--pack-ink)}
+#booking .pack-emoji {font-size:20px;line-height:1.2;flex-shrink:0}
+#booking .pack-item-copy {display:block;min-width:0;flex:1;overflow-wrap:anywhere}
+#booking .pack-item-copy b {display:block;font-size:14px;line-height:1.6;font-weight:500;color:var(--pack-ink)}
+#booking .pack-item-copy small {display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;margin-top:3px;color:var(--pack-muted);font-size:11px;line-height:1.65}
+#booking .pack-quantity {font-size:12px;color:var(--pack-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#booking .pack-item.is-packed .pack-item-label {opacity:.48}
+#booking .pack-item.is-packed .pack-item-copy b {text-decoration:line-through}
+#booking .pack-drag {flex:0 0 18px;width:18px;min-height:42px;padding:0;border:0;background:transparent;color:var(--pack-muted);cursor:grab;font-size:16px;touch-action:manipulation}
+#booking .pack-drag:active {cursor:grabbing}
+#booking .pack-item.is-dragging {opacity:.3}
+#booking .pack-category.is-drop-target {box-shadow:0 0 0 2px var(--pack-action)}
+#booking .pack-item.is-drop-before::before,#booking .pack-item.is-drop-after::after {content:"";position:absolute;left:0;right:0;height:3px;background:var(--pack-action);border-radius:3px}
+#booking .pack-item.is-drop-before::before {top:0}#booking .pack-item.is-drop-after::after {bottom:0}
+#booking .pack-add-row {display:block;width:100%;min-height:48px;padding:12px 20px;text-align:left;border:0;border-top:1px dashed var(--pack-line);background:transparent;color:var(--pack-muted);font-size:12px}
+#booking .pack-add-row:hover {color:var(--pack-action);background:color-mix(in srgb,var(--pack-action) 5%,transparent)}
+#booking .pack-todos {border-left:3px solid var(--pack-accent)}
+#booking .pack-todos .pack-items {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:30px}
+#booking .pack-todos .pack-category-head {background:color-mix(in srgb,var(--pack-accent) 11%,var(--pack-page))}
+#booking .pack-section-label {display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:32px 2px 16px}
+#booking .pack-section-label h3 {margin:0;font:600 21px/1.5 Georgia,"Songti SC",serif;color:var(--pack-ink)}
+#booking .pack-section-label span {font-size:11px;color:var(--pack-muted)}
+#booking .pack-footer {display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:18px}
+#booking .pack-footer>span {margin-left:auto;color:var(--pack-muted);font-size:11px}
+#booking .pack-live {font-size:12px;line-height:1.7;min-height:22px;margin:14px 0;color:var(--pack-action)}
+#booking .pack-empty {list-style:none;padding:22px 8px;margin:0;color:var(--pack-muted);font-size:12px}
+#booking .pack-dialog {width:min(600px,calc(100vw - 28px));max-width:600px;max-height:min(88dvh,920px);padding:0;border:1px solid var(--pack-line);border-radius:24px;background:var(--pack-page);color:var(--pack-ink);box-shadow:0 25px 100px rgba(0,0,0,.3);overflow:auto;overscroll-behavior:contain}
+#booking .pack-dialog::backdrop {background:rgba(4,24,21,.6);backdrop-filter:blur(5px)}
+#booking .pack-dialog-head {display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 26px 18px;border-bottom:1px solid var(--pack-line)}
+#booking .pack-dialog-head h3 {margin:5px 0 0;font:600 23px/1.5 Georgia,"Songti SC",serif;color:var(--pack-ink)}
+#booking .pack-dialog-head .pack-kicker {color:var(--pack-action)}
+#booking .pack-dialog-head .pack-icon {font-size:26px}
+#booking .pack-dialog-body {padding:22px 26px}
+#booking .pack-dialog label:not(.pack-suggestion) {display:block;font-size:12px;font-weight:600;color:var(--pack-muted)}
+#booking .pack-dialog input:not([type="checkbox"]),#booking .pack-dialog textarea,#booking .pack-dialog select {display:block;width:100%;min-width:0;min-height:44px;margin:7px 0 17px;padding:11px 12px;border:1px solid var(--pack-line);border-radius:10px;background:color-mix(in srgb,var(--pack-page) 60%,white);color:var(--pack-ink);font-size:14px;box-shadow:none}
+#booking .pack-dialog textarea {resize:vertical;line-height:1.7}
+#booking .pack-form-pair {display:grid;grid-template-columns:82px minmax(0,1fr);gap:14px}
+#booking .pack-form-columns {display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px}
+#booking .pack-dialog-actions {display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:20px}
+#booking .pack-dialog-actions .pack-button {margin-left:auto}
+#booking .pack-danger {color:#a13a2a}
+#booking .pack-reorder {display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:20px;margin-top:20px;border-top:1px solid var(--pack-line)}
+#booking .pack-reorder>span {font-size:11px;color:var(--pack-muted);margin-right:auto}
+#booking .pack-small-button {min-height:40px;padding:8px 12px;border:1px solid var(--pack-line);border-radius:9px;background:transparent;color:var(--pack-action);font-size:12px}
+#booking .pack-form-error {margin:5px 0;color:#a13a2a;font-size:12px;line-height:1.7}
+#booking .pack-ai-context {padding:16px 18px;border-radius:14px;background:color-mix(in srgb,var(--pack-action) 8%,var(--pack-page));font-size:13px}
+#booking .pack-ai-context p {margin:8px 0 0;font-size:12px;line-height:1.8;color:var(--pack-muted)}
+#booking .pack-help {font-size:12px;line-height:1.9;color:var(--pack-muted);margin:15px 0}
+#booking .pack-scenes {display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:22px 0}
+#booking .pack-scenes>span {flex-basis:100%;font-size:11px;color:var(--pack-muted);margin-bottom:2px}
+#booking .pack-scenes label {position:relative;cursor:pointer}
+#booking .pack-scenes input {position:absolute!important;opacity:0!important;min-width:0!important;width:0!important;height:0!important}
+#booking .pack-scenes label>span {display:block;padding:10px 13px;min-height:40px;border:1px solid var(--pack-line);border-radius:25px;font-size:12px;font-weight:500;color:var(--pack-ink)}
+#booking .pack-scenes input:checked+span {background:var(--pack-action);color:var(--hb-on-dark,#fff9ee);border-color:var(--pack-action)}
+#booking .pack-scenes input:focus-visible+span {outline:3px solid var(--pack-action);outline-offset:3px}
+#booking .pack-suggestion-heading {display:flex;align-items:center;justify-content:space-between;font-size:13px;margin:20px 0 4px}
+#booking .pack-suggestion {display:flex;align-items:flex-start;gap:13px;padding:16px 0;border-bottom:1px solid var(--pack-line);cursor:pointer}
+#booking .pack-suggestion input {margin-top:3px!important}
+#booking .pack-suggestion>span {min-width:0;overflow-wrap:anywhere}
+#booking .pack-suggestion strong {font-size:14px;line-height:1.6;font-weight:600}
+#booking .pack-suggestion small {display:block;font-size:12px;line-height:1.8;color:var(--pack-muted);margin-top:4px}
+#booking .pack-ai-refresh {border-top:1px solid var(--pack-line);margin-top:26px;padding-top:20px}
+#booking .pack-ai-refresh>summary {cursor:pointer;font-size:12px;color:var(--pack-action);font-weight:600}
+#booking .pack-ai-refresh>.pack-small-button {margin:0 0 16px}
+@media(min-width:1450px) {#booking .pack-grid {grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:1100px) {#booking .pack-overview {grid-template-columns:minmax(0,1fr) minmax(160px,220px)}#booking .pack-top-actions {grid-column:1/-1}#booking .pack-footer>span {margin-left:0}}
+@media(max-width:720px) {
+  #booking .pack-overview {grid-template-columns:1fr;gap:22px;padding:24px 21px;border-radius:20px}
+  #booking .pack-overview h3 {font-size:23px}#booking .pack-progress strong {font-size:32px}
+  #booking .pack-top-actions {display:grid;grid-template-columns:1fr 1fr;width:100%}
+  #booking .pack-toolbar {gap:10px;padding:12px 0 16px}#booking .pack-save {font-size:10px;margin-left:0}
+  #booking .pack-toolbar .pack-link {margin-left:auto}
+  #booking .pack-grid {grid-template-columns:1fr;gap:16px}#booking .pack-todos .pack-items {display:block}
+  #booking .pack-category-head {padding:14px 14px}#booking .pack-category-head h3 {font-size:16px}
+  #booking .pack-items {padding:2px 10px}#booking .pack-item {gap:2px;min-height:66px}
+  #booking .pack-item-label {gap:8px}#booking .pack-item-copy b {font-size:14px}
+  #booking .pack-item .pack-icon {width:38px;flex-basis:38px;min-height:44px}
+  #booking .pack-emoji {font-size:18px}#booking .pack-section-label span {display:none}
+  #booking .pack-footer {gap:8px 18px}#booking .pack-footer>span {flex-basis:100%;order:1}
+  #booking .pack-dialog {border-radius:20px;max-height:90dvh}#booking .pack-dialog-head {padding:19px 18px 15px}
+  #booking .pack-dialog-body {padding:18px}#booking .pack-dialog-head h3 {font-size:22px}
+  #booking .pack-form-columns {grid-template-columns:1fr}#booking .pack-dialog input:not([type="checkbox"]),#booking .pack-dialog textarea,#booking .pack-dialog select {font-size:16px}
+}
+@media(prefers-reduced-motion:reduce) {#booking .packing-app * {transition:none!important}}
+@media print {#booking .pack-drag,#booking .pack-icon,#booking .pack-top-actions,#booking .pack-toolbar,#booking .pack-add-row,#booking .pack-footer,#booking .pack-dialog {display:none!important}#booking .pack-grid {grid-template-columns:repeat(2,minmax(0,1fr))}#booking .pack-category {break-inside:avoid;box-shadow:none}#booking .pack-item-copy small {display:block;-webkit-line-clamp:unset}}
+
+/* Compact departure reminders: one title + one description, same palette/cards. */
+#booking .pack-todos .pack-item {min-height:58px;padding:7px 0}
+#booking .pack-todos .pack-item-label {order:0}
+#booking .pack-todos .pack-drag {order:1}
+#booking .pack-todos .pack-item>.pack-icon {order:2}
+#booking .pack-todos .pack-item-copy b {white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#booking .pack-todos .pack-item-copy small {display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}

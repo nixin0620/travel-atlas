@@ -1,0 +1,21 @@
+/* Single, quiet wash of light on arrival; never intercept map interactions. */
+#china-footprints .guide-atlas-glow{
+  position:absolute;inset:-10%;z-index:4;pointer-events:none;
+  background:radial-gradient(ellipse at 38% 55%,color-mix(in srgb,var(--fp-gold,#eac481) 12%,transparent),transparent 58%);
+}
+@media(prefers-reduced-motion:no-preference){
+  .desktop-chapter-rail .rail-nav-icon,.desktop-chapter-rail .rail-shortcut-icon{transition:color .28s ease}
+  .destination-guide .dg-tabs button{transition:background-color .25s ease,color .25s ease}
+}
+@media(min-width:1180px){
+  body .desktop-chapter-rail.has-utility-footer .guide-rail-main .fp-rail-entry{transition:background-color .28s ease,color .28s ease}
+  body .desktop-chapter-rail.has-utility-footer .guide-rail-main .fp-rail-entry.is-active{
+    background:color-mix(in srgb,var(--hb-accent,#e1b66e) 13%,transparent)!important;
+    color:var(--hb-on-dark,#fff9ee)!important;
+  }
+  .desktop-chapter-rail.has-utility-footer .fp-rail-entry.is-active .rail-shortcut-icon{color:var(--hb-accent,#e1b66e)}
+}
+@media(prefers-reduced-motion:reduce){
+  #china-footprints .guide-atlas-glow{display:none}
+  body .desktop-chapter-rail.has-utility-footer .guide-rail-main .fp-rail-entry{transition:none}
+}

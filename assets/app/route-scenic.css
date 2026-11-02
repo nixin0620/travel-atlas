@@ -1,0 +1,272 @@
+/* Scenic itinerary: city bands, compact transport rows and inset accommodation. */
+html:has(#route:target){scroll-padding-top:0}
+#route{scroll-margin-top:0!important}
+body[data-handbook-theme] main>#route,body main>#route{padding:var(--travel-chapter-gap,32px) 0!important;background:var(--hb-deep,#082f29)!important;border:0}
+body main>#route>.shell{width:calc(100% - 2 * var(--travel-page-gutter,32px));max-width:1240px;margin:0 auto;padding:0}
+#route #journey-app{--jo-ink:var(--hb-on-light);--jo-muted:var(--hb-on-light-muted);--jo-paper:var(--hb-card);--jo-soft:var(--hb-page-soft);--jo-line:var(--hb-line-light);--route-gold:var(--hb-gold-ink);margin:0;color:var(--jo-ink);font-size:14px;background:var(--hb-page,#f4efe5);border-radius:var(--travel-panel-radius,20px);box-shadow:0 0 0 1px var(--hb-line-dark,#ffffff30)}
+/* One bounded chapter: scenic header and paper body share the same outer panel. */
+#journey-app .jo-masthead{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:22px;padding:32px var(--travel-page-gutter,32px);min-height:156px;color:var(--hb-on-dark,#fff9ed);isolation:isolate;background:var(--hb-surface,#124d43);overflow:hidden;border-radius:var(--travel-panel-radius,20px) var(--travel-panel-radius,20px) 0 0}
+#journey-app .jo-masthead::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,var(--hb-surface,#124d43) 0%,color-mix(in srgb,var(--hb-surface,#124d43) 92%,transparent) 30%,color-mix(in srgb,var(--hb-deep,#082f29) 55%,transparent) 65%,color-mix(in srgb,var(--hb-deep,#082f29) 38%,transparent)),url('assets/demo-landscape.svg') right 53%/70% auto no-repeat;opacity:.9;pointer-events:none}
+body #route #journey-app .jo-masthead .section-heading{display:grid;grid-template-columns:38px minmax(0,1fr);gap:18px;align-items:center;flex:1 0 300px;max-width:380px;margin:0!important;color:inherit}
+#route #journey-app .jo-masthead .section-no{font-size:34px;color:#d4af6b}
+#route #journey-app .jo-masthead h2{font-size:34px;color:#fff9ed;line-height:1.2;margin:5px 0 9px;white-space:nowrap}
+#route #journey-app .jo-masthead .eyebrow{display:block;font-size:9px;letter-spacing:.22em;color:#e6eade;margin:0}
+#route #journey-app .jo-masthead .section-heading>div>p:last-child{font-size:13px;color:#d5e1d7!important;line-height:1.5;margin:0}
+#journey-app .jo-hero-stats{display:flex;align-items:stretch;gap:10px;flex:1;min-width:510px}
+#journey-app .jo-trip-stat,#journey-app .jo-cost-total,#journey-app .jo-cost-part{display:flex;flex-direction:column;justify-content:center;gap:1px;min-height:62px;padding:10px 15px;border:1px solid #f3ead626;border-radius:var(--travel-inset-radius,12px);background:color-mix(in srgb,var(--hb-deep,#082f29) 82%,transparent);backdrop-filter:blur(8px)}
+#journey-app .jo-trip-stat{flex-direction:row;align-items:center;gap:11px;min-width:173px}
+#journey-app .jo-trip-stat svg{width:22px;height:22px;flex:none;color:#debd7b}
+#journey-app .jo-trip-stat>div{display:grid;gap:4px}
+#journey-app #jo-scale{font-weight:500;font-size:13px;line-height:1.4;color:#fff9ed;white-space:nowrap}
+#journey-app #jo-date-range{font-size:10px;color:#c9d7cb;white-space:nowrap}
+#journey-app #jo-check-costs{display:flex;align-items:stretch;flex:1;gap:10px;flex-wrap:nowrap;margin:0;padding:0;color:#fff9ed}
+#journey-app #jo-check-costs>div{flex:1;min-width:82px}
+#journey-app #jo-check-costs span{font-size:10px;line-height:1.4;color:#d5dfd4}
+#journey-app #jo-check-costs strong{font:500 18px/1.3 system-ui,sans-serif;font-variant-numeric:tabular-nums;color:#fff9ed;white-space:nowrap}
+#journey-app #jo-check-costs .jo-cost-total{min-width:110px}
+#journey-app #jo-check-costs .jo-cost-amount{font-size:21px}
+#journey-app .jo-route-tools{display:flex;justify-content:space-between;align-items:center;gap:24px;max-width:1440px;margin:0 auto;padding:18px var(--travel-page-gutter,32px) 22px}
+#journey-app .jo-toolbar{display:flex;gap:12px;margin:0;padding:0;border:0}
+#journey-app .jo-toolbar>.jo-btn{background:none;border-color:var(--hb-line-light);color:var(--jo-ink);font-size:13px;min-height:42px;padding:9px 15px;border-radius:8px}
+#journey-app .jo-toolbar>#jo-manage-orders{margin-left:8px;gap:10px;padding:9px 15px;font-size:13px;color:var(--jo-ink);white-space:nowrap}
+#journey-app .jo-toolbar>#jo-manage-orders[aria-expanded=true]{background:var(--hb-hover);border-color:var(--hb-line-light)}
+#journey-app #jo-manage-orders[aria-expanded=true] .jo-disclosure-chevron{transform:rotate(225deg)}
+#journey-app .jo-manager-area{max-width:1440px;margin:0 auto;padding:0 var(--travel-page-gutter,32px) 24px}
+#journey-app .jo-manager-area:has(#stay:not([open])){display:none}
+#journey-app .jo-manager-area #stay:not([open]){display:none}
+#journey-app #jo-route-check{position:relative;display:flex;align-items:center;justify-content:flex-end;gap:16px;flex-wrap:wrap;padding:0;margin:0;border:0;background:none;box-shadow:none;color:var(--jo-muted)}
+#journey-app #jo-check-toggle{padding:6px 0;min-height:36px;color:var(--hb-gold-ink);font-size:12px;background:none;border:0;gap:7px}
+#journey-app #jo-price-note{font-size:11px;color:var(--hb-gold-ink)}
+#journey-app #jo-check-status{display:none}
+#journey-app #jo-check-list{flex-basis:100%;min-width:260px;padding:12px 16px;border:1px solid var(--jo-line);border-radius:8px;background:var(--jo-paper);font-size:13px}
+#journey-app #jo-sync-panel{margin:0 var(--travel-page-gutter,32px) 14px}
+#route #journey-app #jo-sync-panel{color:var(--jo-ink);background:#f3eddf;border-color:#d8c5a2}
+#route #journey-app #jo-sync-panel .jo-sync-copy p{color:var(--jo-muted)}
+#route #journey-app #jo-sync-panel .jo-primary{background:var(--jo-ink);border-color:var(--jo-ink);color:#fff9ed}
+#route #journey-app #jo-sync-panel .jo-primary:disabled{background:#e7e5da;color:var(--jo-muted);border-color:var(--jo-line)}
+#route #journey-app>.jo-summary-bar,#route #journey-app>.jo-sticky-status,#route #journey-app .jo-summary-bar .jo-sticky-status{color:var(--jo-muted)}
+#route #journey-app #jo-storage-warning{color:#825b2f;background:#f4ead5;border-color:#c5a46e}
+#route #journey-app #jo-daily-warning{color:#825b2f}
+#journey-app #jo-route-paper{max-width:1440px;margin:0 auto;padding:0 var(--travel-page-gutter,32px) 20px;background:none;border:0;border-radius:0!important;color:var(--jo-ink)}
+#journey-app #jo-timeline{display:grid;gap:32px;max-width:none;padding:0;margin:0;color:var(--jo-ink)}
+#journey-app #jo-timeline::before,#journey-app #jo-timeline .jo-stop::before,#journey-app #jo-timeline .jo-leg::before{display:none}
+#journey-app #jo-timeline .jo-stop{position:relative;display:block;margin:0;padding:0;border:1px solid var(--hb-line-light);border-radius:var(--travel-card-radius,16px);background:var(--hb-card);box-shadow:0 5px 16px #4c483108;overflow:hidden}
+#journey-app #jo-timeline .jo-stop-top{position:relative;display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:16px;isolation:isolate;min-height:77px;padding:14px 20px;margin:0;border:0;background:var(--hb-page-soft);overflow:hidden}
+#journey-app #jo-timeline .jo-stop-top::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,var(--hb-page-soft) 0%,var(--hb-page-soft) 25%,color-mix(in srgb,var(--hb-page-soft) 86%,transparent) 37%,transparent 61%,color-mix(in srgb,var(--hb-page-soft) 33%,transparent) 72%,color-mix(in srgb,var(--hb-page-soft) 96%,transparent) 90%,var(--hb-page-soft) 100%)}
+#journey-app #jo-timeline .jo-city-scene{position:absolute;z-index:-2;width:72%;height:100%;right:0;top:0;object-fit:cover;filter:saturate(.78);pointer-events:none}
+#journey-app #jo-timeline .jo-city-number{display:grid;place-items:center;flex:0 0 40px;width:40px;height:40px;border-radius:50%;color:#fff9e8;background:linear-gradient(135deg,#c2a266,#93713d);font-size:18px;line-height:1;font-weight:400;box-shadow:inset 0 0 0 1px #fff5d826}
+#journey-app #jo-timeline .jo-city{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 16px;min-width:0;flex:1}
+#journey-app #jo-timeline .jo-city h4{margin:0;color:var(--jo-ink);font:500 27px/1.3 'Songti SC','Noto Serif SC',Georgia,serif;letter-spacing:.02em}
+#journey-app #jo-timeline .jo-city-dates{font-size:12px;color:var(--hb-on-light-muted);white-space:nowrap}
+#journey-app #jo-timeline .jo-scene-caption{align-self:center;flex:none;margin-left:auto;max-width:190px;font-size:12px;line-height:1.5;color:var(--hb-on-light);font-weight:500;text-align:right}
+#journey-app #jo-timeline .jo-stop-body{padding:8px 18px 12px;margin:0;border:0;border-radius:0;background:var(--hb-card);color:var(--jo-ink)}
+#journey-app #jo-timeline .jo-transfer{position:relative;display:block;margin:0;padding:10px 0 5px;min-height:0;border:0;border-radius:0;background:none;color:var(--jo-ink);transition:none}
+#journey-app #jo-timeline .jo-transfer-line{display:grid;grid-template-columns:66px 42px minmax(175px,1fr) minmax(200px,1.1fr) 84px 40px;align-items:center;gap:14px;width:100%;min-width:0}
+#journey-app #jo-timeline .jo-leg-date{align-self:start;display:grid;gap:2px;padding:2px 10px 0 6px;min-height:48px;border-right:1px solid var(--hb-line-light);font-variant-numeric:tabular-nums}
+#journey-app #jo-timeline .jo-leg-date time{font-size:16px;font-weight:600;line-height:1.5;white-space:nowrap}
+#journey-app #jo-timeline .jo-leg-date small{font-size:11px;color:var(--jo-muted)}
+#journey-app #jo-timeline .jo-order-glyph{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--hb-page-soft);color:var(--hb-action);flex:none}
+#journey-app #jo-timeline .jo-order-glyph svg{width:23px;height:23px}
+#journey-app #jo-timeline .jo-transfer-route{min-width:0;display:flex;flex-direction:column}
+#journey-app #jo-timeline .jo-transfer-route h5{margin:3px 0 0;font-size:16px;font-weight:600;line-height:1.4;overflow-wrap:anywhere;color:var(--jo-ink);order:2}
+#journey-app #jo-timeline .jo-transport-meta{display:flex;align-items:center;flex-wrap:wrap;gap:3px 7px;min-width:0;font-size:12px;color:var(--jo-muted);order:1}
+#journey-app #jo-timeline .jo-mode-pill[data-mode]{font-size:12px;font-weight:400;padding:0;border:0;background:none;color:var(--jo-muted)}
+#journey-app #jo-timeline .jo-service-number{font-size:12px;font-weight:500;color:var(--hb-on-light-muted)}
+#journey-app #jo-timeline .jo-depart-date{display:none}
+#journey-app #jo-timeline .jo-route-role{font-size:11px}
+#journey-app #jo-timeline .jo-checkin{min-height:25px;padding:2px 7px;font-size:10px;margin:0;border:0;border-radius:20px;background:#eee5cf;color:#8d672b;white-space:nowrap}
+#journey-app #jo-timeline .jo-checkin.is-done{background:var(--hb-hover);color:var(--hb-action)}
+#journey-app #jo-timeline .jo-transfer-time{display:flex;justify-content:flex-start;align-items:center;flex-wrap:wrap;gap:5px 15px;min-width:0;width:auto;max-width:none;padding:0 0 0 20px;border-left:1px solid var(--hb-line-light);text-align:left;white-space:normal;margin:0}
+#journey-app #jo-timeline .jo-clock-pair{display:flex;align-items:baseline;gap:10px;justify-content:flex-start}
+#journey-app #jo-timeline .jo-clock-cell{display:flex;align-items:baseline;gap:4px}
+#journey-app #jo-timeline .jo-clock-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+#journey-app #jo-timeline .jo-clock-cell b{font-size:23px;line-height:1.35;font-weight:500;letter-spacing:-.03em;color:var(--jo-ink);white-space:nowrap}
+#journey-app #jo-timeline .jo-clock-offset{font-size:10px;white-space:nowrap;color:var(--hb-gold-ink)}
+#journey-app #jo-timeline .jo-clock-arrow{font-size:17px;padding:0;color:#919a90}
+#journey-app #jo-timeline .jo-duration-line{font-size:11px;display:flex;justify-content:flex-start;flex-wrap:wrap;gap:4px;margin:0}
+#journey-app #jo-timeline .jo-duration,#journey-app #jo-timeline .jo-duration.is-unknown{font-size:11px;color:var(--jo-muted);font-weight:400;background:none;padding:0;border:0;white-space:normal}
+#journey-app #jo-timeline .jo-duration-line>small{font-size:11px}
+#journey-app #jo-timeline .jo-transfer-price{text-align:right;font-size:18px;font-weight:500;white-space:nowrap;font-variant-numeric:tabular-nums}
+#journey-app #jo-timeline .jo-transfer-actions{display:flex;justify-content:flex-end;gap:0;margin:0;min-width:0}
+#journey-app #jo-timeline :is(.jo-transfer-actions,.jo-stay-aside) .jo-btn{display:inline-flex;align-items:center;justify-content:center;min-width:40px;min-height:40px;padding:8px;border:0;border-radius:8px;background:none;color:var(--hb-action);font-size:11px}
+#journey-app #jo-timeline :is(.jo-transfer-actions,.jo-stay-aside) .jo-btn svg{width:17px;height:17px}
+#journey-app #jo-timeline .jo-transfer-details{margin:0 0 0 136px;padding:0;border:0;min-width:0}
+#journey-app #jo-timeline .jo-transfer-details>summary{display:inline-flex;min-height:25px;padding:1px 0;gap:6px;border:0;background:none;font-size:10px;color:var(--hb-on-light-muted);filter:none}
+#journey-app #jo-timeline .jo-transfer-details .jo-detail-body{padding:12px 0;margin:4px 0 8px;border-top:1px solid var(--jo-line)}
+#journey-app #jo-timeline .jo-detail-body .jo-row-meta{color:var(--jo-muted);font-size:12px}
+#journey-app #jo-timeline .jo-terminal-pair{gap:20px}
+#journey-app #jo-timeline .jo-terminal-pair small{font-size:11px}
+#journey-app #jo-timeline .jo-terminal-pair b{font-size:14px;line-height:1.5}
+#journey-app #jo-timeline .jo-transfer-alert{margin:5px 0 0 136px;font-size:12px;color:var(--hb-gold-ink)}
+#journey-app #jo-timeline .jo-leg .jo-btn{color:var(--jo-ink);border-color:var(--jo-line)}
+#journey-app #jo-timeline .jo-stop-hotels{display:grid;gap:8px;margin:1px 0 0 80px;padding:0;border:0}
+#journey-app #jo-timeline .jo-stop-hotels:empty{display:none}
+#journey-app #jo-timeline .jo-stop .jo-hotel-row.jo-stay-entry{display:grid;grid-template-columns:minmax(0,1fr) 138px;align-items:center;gap:14px;margin:0;padding:12px 10px 12px 0;border:1px solid var(--hb-line-light);border-radius:var(--travel-inset-radius,12px);background:linear-gradient(110deg,color-mix(in srgb,var(--hb-page-soft) 65%,transparent),color-mix(in srgb,var(--hb-page) 50%,transparent));color:var(--jo-ink);box-shadow:none;transition:none}
+#journey-app #jo-timeline .jo-stay-entry+.jo-stay-entry{border-top:1px solid var(--hb-line-light)!important;padding-top:12px!important}
+#journey-app #jo-timeline .jo-stay-main{display:grid;grid-template-columns:130px minmax(160px,1fr) minmax(170px,1fr);gap:8px 14px;align-items:center;min-width:0;position:relative;padding:0}
+#journey-app #jo-timeline .jo-stay-kind{display:flex;align-items:center;gap:10px;padding-left:8px;margin:0;white-space:nowrap;font-size:12px;line-height:1.4;color:var(--hb-gold-ink);font-weight:500}
+#journey-app #jo-timeline .jo-stay-kind svg{width:40px;height:40px;padding:9px;flex:none;border-radius:50%;background:color-mix(in srgb,var(--hb-accent) 16%,var(--hb-page));color:var(--hb-gold-ink)}
+#journey-app #jo-timeline .jo-stay-main h5{margin:0;font-size:14px;line-height:1.6;font-weight:600;overflow-wrap:anywhere;color:var(--jo-ink)}
+#journey-app #jo-timeline .jo-hotel-map{color:inherit;text-decoration:none;border-radius:2px;text-underline-offset:3px}
+#journey-app #jo-timeline .jo-hotel-map>span{font-size:11px;margin-left:4px;color:var(--hb-on-light-muted);display:inline-block}
+#journey-app #jo-timeline .jo-stay-dates{margin:0;padding-left:18px;border-left:1px solid var(--hb-line-light);min-width:0;font-size:12px;line-height:1.6;color:var(--jo-muted)}
+#journey-app #jo-timeline .jo-stay-main>.jo-row-meta{grid-column:2/4;font-size:11px;line-height:1.4;color:var(--jo-muted);margin:0}
+#journey-app #jo-timeline .jo-stay-main>.jo-row-meta:empty{display:none}
+#journey-app #jo-timeline .jo-stay-aside,#journey-app #jo-timeline .jo-stay-aside:has([data-jo-image]){display:grid;grid-template-columns:84px 40px;align-items:center;gap:14px;min-width:0}
+#journey-app #jo-timeline .jo-stay-amount{display:grid;gap:2px;text-align:right;padding:0}
+#journey-app #jo-timeline .jo-stay-amount strong{font-size:17px;font-weight:500;line-height:1.4;color:var(--jo-ink)}
+#journey-app #jo-timeline .jo-stay-amount small{font-size:10px;line-height:1.4;color:var(--jo-muted);white-space:nowrap}
+#journey-app #jo-timeline .jo-stay-aside .jo-row-actions{display:flex;flex-direction:column;justify-content:center;gap:0;min-width:0}
+#journey-app #jo-timeline .jo-pending-stay{display:flex;align-items:center;gap:14px;padding:10px 12px;margin:0;border:1px dashed #d8cbb5;border-radius:var(--travel-inset-radius,12px);background:color-mix(in srgb,var(--hb-page) 60%,transparent);color:var(--jo-muted)}
+#journey-app #jo-timeline .jo-pending-bed{display:grid;place-items:center;flex:none;width:40px;height:40px;background:var(--hb-page-soft);border-radius:50%;color:var(--hb-gold-ink)}
+#journey-app #jo-timeline .jo-pending-bed svg{width:23px;height:23px}
+#journey-app #jo-timeline .jo-pending-copy{display:flex;align-items:center;gap:18px;flex:1;min-width:0}
+#journey-app #jo-timeline .jo-pending-copy b{font-size:12px;font-weight:500;color:var(--hb-gold-ink);white-space:nowrap}
+#journey-app #jo-timeline .jo-pending-copy span{font-size:12px;line-height:1.6;color:var(--jo-muted)}
+#journey-app #jo-timeline .jo-pending-stay .jo-btn{color:var(--jo-ink);border-color:#dacbb1;background:none;font-size:12px;min-height:36px;white-space:nowrap}
+#journey-app #jo-timeline .jo-route-tail{margin:0;padding:12px 18px;border:1px solid var(--hb-line-light);border-radius:var(--travel-card-radius,16px);background:var(--hb-card);color:var(--jo-ink)}
+#journey-app #jo-timeline .jo-route-tail>.jo-stop-marker{display:none}
+#journey-app #jo-timeline .jo-route-tail>.jo-stop-top{min-height:0;padding:0 6px 8px;background:none;border-bottom:1px solid var(--hb-line-light);margin:0 0 3px}
+#journey-app #jo-timeline .jo-route-tail>.jo-stop-top::after{display:none}
+#journey-app #jo-timeline .jo-route-tail h4{margin:0;font-size:15px;line-height:1.5;color:var(--hb-gold-ink);font-weight:500}
+#journey-app #jo-timeline .jo-pending-leg{padding:15px 6px;background:none;color:var(--jo-muted)}
+#journey-app #jo-timeline .jo-pending-leg .jo-row-meta{color:var(--jo-muted)}
+#journey-app #jo-timeline .jo-issue{color:#916334;margin:10px 0}
+#journey-app .jo-manager-area #stay{padding:0 20px;margin:0;border:1px solid var(--hb-line-light);border-radius:var(--travel-card-radius,16px);background:var(--hb-card);box-shadow:none}
+#journey-app .jo-manager-area #stay>summary{padding:13px 0}
+#journey-app .jo-manager-area #stay .jo-note{margin:1px 0 0}
+#journey-app>.jo-summary-bar,#journey-app>#jo-storage-warning,#journey-app>#jo-undo-bar{margin-inline:var(--travel-page-gutter,32px)}
+#journey-app :is(.jo-masthead) :is(button,a):focus-visible{outline-color:#e6bd72}
+@media(hover:hover){#journey-app #jo-timeline :is(.jo-transfer-actions,.jo-stay-aside) .jo-btn:hover{background:var(--hb-hover);color:var(--hb-on-light)}#journey-app #jo-timeline .jo-hotel-map:hover{text-decoration:underline}}
+@media(max-width:1300px){
+ #journey-app .jo-masthead{gap:18px;padding-block:24px}
+ body #route #journey-app .jo-masthead .section-heading{flex-basis:270px;max-width:none}
+ #journey-app .jo-hero-stats{min-width:510px}
+ #journey-app #jo-timeline .jo-transfer-line{grid-template-columns:58px 38px minmax(150px,1fr) minmax(170px,1fr) 78px 36px;gap:12px}
+ #journey-app #jo-timeline .jo-transfer-time{padding-left:14px}
+ #journey-app #jo-timeline .jo-transfer-details,#journey-app #jo-timeline .jo-transfer-alert{margin-left:120px}
+ #journey-app #jo-timeline .jo-stop-hotels{margin-left:70px}
+ #journey-app #jo-timeline .jo-stay-main{grid-template-columns:114px minmax(130px,1fr) minmax(145px,1fr);gap:10px}
+ #journey-app #jo-timeline .jo-stay-kind{gap:7px;font-size:11px}
+ #journey-app #jo-timeline .jo-stay-dates{padding-left:12px;font-size:11px}
+ #journey-app #jo-timeline .jo-stop .jo-hotel-row.jo-stay-entry{grid-template-columns:minmax(0,1fr) 126px;gap:12px}
+ #journey-app #jo-timeline .jo-stay-aside,#journey-app #jo-timeline .jo-stay-aside:has([data-jo-image]){grid-template-columns:78px 36px;gap:12px}
+}
+@media(max-width:1200px){
+ body #route #journey-app .jo-masthead .section-heading{flex-basis:100%;padding-right:0}
+ #journey-app .jo-hero-stats{min-width:0;flex-basis:100%}
+ #journey-app .jo-trip-stat{flex:1}
+ #journey-app #jo-check-costs{flex:2}
+ #journey-app #jo-timeline .jo-stop-top{gap:12px;padding:13px 16px}
+ #journey-app #jo-timeline .jo-scene-caption{font-size:10px;max-width:130px}
+ #journey-app #jo-timeline .jo-city h4{font-size:25px}
+ #journey-app #jo-timeline .jo-stay-main{grid-template-columns:112px minmax(0,1fr);gap:1px 10px}
+ #journey-app #jo-timeline .jo-stay-kind{grid-row:1/3}
+ #journey-app #jo-timeline .jo-stay-dates{grid-column:2;border:0;padding:0}
+ #journey-app #jo-timeline .jo-stay-main>.jo-row-meta{grid-column:2}
+ #journey-app #jo-timeline .jo-pending-copy{display:grid;gap:2px}
+}
+@media(max-width:780px){
+ #journey-app #jo-timeline .jo-transfer-line{grid-template-columns:48px 34px minmax(0,1fr) 74px 36px;gap:9px}
+ #journey-app #jo-timeline .jo-transfer-time{grid-column:3/5;grid-row:2;gap:4px 12px;border:0;padding:0}
+ #journey-app #jo-timeline .jo-leg-date{grid-column:1;grid-row:1/3;padding-left:0}
+ #journey-app #jo-timeline .jo-order-glyph{grid-column:2;grid-row:1;width:34px;height:34px}
+ #journey-app #jo-timeline .jo-transfer-route{grid-column:3;grid-row:1}
+ #journey-app #jo-timeline .jo-transfer-price{grid-column:4;grid-row:1;font-size:16px}
+ #journey-app #jo-timeline .jo-transfer-actions{grid-column:5;grid-row:1}
+ #journey-app #jo-timeline .jo-clock-cell b{font-size:22px}
+ #journey-app #jo-timeline .jo-transfer-details,#journey-app #jo-timeline .jo-transfer-alert{margin-left:100px}
+ #journey-app #jo-timeline .jo-stop-hotels{margin-left:57px;margin-top:4px}
+ #journey-app #jo-timeline .jo-stay-kind{padding-left:7px;font-size:11px;gap:7px}
+ #journey-app #jo-timeline .jo-stay-kind svg{width:34px;height:34px;padding:7px}
+ #journey-app #jo-timeline .jo-stay-main{grid-template-columns:102px minmax(0,1fr)}
+ #journey-app #jo-timeline .jo-stay-main h5{font-size:13px}
+ #journey-app #jo-timeline .jo-scene-caption{display:none}
+ #journey-app #jo-timeline .jo-stop-top::after{background:linear-gradient(90deg,var(--hb-page-soft),color-mix(in srgb,var(--hb-page-soft) 94%,transparent) 44%,color-mix(in srgb,var(--hb-page-soft) 13%,transparent) 100%)}
+}
+@media(max-width:600px){
+ #journey-app .jo-masthead{padding:22px 16px 18px;gap:17px;min-height:0}
+ #journey-app .jo-masthead::before{background-size:auto,cover;background-position:center,center}
+ body #route #journey-app .jo-masthead .section-heading{grid-template-columns:28px minmax(0,1fr);gap:9px;padding-right:0;flex-basis:auto;max-width:100%;margin:0!important}
+ #route #journey-app .jo-masthead h2{font-size:28px;margin:4px 0 7px}
+ #route #journey-app .jo-masthead .section-no{font-size:27px}
+ #route #journey-app .jo-masthead .section-heading>div>p:last-child{font-size:12px}
+ #route #journey-app .jo-masthead .eyebrow{font-size:8px}
+ #journey-app .jo-hero-stats{display:grid;grid-template-columns:1fr;gap:8px}
+ #journey-app .jo-trip-stat{padding:0;border:0;min-height:0;background:none;backdrop-filter:none;justify-content:flex-start;margin-left:37px}
+ #journey-app .jo-trip-stat svg{display:none}
+ #journey-app .jo-trip-stat>div{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center}
+ #journey-app #jo-scale{font-size:12px}
+ #journey-app #jo-date-range{font-size:10px}
+ #journey-app #jo-check-costs{gap:7px}
+ #journey-app #jo-check-costs>div{min-width:0;padding:9px 12px;min-height:57px}
+ #journey-app #jo-check-costs .jo-cost-total{min-width:0}
+ #journey-app #jo-check-costs strong{font-size:18px}
+ #journey-app #jo-check-costs .jo-cost-amount{font-size:20px}
+ #journey-app .jo-route-tools{padding:16px 12px 20px;gap:10px;align-items:stretch;flex-direction:column}
+ #journey-app .jo-toolbar{gap:10px;flex-wrap:wrap}
+ #journey-app .jo-toolbar>.jo-btn{flex:1;font-size:12px;padding:8px 7px;min-height:42px;white-space:nowrap}
+ #journey-app .jo-toolbar>#jo-manage-orders{margin-left:0;gap:7px;padding:8px 7px;font-size:12px}
+ #journey-app .jo-manager-area{padding:0 12px 20px}
+ #journey-app #jo-route-check{gap:12px;display:flex;flex-direction:row;align-items:center;justify-content:flex-start;min-width:0}
+ #journey-app #jo-check-toggle{font-size:11px;min-height:32px}
+ #journey-app #jo-price-note{font-size:10px}
+ #journey-app #jo-check-list{min-width:0;width:210px;font-size:12px}
+ #journey-app #jo-route-paper{padding:0 12px 18px;margin:0}
+ #journey-app #jo-timeline{gap:24px}
+ #journey-app #jo-timeline .jo-stop-top{padding:12px;min-height:78px;gap:10px}
+ #journey-app #jo-timeline .jo-city-number{width:32px;height:32px;flex-basis:32px;font-size:15px}
+ #journey-app #jo-timeline .jo-city{display:grid;gap:3px}
+ #journey-app #jo-timeline .jo-city h4{font-size:25px}
+ #journey-app #jo-timeline .jo-city-dates{font-size:11px}
+ #journey-app #jo-timeline .jo-stop-top::after{background:linear-gradient(90deg,var(--hb-page-soft),color-mix(in srgb,var(--hb-page-soft) 97%,transparent) 40%,color-mix(in srgb,var(--hb-page-soft) 38%,transparent) 80%,color-mix(in srgb,var(--hb-page-soft) 8%,transparent))}
+ #journey-app #jo-timeline .jo-city-scene{width:85%}
+ #journey-app #jo-timeline .jo-stop-body{padding:8px 11px 11px}
+ #journey-app #jo-timeline .jo-transfer{padding:3px 0 5px}
+ #journey-app #jo-timeline .jo-transfer-line{grid-template-columns:33px minmax(0,1fr) 38px;gap:8px 9px;align-items:center}
+ #journey-app #jo-timeline .jo-leg-date{grid-column:1/3;grid-row:1;display:flex;align-items:center;gap:7px;min-height:0;border:0;padding:0}
+ #journey-app #jo-timeline .jo-leg-date time{font-size:12px}
+ #journey-app #jo-timeline .jo-leg-date small{font-size:10px}
+ #journey-app #jo-timeline .jo-order-glyph{grid-column:1;grid-row:2;width:33px;height:33px}
+ #journey-app #jo-timeline .jo-transfer-route{grid-column:2/4;grid-row:2;padding-right:0}
+ #journey-app #jo-timeline .jo-transfer-route h5{font-size:15px;margin-top:3px}
+ #journey-app #jo-timeline .jo-transport-meta{font-size:11px;gap:3px 6px}
+ #journey-app #jo-timeline .jo-mode-pill[data-mode],#journey-app #jo-timeline .jo-service-number{font-size:11px}
+ #journey-app #jo-timeline .jo-checkin{min-height:22px;font-size:10px;padding:1px 6px}
+ #journey-app #jo-timeline .jo-transfer-time{grid-column:2/4;grid-row:3;flex-wrap:wrap;gap:2px 10px}
+ #journey-app #jo-timeline .jo-clock-cell b{font-size:22px}
+ #journey-app #jo-timeline .jo-clock-pair{gap:9px}
+ #journey-app #jo-timeline .jo-duration{font-size:10px}
+ #journey-app #jo-timeline .jo-transfer-price{grid-column:2;grid-row:4;text-align:left;font-size:15px}
+ #journey-app #jo-timeline .jo-transfer-actions{grid-column:3;grid-row:1;align-self:center}
+ #journey-app #jo-timeline :is(.jo-transfer-actions,.jo-stay-aside) .jo-btn{min-height:36px;min-width:36px;padding:7px}
+ #journey-app #jo-timeline .jo-transfer-details,#journey-app #jo-timeline .jo-transfer-alert{margin-left:42px}
+ #journey-app #jo-timeline .jo-transfer-details>summary{font-size:11px;min-height:30px}
+ #journey-app #jo-timeline .jo-stop-hotels{margin:5px 0 0}
+ #journey-app #jo-timeline .jo-stop .jo-hotel-row.jo-stay-entry{grid-template-columns:minmax(0,1fr) 36px;padding:11px 8px;gap:7px;background:color-mix(in srgb,var(--hb-page-soft) 60%,var(--hb-card))}
+ #journey-app #jo-timeline .jo-stay-main{grid-column:1;grid-row:1;display:grid;grid-template-columns:1fr;gap:4px;padding-left:35px}
+ #journey-app #jo-timeline .jo-stay-kind{grid-row:1;grid-column:1;display:block;padding:0;font-size:10px}
+ #journey-app #jo-timeline .jo-stay-kind svg{position:absolute;left:0;top:0;width:28px;height:28px;padding:5px}
+ #journey-app #jo-timeline .jo-stay-main h5{grid-row:2;font-size:14px;line-height:1.5}
+ #journey-app #jo-timeline .jo-stay-dates{grid-column:1;grid-row:3;font-size:11px;padding:0}
+ #journey-app #jo-timeline .jo-stay-main>.jo-row-meta{grid-column:1;font-size:10px}
+ #journey-app #jo-timeline .jo-stay-aside,#journey-app #jo-timeline .jo-stay-aside:has([data-jo-image]){display:contents}
+ #journey-app #jo-timeline .jo-stay-amount{grid-column:1;grid-row:2;display:flex;gap:7px;align-items:baseline;padding-left:35px;text-align:left}
+ #journey-app #jo-timeline .jo-stay-amount strong{font-size:15px}
+ #journey-app #jo-timeline .jo-stay-aside .jo-row-actions{grid-column:2;grid-row:1/3;align-self:center}
+ #journey-app #jo-timeline .jo-stay-aside .jo-btn[data-jo-image]{font-size:10px;white-space:normal}
+ #journey-app #jo-timeline .jo-pending-stay{gap:8px;padding:10px 8px;flex-wrap:wrap}
+ #journey-app #jo-timeline .jo-pending-bed{width:28px;height:28px}
+ #journey-app #jo-timeline .jo-pending-bed svg{width:20px;height:20px}
+ #journey-app #jo-timeline .jo-pending-copy{flex-basis:calc(100% - 40px)}
+ #journey-app #jo-timeline .jo-pending-copy span{font-size:11px}
+ #journey-app #jo-timeline .jo-pending-stay .jo-btn{margin-left:36px;font-size:11px}
+ #journey-app #jo-timeline .jo-route-tail{padding:10px 11px}
+ #journey-app #jo-timeline .jo-terminal-pair{gap:12px;flex-wrap:wrap}
+ #journey-app #jo-timeline .jo-terminal-pair>div{min-width:90px;flex:1}
+ #journey-app #jo-timeline .jo-detail-actions{flex-wrap:wrap;justify-content:flex-start}
+ #journey-app #jo-timeline .jo-pending-leg{flex-wrap:wrap}
+ #journey-app .jo-manager-area #stay{padding:0 12px}
+}
+@media(prefers-reduced-motion:reduce){#journey-app #jo-timeline *{animation:none!important;transition:none!important}}
+@media print{#journey-app .jo-masthead{background:#123d34!important;print-color-adjust:exact}#journey-app #jo-timeline .jo-stop{break-inside:avoid}#journey-app .jo-route-tools{display:none}}

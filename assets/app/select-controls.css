@@ -1,0 +1,127 @@
+/* Shared select geometry. Native menus keep their keyboard and mobile behavior.
+   Important declarations intentionally supersede legacy per-chapter form rules. */
+body select:not([multiple]):not([size]){
+ --select-ink:var(--hb-on-light,#123c35);
+ --select-paper:var(--hb-card,#fbf9f4);
+ --select-line:var(--hb-line-light,#123c3529);
+ --select-focus:var(--hb-action,#176b5d);
+ appearance:none!important;-webkit-appearance:none!important;
+ box-sizing:border-box!important;min-width:0!important;max-width:100%!important;
+ height:44px!important;min-height:44px!important;
+ padding:10px 40px 10px 12px!important;
+ border:1px solid var(--select-line)!important;
+ border-radius:var(--travel-control-radius,8px)!important;
+ color:var(--select-ink)!important;background-color:var(--select-paper)!important;
+ /* One theme-aware chevron; keep a separate text gutter on the right. */
+ background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%)!important;
+ background-position:right 18px center,right 13px center!important;
+ background-size:5px 5px!important;background-repeat:no-repeat!important;
+ font-family:inherit!important;font-size:14px!important;font-weight:400!important;
+ line-height:1.5!important;letter-spacing:normal!important;
+ text-overflow:ellipsis;white-space:nowrap;box-shadow:none!important;
+ vertical-align:middle;cursor:pointer;
+}
+body :is(.trip-mode-panel,.tc-day-select-label) select{
+ --select-ink:var(--hb-on-dark,#f6f1e6);
+ --select-paper:var(--hb-surface,#194f44);
+ --select-line:var(--hb-line-dark,#ffffff38);
+ --select-focus:var(--hb-accent,#e1b66e);
+}
+body select:not([multiple]):not([size]):focus{
+ border-color:var(--select-focus)!important;box-shadow:none!important;
+}
+body select:not([multiple]):not([size]):focus:not(:focus-visible){outline:none!important}
+body select:not([multiple]):not([size]):focus-visible{
+ /* A single compact focus edge, with no extra halo crowding nearby labels. */
+ outline:2px solid var(--select-focus)!important;outline-offset:0!important;
+}
+@media(hover:hover){
+ body select:not([multiple]):not([size]):enabled:hover{border-color:var(--select-focus)!important}
+}
+body select:not([multiple]):not([size]):disabled{
+ opacity:1!important;cursor:not-allowed;
+ color:var(--hb-on-light-muted,#526c64)!important;
+ background-color:var(--hb-page-soft,#ebe5d9)!important;
+ border-color:var(--hb-line-light,#123c3529)!important;
+}
+body select option{color:var(--select-ink);background:var(--select-paper)}
+/* Searchable dropdowns and date/time fields should not regain a second halo. */
+body :is(#journey-app,#trip-daily-content,#china-footprints,#place-first-guide,#daily-gap-fill,#booking,.tm-app,.lf-dialog,.tb-dialog) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]),textarea):focus-visible{
+ outline:2px solid var(--hb-action,#176b5d)!important;outline-offset:0!important;box-shadow:none!important;
+}
+body[data-handbook-theme] #china-footprints .fp-city-picker .fp-search input[type=search]:focus-visible{outline:none!important}
+body #journey-app .jo-terminal-input>input[role=combobox]{min-height:44px;padding-right:44px;font-size:14px}
+body #journey-app .jo-terminal-picker>label{margin-bottom:8px}
+body #journey-app .jo-terminal-toggle{right:5px;width:34px}
+body #journey-app .jo-terminal-options>li{min-height:44px;box-sizing:border-box;padding:10px 12px;gap:8px;font-size:14px}
+body #journey-app .jo-terminal-options>li>small{font-size:12px}
+body .destination-guide .dg-city-trigger:focus-visible{outline-offset:0}
+/* Remove older wrapper arrows now that each select draws its own. */
+body #china-footprints .fp-city-picker .fp-province-picker::after{content:none}
+body #tips .tips-preview-select>svg{display:none}
+
+/* Inline filters: the label keeps its own column, even with a long trip name. */
+body #china-footprints .mm-trip-choice{
+ display:grid;grid-template-columns:max-content minmax(0,320px);
+ align-items:center;gap:16px;font-size:14px;min-width:0;
+}
+body #china-footprints .mm-trip-choice select{width:100%;margin:0}
+body #china-footprints .mm-replay-tools label{
+ display:flex;align-items:center;gap:12px;min-width:0;font-size:14px;
+}
+body #china-footprints .mm-replay-tools label>span{white-space:nowrap}
+body #china-footprints .mm-replay-tools button{min-height:44px}
+body #china-footprints .mm-city-visit{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:12px}
+body #china-footprints .mm-editor-head{gap:12px;flex-wrap:wrap}
+body #china-footprints .mm-editor-head strong{flex-shrink:0}
+body #china-footprints .mm-editor-head select{flex:1;max-width:100%;margin:0}
+body #china-footprints .fp-province-picker{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:12px}
+body #china-footprints .fp-province-picker select{width:100%;max-width:100%}
+body #tips .tl-day-toolbar label{display:flex;align-items:center;gap:12px;min-width:0}
+body #tips .tl-day-toolbar select{margin:0}
+body :is(.tm-search-city,.tm-add-action){gap:12px;min-width:0}
+
+/* Stacked forms: labels and controls share one spacing rule. */
+body :is(.dp-fields,.jo-fields,.tm-fields,.pg-supplement-context){min-width:0}
+body :is(.dp-fields,.tm-fields,.pg-supplement-context)>label{min-width:0}
+body #trip-daily-content .dp-fields>label:has(>select:not([hidden])){display:grid;gap:8px;align-content:start}
+body #trip-daily-content .dp-fields>label>select{margin-top:0}
+body #journey-app .jo-field>span{margin-bottom:8px}
+body :is(#place-first-guide,#daily-gap-fill) .pg-supplement-context label{gap:8px}
+body .fpm-legacy-assignment label{display:grid;gap:8px;min-width:0}
+
+/* The map's existing date list uses the same field edge and focus treatment. */
+body #tm-date-picker{width:216px}
+body #tm-date-picker>summary{
+ box-sizing:border-box;min-height:44px;padding:10px 12px;gap:12px;
+ border-radius:var(--travel-control-radius,8px);font-size:14px;
+ color:var(--tm-ink);box-shadow:none;
+}
+body #tm-date-picker>summary:focus-visible{
+ outline:2px solid var(--tm-action)!important;outline-offset:0!important;
+}
+body #tm-date-picker>summary:hover{border-color:var(--tm-action)}
+body #tm-date-picker #tm-date{box-sizing:border-box;max-width:calc(100vw - 24px)}
+body #tm-date-picker #tm-date [role=option]{font-size:14px;min-height:44px}
+
+@media(max-width:760px){
+ body select:not([multiple]):not([size]){font-size:16px!important}
+ body #journey-app .jo-terminal-input>input[role=combobox]{font-size:16px}
+ body #china-footprints .mm-trip-choice{grid-template-columns:max-content minmax(0,1fr);gap:12px;font-size:13px}
+ body #china-footprints .mm-replay-tools{gap:12px}
+ body #china-footprints .mm-editor-head select{flex-basis:100%}
+ body :is(#place-first-guide,#daily-gap-fill) .pg-supplement-context{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ body #tips .tl-day-toolbar label{width:100%;flex-wrap:wrap}
+ body #tips .tl-day-toolbar select{flex:1}
+}
+@media(max-width:800px){
+ body .tm-view-controls{flex-wrap:wrap;gap:8px}
+ body #tm-date-field{flex-basis:100%}
+ body #tm-date-picker{width:100%;min-width:0}
+ body #tm-date-picker>summary{font-size:14px}
+ body #tm-date-picker #tm-date{left:0;right:auto}
+ body .tm-toolbar .tm-add{align-self:start}
+}
+@media(forced-colors:active){
+ body select:not([multiple]):not([size]){appearance:auto!important;background-image:none!important}
+}
