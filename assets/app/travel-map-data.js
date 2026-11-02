@@ -118,14 +118,14 @@
    record.autoLocationAllowed=![record._place,...rawEntries.map(e=>e.place),...rawLocations.map(([,p])=>p)].some(p=>p?.locationAutoMatchBlocked);
    record.visits.sort((a,b)=>a.date.localeCompare(b.date)||a.order-b.order);record.fixed=record.visits.length>0&&record.visits.every(v=>v.fixed);if(record.cityId&&(record.wish||record.visits.length)&&!cities.has(record.cityId))cities.set(record.cityId,{id:record.cityId,name:record.city||record.cityId});
   }
-  return {trip:{id:trip.tripId||'',startDate:trip.startDate||'',endDate:trip.endDate||''},days,cities:[...cities.values()],places:records};
+  return {trip:{id:trip.tripId||'',startDate:trip.startDate||'',endDate:trip.endDate||'',days:days.map(d=>({id:d.id,date:d.date||''}))},days,cities:[...cities.values()],places:records};
  }
  function current(input,expectedTrip){if(!input.trip?.tripId||expectedTrip&&expectedTrip!==input.trip.tripId)throw Error('当前旅行已变化，请重新打开地图。');}
  function schedule(input,request,idFactory){
   current(input,request.tripId);
   const view=snapshot(input),place=view.places.find(p=>p.id===request.placeId),day=view.days.find(d=>d.id===request.dayId);
   if(!place)throw Error('地点已变化，请重新选择。');
-  if(!day||!day.date)throw Error('请选择本次旅行中已确定日期的一天。');
+  if(!day)throw Error('请选择本次旅行中的一天。');
   if(place.cityId&&!day.cityIds.includes(place.cityId))throw Error('这个地点不在所选日期的城市，请选择对应城市的一天。');
   if(place.fixed)throw Error('这项交通或住宿已经随订单同步，请在订单中调整。');
   const start=request.start||'',end=request.end||'';
