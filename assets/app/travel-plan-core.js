@@ -8,7 +8,12 @@
   const copy = value => JSON.parse(JSON.stringify(value));
   const fail = message => { throw Error(message); };
   const text = (value, max = 180) => typeof value === 'string' && value.trim().length <= max ? value.trim() : fail('旅行规划文字格式不正确');
-  const cityName = value => text(value, 100).replace(/市$/, '');
+  // Match the existing TripData canonical names, including its legacy aliases.
+  // Normalize before compiling IDs so content, native days and maps share a city.
+  const cityName = value => {
+    const name = text(value, 100).normalize('NFKC').replace(/\s+/g, ' ').replace(/市$/, '');
+    return ({'西双版纳傣族自治州':'西双版纳','西双版纳州':'西双版纳','版纳':'西双版纳','景洪':'西双版纳'})[name] || name;
+  };
   const add = (date, n) => new Date(Date.parse(date + 'T00:00:00Z') + n * 86400000).toISOString().slice(0, 10);
   const validDate = date => /^20\d\d-\d\d-\d\d$/.test(date) && Number.isFinite(Date.parse(date + 'T00:00:00Z')) && add(date, 0) === date;
   function photo(value) {
