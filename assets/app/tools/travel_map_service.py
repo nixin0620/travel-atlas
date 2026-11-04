@@ -269,7 +269,7 @@ def photon_candidates(payload, city):
         # Administrative centroids are not a matched sight/restaurant entrance.
         if typ not in ('N', 'W', 'R') or not re.fullmatch(r'\d+', oid) or not within_city(lat, lng, city):
             continue
-        if prop.get('countrycode', '').upper() not in ('CN', '') or prop.get('osm_key') in ('boundary', 'place'):
+        if prop.get('countrycode', '').upper() not in (city.get('countryCode', 'CN'), '') or prop.get('osm_key') in ('boundary', 'place'):
             continue
         name = words(prop.get('name'))
         pid = f'osm:{typ}:{oid}'
@@ -305,15 +305,68 @@ def amap_candidates(payload, city):
     return out[:6]
 
 
-def search(q, city_id):
+CITY_CACHE = {}
+
+
+def resolve_city(name, country_code=''):
+    """Resolve a city for framing/weather only. Never return it as a POI."""
+    name = words(name)
+    country_code = words(country_code).upper()
+    if not 1 < len(name) <= 100 or (country_code and not re.fullmatch(r'[A-Z]{2}', country_code)):
+        raise ApiError('请提供城市名称与有效国家代码。')
+    key = (name, country_code)
+    with LOCK:
+        cached = CITY_CACHE.get(key)
+    if cached and time.monotonic() - cached[0] < 86400:
+        return dict(cached[1])
+    params = {'name': name, 'count': 10, 'language': 'zh', 'format': 'json'}
+    if country_code: params['countryCode'] = country_code
+    if not UPSTREAM_SLOTS.acquire(blocking=False):
+        raise ApiError('正在查询其他地点，请稍后重试。', 429)
+    try:
+        data = fetch_json('https://geocoding-api.open-meteo.com/v1/search?' + urllib.parse.urlencode(params))
+    finally:
+        UPSTREAM_SLOTS.release()
+    if not isinstance(data, dict) or not isinstance(data.get('results', []), list):
+        raise ApiError('城市查询返回格式无效，请稍后重试。', 502)
+    def normal(value): return words(value).casefold().removesuffix('市')
+    matches = [r for r in data.get('results', []) if isinstance(r, dict)
+               and valid_coords(r.get('latitude'), r.get('longitude'))
+               and (not country_code or r.get('country_code') == country_code)
+               and normal(r.get('name')) == normal(name)]
+    # Distinct same-name cities require the agent to provide researched city metadata.
+    identities = {(round(r['latitude'], 2), round(r['longitude'], 2)) for r in matches}
+    if len(identities) != 1:
+        raise ApiError('城市名称未能唯一匹配，请核对国家或在规划中补充城市位置。')
+    r = matches[0]
+    lat, lng = r['latitude'], r['longitude']
+    city = {'name': name, 'countryCode': r.get('country_code', ''), 'center': [lng, lat],
+            'latitude': lat, 'longitude': lng, 'timezone': r.get('timezone', 'UTC'),
+            'sourceURL': 'https://www.geonames.org/' + str(r.get('id', '')),
+            'bbox': [max(-180, lng-1), max(-90, lat-1), min(180, lng+1), min(90, lat+1)], 'generic': True}
+    with LOCK:
+        if len(CITY_CACHE) >= 200: CITY_CACHE.pop(next(iter(CITY_CACHE)))
+        CITY_CACHE[key] = (time.monotonic(), city)
+    return dict(city)
+
+
+def search(q, city_id, city_name="", country_code="", center=None):
     q = words(q)
     if not 2 <= len(q) <= 120 or any(ord(c) < 32 for c in q):
         raise ApiError('请输入 2–120 个字的地点名称。')
     city = CITIES.get(city_id)
     if not city:
-        raise ApiError('请先选择一个城市，再查找地点。')
-    provider = 'amap' if configured() else 'photon'
-    key = (provider, city_id, q)
+        if not city_name: raise ApiError('请先选择一个城市，再查找地点。')
+        if center is None:
+            city = resolve_city(city_name, country_code)
+        else:
+            if not isinstance(center, (list, tuple)) or len(center) != 2 or not valid_coords(center[1], center[0]) or not re.fullmatch(r'[A-Z]{2}', country_code):
+                raise ApiError('城市搜索范围无效。')
+            lng, lat = center
+            city = {'name': words(city_name), 'countryCode': country_code, 'center': center, 'generic': True,
+                    'bbox': [max(-180, lng-1), max(-90, lat-1), min(180, lng+1), min(90, lat+1)]}
+    provider = 'amap' if configured() and not city.get('generic') else 'photon'
+    key = (provider, city_id, city_name, country_code, tuple(city['center']), q)
     with LOCK:
         cached = CACHE.get(key)
     if cached and time.monotonic() - cached[0] < 1800:
@@ -326,10 +379,11 @@ def search(q, city_id):
             data = fetch_json('https://restapi.amap.com/v3/place/text?' + urllib.parse.urlencode(params))
             rows = amap_candidates(data, city)
         else:
-            params = {'q': q, 'limit': 6, 'lat': city['center'][1], 'lon': city['center'][0], 'bbox': ','.join(map(str, city['bbox']))}
+            params = {'q': q + (' ' + city['name'] if city.get('generic') else ''), 'limit': 10, 'lat': city['center'][1], 'lon': city['center'][0], 'bbox': ','.join(map(str, city['bbox']))}
+            if city.get('countryCode'): params['countrycode'] = city['countryCode']
             data = fetch_json('https://photon.komoot.io/api/?' + urllib.parse.urlencode(params))
             rows = photon_candidates(data, city)
-        result = {'provider': provider, 'candidates': rows, 'message': '请核对名称和地址后确认位置。' if rows else '没有找到此城市内的可靠候选，可换用完整名称或保留位置待确认。'}
+        result = {'provider': provider, 'candidates': rows, 'message': '请核对名称和地址后确认位置。' if rows else '没有找到附近的可靠候选，可换用完整名称或在地图上选点。'}
         with LOCK:
             if len(CACHE) >= 100:
                 CACHE.pop(next(iter(CACHE)))
