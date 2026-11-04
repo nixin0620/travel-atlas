@@ -64,6 +64,10 @@ python3 scripts/start.py --workspace /absolute/path/my-travel
 ```
 
 - cities[].photo、places[].photo 与 cover 格式相同。正式图文交付应填实际照片；null 用于确实无图的条目并报告缺口。
+- cities[].location 可填 `{"latitude":26.65,"longitude":106.63,"timezone":"Asia/Shanghai","sourceURL":"https://example.com/verified-city"}`；这是城市定位/天气范围，不是景点坐标。需使用已查证值和来源，海外城市填正确的 countryCode 与 IANA 时区。同名城市不能只取搜索第一项。缺少可靠城市位置时留空，联网定位无唯一结果时保持待确认。
+- cities[].tips 为可选数组，每项含 `kind`（culture / safety / language）、`title`、`text`、`sourceURL`、`checkedAt`（YYYY-MM-DD）。仅写查证后的简短当地信息；无资料保持空数组，不复用云南贴士。
+- 顶层 travelers 为已知人数（1–99），未知省略。packing 可填 `{"note":"与本次季节和活动有关的准备说明","suggestions":[{"name":"物品名","reason":"推荐理由","quantity":null,"category_name":"行程专属","emoji":"🎒"}]}`。不要默认两人或沿用上一目的地气候；已有用户勾选与数量不覆盖。
+- places[].sources[].reasons 可填 `[{"label":"营业时间","text":"该来源查证的具体内容"},{"label":"交通","text":"该来源的交通信息"}]`，用于原生地点对比。只有这个来源确实支持的内容才写入；没有查证的栏目留空，不用核心体验重复代填。
 - JPEG/PNG/WebP，每张不超过 2.2 MB，width≥480、height≥240；记录真实尺寸，目视确认文件可解码。图片打包进记录，备份能携带这些图片，不依赖朋友电脑上的绝对路径。照片来源入口保留署名、授权和缩放裁切说明。
 - days 为连续 1–366 天。date 全部为真实规划日期 YYYY-MM-DD，或全部留空；不能一部分猜测。city 为当天住宿/主活动城市，alsoCities 用于当日跨城市地点。重复回到同一城市保留为不同天。
 - 无日期时日程和地点地图使用同一组 plan-1、plan-2 等相对天数 ID，地图也能筛选和添加安排，不编造日期来解锁功能。
