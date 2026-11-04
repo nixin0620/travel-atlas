@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN" data-travel-boot="loading"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>旅迹 · 我的旅行手册</title><meta name="description" content="三城各住两晚，古城、茶咖与雨林一路向南。目的地内两人预算6000—8500元，不含往返云南交通与购物；日期待定，交通住宿待补。"/><script id="travel-startup-theme">
+<html lang="zh-CN" data-travel-boot="loading" data-travel-initial-content="1"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>旅迹 · 我的旅行手册</title><meta name="description" content="三城各住两晚，古城、茶咖与雨林一路向南。目的地内两人预算6000—8500元，不含往返云南交通与购物；日期待定，交通住宿待补。"/><script id="travel-startup-theme">
 /* Cache only the visual preference, so the first cover paint matches the saved theme.
    TravelStorage remains authoritative after the trip finishes opening. */
 (function(){
@@ -59,7 +59,7 @@ html[data-travel-boot]:not([data-travel-boot="ready"]) body>:not(#travel-startup
     const store = window.TravelStorage;
     if (store.bootError) {
       clearTimeout(timeout);
-      fail('未能读取本地旅行数据，请重新载入；若仍失败，请重新启动攻略导入服务。');
+      fail('未能载入本地旅行数据或初始内容。' + (store.bootError.message || '') + ' 请重新载入重试；已保存的数据不会被覆盖。');
       return;
     }
     // Let registered storage callbacks and their pending layout frames finish.
@@ -1585,7 +1585,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 </style>
 <script src="footprint-memoir-core.js?v=20261028-replay-1"></script>
 <script src="local-files-core.js"></script>
-<script src="travel-plan-seed.js"></script><script src="preview-workspace.js"></script>
+<script src="travel-plan-seed.js"></script><script src="travel-initial-content.js"></script><script src="preview-workspace.js"></script>
 <script src="local-storage-bridge.js?v=20261028-backup-1"></script>
 <link rel="stylesheet" href="destination-guide.css?v=20261017-compact-nav-1">
 <link rel="stylesheet" href="destination-discovery.css?v=20261024-photos-1">

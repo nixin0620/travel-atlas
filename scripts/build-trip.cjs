@@ -69,7 +69,7 @@ function compile(profile, base, tripId = 'travel-atlas-public-v1') {
   const imports = Imports.validate({version:1,tripId,items,guides:[]},tripId);
   const journey = {version:2,tripId,initialized:true,transports:[],stays:[],plan};
   const daily = {version:1,entries,locations:{}};
-  const result = {version:1, id:hash(JSON.stringify(profile)), tripId, journey, imports, daily,
+  const result = {version:1, id:hash(JSON.stringify({tripId,journey,imports,daily})), tripId, journey, imports, daily,
     report:{cities:plan.cities.length, days:plan.days.length, places:items.length, scheduled:entries.filter(e=>e.type!=='note').length, photos:items.filter(i=>i.place.publicPhotos.length).length, visualReady:missingPhotos.length===0, missingPhotos, warnings}};
   if (Buffer.byteLength(JSON.stringify(result)) > 65000000) fail('内容包过大，请压缩图片');
   return result;
@@ -79,12 +79,12 @@ function install(profileFile, workspace, {allowIncomplete=false} = {}) {
   if (!fs.existsSync(marker) || JSON.parse(fs.readFileSync(marker)).app !== 'travel-atlas') fail('请先用 start.py 创建个人工作目录');
   if (JSON.parse(fs.readFileSync(marker)).demo) fail('个人内容不写入示例工作目录');
   const html = fs.readFileSync(path.join(workspace,'index.html'),'utf8');
-  if (!html.includes('travel-plan-import.js') || !html.includes('TravelPlanCore.clean')) fail('工作目录是旧版应用；先保留备份并升级应用，不要改写 HTML 拼接攻略');
+  if (!html.includes('travel-initial-content.js') || !html.includes('TravelPlanCore.clean')) fail('工作目录是旧版应用；先保留备份并升级应用，不要改写 HTML 拼接攻略');
   const seed = JSON.parse(html.match(/<script[^>]*id="journey-seed"[^>]*>([\s\S]*?)<\/script>/)[1]);
   const compiled = compile(JSON.parse(fs.readFileSync(profileFile,'utf8')),base,seed.tripId);
   if (!compiled.report.visualReady && !allowIncomplete) fail('图文规划尚未完成，缺少图片：'+compiled.report.missingPhotos.join('、')+'。请补齐后再安装；仅在用户接受无图草稿时使用 --allow-incomplete。已有规划未修改。');
   const file = path.join(workspace,'travel-plan-seed.js');
-  const content = '/* Generated researched content; applied through the native planner. */\nwindow.TravelPlanSeed = ' + JSON.stringify(compiled).replace(/</g,'\\u003c') + ';\n';
+  const content = '/* Complete initial content for new browsers; existing browser edits stay local. */\nwindow.TravelPlanSeed = ' + JSON.stringify(compiled).replace(/</g,'\\u003c') + ';\n';
   if (fs.existsSync(file) && fs.readFileSync(file,'utf8') !== content && fs.statSync(file).size > 200) fs.copyFileSync(file,file + '.' + Date.now() + '.bak');
   fs.writeFileSync(file + '.tmp',content);fs.renameSync(file + '.tmp',file);
   fs.writeFileSync(path.join(workspace,'travel-plan-report.json'),JSON.stringify(compiled.report,null,2));
