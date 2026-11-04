@@ -34,12 +34,13 @@ function acceptedNames(place){
  return names;
 }
 function qualified(place,candidate){
- const city=cities[place.cityId];
+ const city=cities[place.cityId]|| (place.city?{name:place.city}:null);
  if(!city||!candidate||candidate.provider!=='amap'||candidate.coordinateSystem!=='GCJ02'||typeof candidate.id!=='string'||!candidate.id.trim()||typeof candidate.source!=='string'||!candidate.source.trim())return false;
  if(candidate.cityId&&candidate.cityId!==place.cityId)return false;
  const code=String(candidate.adcode||'');
- if(!/^\d{6}$/.test(code)||code.slice(0,4)!==city.adcode.slice(0,4))return false;
- return Number.isFinite(candidate.lng)&&Number.isFinite(candidate.lat)&&candidate.lng>=city.bbox[0]&&candidate.lng<=city.bbox[2]&&candidate.lat>=city.bbox[1]&&candidate.lat<=city.bbox[3];
+ if(!/^\d{6}$/.test(code))return false;
+ if(city.adcode?code.slice(0,4)!==city.adcode.slice(0,4):normalizeName(candidate.city).replace(/市$/,'')!==normalizeName(city.name).replace(/市$/,''))return false;
+ return Number.isFinite(candidate.lng)&&Number.isFinite(candidate.lat)&&Math.abs(candidate.lng)<=180&&Math.abs(candidate.lat)<=90&&(!city.bbox||candidate.lng>=city.bbox[0]&&candidate.lng<=city.bbox[2]&&candidate.lat>=city.bbox[1]&&candidate.lat<=city.bbox[3]);
 }
 function evaluate(place,candidates){
  if(!place||!Array.isArray(candidates))return null;

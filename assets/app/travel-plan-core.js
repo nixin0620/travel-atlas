@@ -26,10 +26,28 @@
     if (licenseURL && !/^https:\/\/[^\s<>"'`]+$/.test(licenseURL)) fail('图片授权链接不正确');
     return {url, sourceURL, licenseURL, alt: text(value.alt || ''), credit: text(value.credit || '', 400), license: text(value.license || '', 200), width: Number(value.width) || 0, height: Number(value.height) || 0};
   }
+  function location(value) {
+    if (!value) return null;
+    if (!Number.isFinite(value.latitude) || Math.abs(value.latitude)>90 || !Number.isFinite(value.longitude) || Math.abs(value.longitude)>180) fail('城市位置格式不正确');
+    const timezone=text(value.timezone||'',100),sourceURL=text(value.sourceURL||'',2000);
+    try {new Intl.DateTimeFormat('en',{timeZone:timezone});} catch(_){fail('城市需要有效时区');}
+    if(!/^https:\/\/[^\s<>]+$/.test(sourceURL))fail('城市位置需要来源页面');
+    return {latitude:value.latitude,longitude:value.longitude,timezone,sourceURL};
+  }
+  function tips(values) {
+    if(values==null)return [];
+    if(!Array.isArray(values)||values.length>30)fail('当地贴士格式不正确');
+    return values.map(v=>{if(!['culture','safety','language'].includes(v.kind)||!/^https:\/\/[^\s<>]+$/.test(v.sourceURL||'')||!validDate(v.checkedAt))fail('贴士需要分类、来源和核验日期');return{kind:v.kind,title:text(v.title,100),text:text(v.text,600),sourceURL:text(v.sourceURL,2000),checkedAt:v.checkedAt};});
+  }
+  function packing(value) {
+    if(!value)return {note:'',suggestions:[]};
+    if(!Array.isArray(value.suggestions||[])||(value.suggestions||[]).length>50)fail('行李建议格式不正确');
+    return {note:text(value.note||'',600),suggestions:(value.suggestions||[]).map(v=>{if(v.quantity!=null&&(!Number.isInteger(v.quantity)||v.quantity<1||v.quantity>999))fail('行李数量无效');return{name:text(v.name,120),reason:text(v.reason||'',600),quantity:v.quantity??null,category_name:text(v.category_name||'行程专属',50),emoji:text(v.emoji||'🎒',24)};})};
+  }
   function clean(raw) {
     if (raw == null) return null;
     if (raw.version !== 1 || !Array.isArray(raw.days) || !raw.days.length || raw.days.length > 366 || !Array.isArray(raw.cities)) fail('旅行规划格式不正确');
-    const cities = raw.cities.map(c => ({name: cityName(c.name), countryCode: /^[A-Z]{2}$/.test(c.countryCode) ? c.countryCode : null, photo: photo(c.photo)}));
+    const cities = raw.cities.map(c => ({name: cityName(c.name), countryCode: /^[A-Z]{2}$/.test(c.countryCode) ? c.countryCode : null, photo: photo(c.photo),location:location(c.location),tips:tips(c.tips)}));
     if (cities.some(c => !c.name) || new Set(cities.map(c => c.name)).size !== cities.length) fail('规划城市不能为空或重复');
     const names = new Set(cities.map(c => c.name));
     const days = raw.days.map(d => {
@@ -39,7 +57,8 @@
       return {date, city, alsoCities, title: text(d.title || ''), summary: text(d.summary || '', 600)};
     });
     if (days.some(d => d.date) && (!days[0].date || !days.every((d, i) => d.date === add(days[0].date, i)))) fail('规划日期须连续；日期待定时全部留空');
-    return {version: 1, title: text(raw.title || ''), cover: photo(raw.cover), cities, days};
+    if(raw.travelers!=null&&(!Number.isInteger(raw.travelers)||raw.travelers<1||raw.travelers>99))fail('人数需为1–99的整数或留空');
+    return {version: 1, title: text(raw.title || ''), cover: photo(raw.cover), travelers:raw.travelers??null,packing:packing(raw.packing),cities, days};
   }
   function mergeView(view, state) {
     const plan = clean(state.plan);

@@ -8,7 +8,8 @@ const cities={
  kunming:{name:'昆明',adcode:'530100',bbox:[102,24.2,103.8,26.6],center:[102.71,25.04]}
 };
 const extraCities=Object.create(null);
-const cityFor=place=>cities[place.cityId]||extraCities[place.cityId]||(place.city?{name:place.city,adcode:place.city}:null);
+const cityFor=place=>cities[place.cityId]||extraCities[place.cityId]||(place.city?{name:place.city,adcode:place.city,countryCode:place.countryCode}:null);
+function setCities(rows){for(const c of rows||[])if(c.id&&c.name&&!cities[c.id])extraCities[c.id]={...extraCities[c.id],...c,adcode:c.adcode||c.name,center:c.weather?[c.weather.longitude,c.weather.latitude]:extraCities[c.id]?.center};}
 const coordinates=p=>Boolean(p&&Number.isFinite(p.lat)&&Math.abs(p.lat)<=90&&Number.isFinite(p.lng)&&Math.abs(p.lng)<=180);
 const sourced=p=>coordinates(p)&&p.confirmed===true&&typeof p.source==='string'&&Boolean(p.source.trim());
 const inBounds=(p,c)=>Boolean(c&&coordinates(p)&&(!c.bbox||p.lng>=c.bbox[0]&&p.lng<=c.bbox[2]&&p.lat>=c.bbox[1]&&p.lat<=c.bbox[3]));
@@ -76,10 +77,10 @@ function checkedConfirm(C,provider,place,candidate){
   locationAdcode:candidate.adcode,confirmedAt:new Date().toISOString()};
 }
 async function fallbackSearch(place,q){
- if(!cities[place.cityId])throw Error('请先确认地点所属城市。');
- const url=new URL('/api/map/poi',root.location.origin);url.searchParams.set('q',q);url.searchParams.set('city',place.city);url.searchParams.set('cityId',place.cityId);
+ const city=cityFor(place);if(!city)throw Error('请先确认地点所属城市。');
+ const url=new URL('/api/map/poi',root.location.origin);url.searchParams.set('q',q);url.searchParams.set('city',place.city);url.searchParams.set('cityId',place.cityId);url.searchParams.set('countryCode',city.countryCode||'');if(city.center&&city.countryCode){url.searchParams.set('longitude',city.center[0]);url.searchParams.set('latitude',city.center[1]);}
  const data=await json(url.href,15000);
- return (Array.isArray(data.candidates)?data.candidates:[]).filter(c=>typeof c?.name==='string'&&c.coordinateSystem==='WGS84'&&inBounds(c,cities[place.cityId])&&cityMatches(c,cities[place.cityId])).slice(0,8);
+ return (Array.isArray(data.candidates)?data.candidates:[]).filter(c=>typeof c?.name==='string'&&c.coordinateSystem==='WGS84'&&inBounds(c,city)&&cityMatches(c,city)).slice(0,8);
 }
 function pin(name,label,selected,onSelect){
  const el=root.document.createElement('div'),span=root.document.createElement('span'),b=root.document.createElement('b');
@@ -93,22 +94,28 @@ function emptyAdapter(C,onStatus,message){
  onStatus(message);
  return {provider:'unavailable',render:async()=>{},focus(){},resize(){},search:async()=>{throw Error(message);},confirm:(place,candidate)=>checkedConfirm(C,'unavailable',place,candidate),isLocated:p=>sourced(p)&&['WGS84','GCJ02'].includes(p.coordinateSystem),destroy(){}};
 }
-function createLeaflet(C,{element,onSelect,onStatus},prefix=''){
+function createLeaflet(C,{element,onSelect,onStatus,onPick},prefix=''){
  const L=root.L;if(!L)return emptyAdapter(C,onStatus,'地图组件未加载，地点列表仍可使用。');
- const map=L.map(element,{scrollWheelZoom:false}).setView([22,100.8],12),layer=L.layerGroup().addTo(map),markers=new Map();let destroyed=false;
+ const map=L.map(element,{scrollWheelZoom:false}).setView([22,100.8],12),layer=L.layerGroup().addTo(map),markers=new Map();let destroyed=false,picking=false,previewMarker=null,epoch=0,lastCity=null;
  const tile=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,referrerPolicy:'strict-origin-when-cross-origin',attribution:'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'}).addTo(map);
  let failed=false;tile.on('tileload',()=>{if(!destroyed&&!failed)onStatus(prefix);});tile.on('tileerror',()=>{failed=true;if(!destroyed)onStatus('部分底图未能加载，地点列表仍可使用。');});
  onStatus(prefix||'正在加载底图…');
- return {provider:'leaflet',isLocated:p=>C.coord(p),confirm:(p,c)=>checkedConfirm(C,'leaflet',p,c),search:fallbackSearch,
+ function clearPreview(){if(previewMarker){map.removeLayer?.(previewMarker);previewMarker=null;}}
+ function preview(candidate){clearPreview();if(destroyed||!coordinates(candidate)||candidate.coordinateSystem!=='WGS84')return;previewMarker=L.marker([candidate.lat,candidate.lng],{icon:L.divIcon({className:'',html:pin(candidate.name||'选中的位置','+',true,()=>{}),iconSize:[34,40],iconAnchor:[17,40]})}).addTo(map);map.setView([candidate.lat,candidate.lng],Math.max(map.getZoom?.()||12,16));}
+ map.on('click',event=>{if(picking&&!destroyed&&coordinates(event.latlng))onPick?.({lng:event.latlng.lng,lat:event.latlng.lat});});
+ return {provider:'leaflet',setCities,preview,clearPreview,setPicking(value){picking=Boolean(value);const el=map.getContainer?.();if(el)el.style.cursor=picking?'crosshair':'';},async pick(place,pos){const city=cityFor(place);if(!city||!inBounds(pos,city))throw Error('选点超出当前城市，请核对后再选。');return {id:'manual:'+pos.lng.toFixed(6)+','+pos.lat.toFixed(6),...pos,name:'地图选点',city:city.name,cityId:place.cityId,address:'地图选点 · '+pos.lat.toFixed(6)+', '+pos.lng.toFixed(6),coordinateSystem:'WGS84',provider:'manual',source:'用户在地图上手动选点',manual:true};},isLocated:p=>C.coord(p),confirm:(p,c)=>checkedConfirm(C,'leaflet',p,c),search:fallbackSearch,
   async render(rows,selected,{fit=false,city:cityId='',labels={}}={}){
-   if(destroyed)return;layer.clearLayers();markers.clear();
+   if(destroyed)return;const current=++epoch;layer.clearLayers();markers.clear();
    rows.forEach((p,index)=>{if(!C.coord(p))return;const mark=L.marker([p.lat,p.lng],{title:p.name,alt:p.name,icon:L.divIcon({className:'',html:pin(p.name,labels[p.id],p.id===selected,()=>onSelect(p.id)),iconSize:[34,40],iconAnchor:[17,40]})}).addTo(layer);
     const label=root.document.createElement('span');label.textContent=p.name;mark.bindTooltip(label);mark.on('click',()=>onSelect(p.id));markers.set(p.id,mark);
    });
    if(fit&&markers.size)map.fitBounds(L.latLngBounds([...markers.values()].map(m=>m.getLatLng())),{padding:[42,42],maxZoom:16,animate:false});
-   if(!markers.size){const city=cities[cityId]||(rows.length&&rows.every(p=>p.cityId===rows[0].cityId)?cities[rows[0].cityId]:null);map.setView(city?[city.center[1],city.center[0]]:[23.5,101.5],city?9:6,{animate:false});}
+   if(!markers.size&&(fit||cityId!==lastCity)){lastCity=cityId;const city=cities[cityId]||extraCities[cityId]||(rows.length&&rows.every(p=>p.cityId===rows[0].cityId)?cityFor(rows[0]):null);
+    if(city&&!city.center){try{const url=new URL('/api/map/city',root.location.origin);url.searchParams.set('city',city.name);url.searchParams.set('countryCode',city.countryCode||'');const resolved=await json(url.href,12000);if(resolved.center)city.center=resolved.center;}catch(_){if(current===epoch&&!destroyed)onStatus('城市位置暂未找到，可搜索具体地点或在地图上选点。');}}
+    if(current===epoch&&!destroyed)map.setView(city?.center?[city.center[1],city.center[0]]:[20,0],city?.center?11:2,{animate:false});
+   }
   },
-  focus(id){const mark=markers.get(id);if(mark&&!destroyed)map.panTo(mark.getLatLng());},resize(){if(!destroyed)map.invalidateSize({pan:false});},destroy(){destroyed=true;map.remove();markers.clear();}
+  focus(id){const mark=markers.get(id);if(mark&&!destroyed)map.panTo(mark.getLatLng());},resize(){if(!destroyed)map.invalidateSize({pan:false});},destroy(){destroyed=true;epoch++;clearPreview();map.remove();markers.clear();}
  };
 }
 function createAmap(C,A,{element,onSelect,onStatus,onPick}){
@@ -173,7 +180,7 @@ function createAmap(C,A,{element,onSelect,onStatus,onPick}){
     coordinateSystem:'GCJ02',provider:'amap',source:'高德地图 / JS API',sourceURL:'https://www.amap.com/place/'+encodeURIComponent(p.id)};
   }).filter(c=>{if(!c||seen.has(c.id)||!inBounds(c,city)||!cityMatches(c,city))return false;seen.add(c.id);return true;}).slice(0,8);
  }
- return {provider:'amap',setCities(rows){for(const c of rows||[])if(c.id&&c.name&&!cities[c.id]&&extraCities[c.id]?.name!==c.name)extraCities[c.id]={name:c.name,adcode:c.name};},isLocated,search,preview,clearPreview,pick,setPicking(value){picking=Boolean(value);map.setDefaultCursor?.(picking?'crosshair':'grab');},confirm:(p,c)=>checkedConfirm(C,'amap',p,c),
+ return {provider:'amap',setCities,isLocated,search,preview,clearPreview,pick,setPicking(value){picking=Boolean(value);map.setDefaultCursor?.(picking?'crosshair':'grab');},confirm:(p,c)=>checkedConfirm(C,'amap',p,c),
   async render(rows,selected,{fit=false,city:cityId='',labels={}}={}){
    if(destroyed)return;const current=++epoch;
    if(pendingFocus!==selected)pendingFocus=null;
