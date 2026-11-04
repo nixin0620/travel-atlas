@@ -70,12 +70,12 @@ def prepare(destination, demo=False):
         if original.count("scope: 'travel-atlas-public-v1'") != 1:
             raise ValueError('找不到独立存储入口，未创建示例目录。')
         demo_preview = original.replace("scope: 'travel-atlas-public-v1'", "scope: 'travel-atlas-demo-v1'")
-    shutil.copytree(ROOT / 'assets/app', destination)
+    shutil.copytree(ROOT / 'assets/app', destination, ignore=shutil.ignore_patterns('tests','__pycache__'))
     if demo:
         (destination / 'index.html').write_text(demo_html, encoding='utf-8')
         (destination / 'preview-workspace.js').write_text(demo_preview, encoding='utf-8')
         shutil.copyfile(ROOT / 'assets/demo/public-demo.js', destination / 'public-demo.js')
-    marker.write_text(json.dumps({'app': 'travel-atlas', 'version': 1, 'demo': demo}))
+    marker.write_text(json.dumps({'app': 'travel-atlas', 'version': 1, 'demo': demo, 'files': {str(p.relative_to(destination)):hashlib.sha256(p.read_bytes()).hexdigest() for p in destination.rglob('*') if p.is_file()}}))
 
 
 def main():

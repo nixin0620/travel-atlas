@@ -1,0 +1,191 @@
+{
+  "source": {
+    "fingerprint": "f452e7c82abe53e2ce0bff383c14471930ad4d95cd0ec3f16e0505d4119918ae",
+    "url": "https://www.xiaohongshu.com/s/dot?dot_share_id=EXAMPLE&file_id=active_search/test",
+    "kind": "dot",
+    "title": "普洱景点推荐",
+    "method": "ocr",
+    "text": "普洱景点推荐\n1. 景迈山 30%人推荐\n2. 太阳河森林公园 29%人推荐\n3. 思茅老街 25%人推荐\n4. 戴家巷 23%人推荐\n5. 茶马古城 15%人推荐\n6. 行署大院 15%人推荐\n7. 茶马古道遗址公园 14%人推荐\n8. 那柯里茶马驿站 13%人推荐",
+    "images": []
+  },
+  "places": [
+    {
+      "rank": 1,
+      "name": "景迈山",
+      "card_name": "糯干古寨",
+      "recommendation_percentage": 30,
+      "recommendation_label": "30%人推荐",
+      "percentage_denominator": null,
+      "overview_percentage": 30.0,
+      "overview_detail_consistent": true,
+      "reasons": [
+        {
+          "label": "测试说明",
+          "text": "用于城市归属和重复导入回归，不是旅行建议。"
+        }
+      ],
+      "evidence": {},
+      "coordinates": null,
+      "canonical_place_id": null,
+      "unconfirmed": [],
+      "kind": "sight",
+      "image_indices": []
+    },
+    {
+      "rank": 2,
+      "name": "太阳河森林公园",
+      "card_name": "普洱太阳河森林公园",
+      "recommendation_percentage": 29,
+      "recommendation_label": "29%人推荐",
+      "percentage_denominator": null,
+      "overview_percentage": 29.0,
+      "overview_detail_consistent": true,
+      "reasons": [
+        {
+          "label": "测试说明",
+          "text": "用于城市归属和重复导入回归，不是旅行建议。"
+        }
+      ],
+      "evidence": {},
+      "coordinates": null,
+      "canonical_place_id": null,
+      "unconfirmed": [],
+      "kind": "sight",
+      "image_indices": []
+    },
+    {
+      "rank": 3,
+      "name": "思茅老街",
+      "card_name": "思茅老街",
+      "recommendation_percentage": 25,
+      "recommendation_label": "25%人推荐",
+      "percentage_denominator": null,
+      "overview_percentage": 25.0,
+      "overview_detail_consistent": true,
+      "reasons": [
+        {
+          "label": "测试说明",
+          "text": "用于城市归属和重复导入回归，不是旅行建议。"
+        }
+      ],
+      "evidence": {},
+      "coordinates": null,
+      "canonical_place_id": null,
+      "unconfirmed": [],
+      "kind": null,
+      "image_indices": []
+    },
+    {
+      "rank": 4,
+      "name": "戴家巷",
+      "card_name": "戴家巷古建筑群",
+      "recommendation_percentage": 23,
+      "recommendation_label": "23%人推荐",
+      "percentage_denominator": null,
+      "overview_percentage": 23.0,
+      "overview_detail_consistent": true,
+      "reasons": [
+        {
+          "label": "测试说明",
+          "text": "用于城市归属和重复导入回归，不是旅行建议。"
+        }
+      ],
+      "evidence": {},
+      "coordinates": null,
+      "canonical_place_id": null,
+      "unconfirmed": [],
+      "kind": null,
+      "image_indices": []
+    },
+    {
+      "rank": 5,
+      "name": "茶马古城",
+      "card_name": "茶马古城",
+      "recommendation_percentage": 15,
+      "recommendation_label": "15%人推荐",
+      "percentage_denominator": null,
+      "overview_percentage": 15.0,
+      "overview_detail_consistent": true,
+      "reasons": [
+        {
+          "label": "测试说明",
+          "text": "用于城市归属和重复导入回归，不是旅行建议。"
+        }
+      ],
+      "evidence": {},
+      "coordinates": null,
+      "canonical_place_id": null,
+      "unconfirmed": [],
+      "kind": "sight",
+      "image_indices": []
+    },
+    {
+      "rank": 6,
+      "name": "行署大院",
+      "card_name": "行署大院",
+      "recommendation_percentage": 15,
+      "recommendation_label": "15%人推荐",
+      "percentage_denominator": null,
+      "overview_percentage": 15.0,
+      "overview_detail_consistent": true,
+      "reasons": [
+        {
+          "label": "测试说明",
+          "text": "用于城市归属和重复导入回归，不是旅行建议。"
+        }
+      ],
+      "evidence": {},
+      "coordinates": null,
+      "canonical_place_id": null,
+      "unconfirmed": [],
+      "kind": null,
+      "image_indices": []
+    },
+    {
+      "rank": 7,
+      "name": "茶马古道遗址公园",
+      "card_name": "普洱茶马古道遗址公园",
+      "recommendation_percentage": 14,
+      "recommendation_label": "14%人推荐",
+      "percentage_denominator": null,
+      "overview_percentage": 14.0,
+      "overview_detail_consistent": true,
+      "reasons": [
+        {
+          "label": "测试说明",
+          "text": "用于城市归属和重复导入回归，不是旅行建议。"
+        }
+      ],
+      "evidence": {},
+      "coordinates": null,
+      "canonical_place_id": null,
+      "unconfirmed": [],
+      "kind": "sight",
+      "image_indices": []
+    },
+    {
+      "rank": 8,
+      "name": "那柯里茶马驿站",
+      "card_name": "那柯里茶马驿站",
+      "recommendation_percentage": 13,
+      "recommendation_label": "13%人推荐",
+      "percentage_denominator": null,
+      "overview_percentage": 13.0,
+      "overview_detail_consistent": true,
+      "reasons": [
+        {
+          "label": "测试说明",
+          "text": "用于城市归属和重复导入回归，不是旅行建议。"
+        }
+      ],
+      "evidence": {},
+      "coordinates": null,
+      "canonical_place_id": null,
+      "unconfirmed": [],
+      "kind": null,
+      "image_indices": []
+    }
+  ],
+  "warnings": [],
+  "_fixture": "Synthetic regression fixture; percentages test parsing, not travel recommendations."
+}

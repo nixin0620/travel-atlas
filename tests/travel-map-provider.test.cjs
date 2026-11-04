@@ -138,3 +138,14 @@ test('late city framing cannot move the map back after switching cities',async()
  let finish,started;const ready=new Promise(resolve=>{started=resolve;});const env=environment({geocode:(name,cb)=>{finish=cb;started();}}),adapter=await env.create();adapter.setCities([{id:'beijing',name:'北京'}]);const pending=adapter.render([],null,{fit:true,city:'beijing'});await ready;
  await adapter.render([],null,{fit:true,city:'kunming'});finish('complete',{geocodes:[{location:[116.4,39.9]}]});await pending;assert.deepEqual(Array.from(env.state.maps[0].center),[102.71,25.04]);adapter.destroy();
 });
+test('default Leaflet supports new-city search, preview and explicit manual selection without changing saved places',async()=>{
+ const candidate={id:'osm:N:1',name:'测试景点',city:'京都',lat:35.01,lng:135.77,coordinateSystem:'WGS84',source:'OpenStreetMap / Photon'};
+ const env=environment({configured:false,pois:[candidate]}),adapter=await env.create(),map=env.state.maps[0];
+ map.removeLayer=m=>{map.markers=map.markers.filter(x=>x!==m);};map.getZoom=()=>map.zoom;map.getContainer=()=>({style:{}});
+ adapter.setCities([{id:'kyoto',name:'京都',countryCode:'JP',weather:{longitude:135.77,latitude:35.01}}]);
+ await adapter.render([],null,{city:'kyoto'});assert.deepEqual(Array.from(map.center),[35.01,135.77]);
+ const target=place('kyoto-place',{city:'京都',cityId:'kyoto',lat:null,lng:null,confirmed:false}),before=structuredClone(target);
+ const rows=await adapter.search(target,'测试景点');assert.equal(rows.length,1);adapter.preview(rows[0]);assert.equal(map.markers.length,1);adapter.clearPreview();assert.equal(map.markers.length,0);assert.deepEqual(target,before);
+ map.events.click({latlng:{lat:35.02,lng:135.78}});assert.equal(env.state.picked,undefined);adapter.setPicking(true);map.events.click({latlng:{lat:35.02,lng:135.78}});
+ const picked=await adapter.pick(target,env.state.picked),saved=adapter.confirm(target,picked);assert.equal(saved.lat,35.02);assert.equal(saved.coordinateSystem,'WGS84');assert.deepEqual(saved.visits,target.visits);assert.equal(saved.wish,true);assert.deepEqual(target,before);adapter.destroy();
+});

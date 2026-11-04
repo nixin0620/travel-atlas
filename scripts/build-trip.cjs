@@ -29,6 +29,7 @@ function compile(profile, base, tripId = 'travel-atlas-public-v1') {
     if (!names.has(p.city) || !['sight','food','experience','shopping'].includes(p.kind) || !p.name?.trim() || !p.description?.trim()) fail('地点需要明确的城市、分类、名称和一句话介绍');
     if (!p.address?.trim()) fail(p.name + ' 缺少具体地址；菜名、城市名不能代替可安排的地点');
     if (!Array.isArray(p.sources) || !p.sources.length || p.sources.some(s => !/^https:\/\/[^\s<>]+$/.test(s.url) || !s.title || !/^20\d\d-\d\d-\d\d$/.test(s.checkedAt))) fail(p.name + ' 缺少已核对来源');
+    const evidenceSources=p.sources.map(source=>{const reasons=source.reasons||[{label:'核心体验',text:p.description}];if(!Array.isArray(reasons)||!reasons.length||reasons.length>30||reasons.some(r=>typeof r.text!=='string'||!r.text.trim()||r.text.length>2000||r.label&&typeof r.label!=='string'))fail(p.name+' 的来源说明格式不正确');return {...source,reasons:reasons.map(r=>({label:r.label||'',text:r.text}))};});
     const sourceId = p.kind + ':atlas-' + hash(p.city + '|' + p.kind + '|' + p.name.trim());
     if (sourceIds.has(sourceId)) fail('重复地点：' + p.name);
     sourceIds.add(sourceId);
@@ -40,7 +41,7 @@ function compile(profile, base, tripId = 'travel-atlas-public-v1') {
     const place = {sourceId, kind:p.kind, cityId:cityKey(p.city), city:p.city, name:p.name.trim(), address:p.address, description:p.description, openingNote:p.description,
       lat:location?.lat ?? null, lng:location?.lng ?? null, coordinateSystem:location?.coordinateSystem, geoSource:location ? '资料参考位置 · ' + location.sourceURL : '', locationPending:!location,
       poiId:location ? 'reference:' + hash(location.sourceURL) : '', coordinateEvidence:location ? {provider:'reference',poiId:'reference:' + hash(location.sourceURL),lat:location.lat,lng:location.lng,coordinateSystem:location.coordinateSystem,source:location.sourceURL,confirmedAt:p.sources[0].checkedAt+'T00:00:00Z',matchMethod:'researched-reference'} : null,
-      publicPhotos:image ? [image] : [], publicEvidence:p.sources.map((s, i) => ({...s, id:sourceId + ':' + i, type:'system', reasons:[{label:'',text:p.description}]}))};
+      publicPhotos:image ? [image] : [], publicEvidence:evidenceSources.map((s, i) => ({...s, id:sourceId + ':' + i, type:'system'}))};
     places.set(p.id, place);
     return {sourceId, place, city:p.city, choice:p.wanted === true ? 'wish' : null, linked:false, sources:[]};
   });

@@ -145,3 +145,19 @@ test('a first trip without dates opens the map and keeps D1 and D2 separate',()=
  assert.throws(()=>Data.schedule({...input,state:saved.state},{tripId:trip.tripId,placeId:newPlace.sourceId,dayId:'plan-2'},()=> 'duplicate'),/已经安排/);
  assert.throws(()=>Data.schedule(input,{tripId:trip.tripId,placeId:newPlace.sourceId,dayId:'plan-1'},()=> 'wrong-city'),/城市/);
 });
+test('researched city location, timezone, tips and party data survive native backup cleaning',()=>{
+ const p=destinationFixture([{name:'京都',countryCode:'JP',location:{latitude:35.01,longitude:135.77,timezone:'Asia/Tokyo',sourceURL:'https://example.com/kyoto'},tips:[{kind:'language',title:'问候',text:'こんにちは',sourceURL:'https://example.com/local',checkedAt:'2026-11-04'}]}],['']);
+ p.travelers=3;p.packing={note:'按实际天气调整',suggestions:[{name:'转换插头',quantity:1,reason:'测试资料',category_name:'电子设备'}]};
+ const {pack,trip,map}=assertDestinationLinks(p);
+ const restored=Plan.clean(JSON.parse(JSON.stringify(pack.journey.plan)));
+ assert.equal(restored.travelers,3);assert.equal(restored.packing.suggestions[0].quantity,1);
+ assert.equal(trip.destinations[0].weather.longitude,135.77);assert.equal(trip.destinations[0].timezone,'Asia/Tokyo');assert.equal(trip.destinations[0].tips[0].text,'こんにちは');assert.equal(map.cities[0].weather.latitude,35.01);
+});
+test('unknown metadata stays unknown and invalid locations or quantities are rejected',()=>{
+ const p=fixture();const clean=Plan.clean(p);assert.equal(clean.travelers,null);assert.deepEqual(clean.packing.suggestions,[]);assert.equal(clean.cities[0].location,null);
+ for(const change of [p=>p.travelers=0,p=>p.cities[0].location={latitude:91,longitude:10,timezone:'UTC',sourceURL:'https://example.com'},p=>p.cities[0].location={latitude:1,longitude:2,timezone:'Invalid/Zone',sourceURL:'https://example.com'},p=>p.packing={suggestions:[{name:'物品',quantity:-1}]}]){const invalid=fixture();change(invalid);assert.throws(()=>Plan.clean(invalid));}
+});
+test('source-specific facts reach guide comparisons without duplicating a general description',()=>{
+ const p=destinationFixture([{name:'成都',countryCode:'CN'}],['']);p.places[0].sources[0].reasons=[{label:'开放时间',text:'测试时段，出行前另查'},{label:'交通',text:'测试交通说明'}];
+ const result=builder.compile(p,__dirname);assert.deepEqual(result.imports.items[0].place.publicEvidence[0].reasons,p.places[0].sources[0].reasons);
+});

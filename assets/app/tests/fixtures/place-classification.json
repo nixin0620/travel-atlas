@@ -1,0 +1,183 @@
+[
+  {
+    "name": "傣果冰屋",
+    "context": "主打餐饮，招牌菜供堂食。",
+    "expected": "food",
+    "provenance": "合成分类测试"
+  },
+  {
+    "name": "毛哥饭铺",
+    "context": "主打餐饮，招牌菜供堂食。",
+    "expected": "food",
+    "provenance": "合成分类测试"
+  },
+  {
+    "name": "双龙商店门口糯米饭",
+    "context": "主打餐饮，招牌菜供堂食。",
+    "expected": "food",
+    "provenance": "合成分类测试"
+  },
+  {
+    "name": "烂番茄小食馆",
+    "context": "主打餐饮，招牌菜供堂食。",
+    "expected": "food",
+    "provenance": "合成分类测试"
+  },
+  {
+    "name": "味美鲜",
+    "context": "招牌菜适合下饭，人均30元。",
+    "expected": "food",
+    "provenance": "边界回归用例"
+  },
+  {
+    "name": "菌喜四季",
+    "context": "菌菇火锅汤底浓郁，需要饭点前去。",
+    "expected": "food",
+    "provenance": "边界回归用例"
+  },
+  {
+    "name": "测试植物园",
+    "context": "植物园里有咖啡馆，人均40元，咖啡口感不错。",
+    "expected": "sight",
+    "provenance": "边界回归用例"
+  },
+  {
+    "name": "植物园咖啡馆",
+    "context": "喝咖啡看植物园，门票另购。",
+    "expected": "food",
+    "provenance": "边界回归用例"
+  },
+  {
+    "name": "双龙商店",
+    "context": "有糯米饭和小吃，也有文创商品，适合买伴手礼。",
+    "expected": "shopping",
+    "provenance": "边界回归用例"
+  },
+  {
+    "name": "测试市集",
+    "context": "有咖啡和小吃，也能购买服饰与文创商品。",
+    "expected": "shopping",
+    "provenance": "边界回归用例"
+  },
+  {
+    "name": "陶艺体验课",
+    "context": "亲手制作，教练提供教学。",
+    "expected": "experience",
+    "provenance": "边界回归用例"
+  },
+  {
+    "name": "测试制陶",
+    "context": "体验课旁边有咖啡馆。",
+    "expected": "experience",
+    "provenance": "边界回归用例"
+  },
+  {
+    "name": "石头",
+    "context": "提前预约手工课程，亲手制作体验。",
+    "expected": "experience",
+    "provenance": "边界回归用例"
+  },
+  {
+    "name": "有间",
+    "context": "文创商品与伴手礼可选购，支持零售。",
+    "expected": "shopping",
+    "provenance": "边界回归用例"
+  },
+  {
+    "name": "旧时光",
+    "context": "古迹与建筑值得游览，门票30元。",
+    "expected": "sight",
+    "provenance": "边界回归用例"
+  },
+  {
+    "name": "某某",
+    "context": "人均30元。",
+    "expected": null,
+    "provenance": "边界回归用例"
+  },
+  {
+    "name": "某某",
+    "context": "位置在市中心，交通方便。",
+    "expected": null,
+    "provenance": "边界回归用例"
+  },
+  {
+    "name": "某某",
+    "context": "美食餐厅人均30元。也有陶艺手作课程和教练。",
+    "expected": null,
+    "provenance": "边界回归用例"
+  },
+  {
+    "name": "某某",
+    "context": "",
+    "expected": null,
+    "provenance": "边界回归用例"
+  },
+  {
+    "name": "测试小馆",
+    "context": "植物很多，旁边是公园。",
+    "expected": "food",
+    "provenance": "边界回归用例"
+  },
+  {
+    "name": "测试博物馆",
+    "context": "可买伴手礼，文创商品很多。",
+    "expected": "sight",
+    "provenance": "边界回归用例"
+  },
+  {
+    "name": "测试咖啡馆（新店）",
+    "context": "",
+    "expected": "food",
+    "provenance": "边界回归用例"
+  },
+  {
+    "name": "测试植物园",
+    "context": "",
+    "title": "必吃美食攻略",
+    "expected": "sight"
+  },
+  {
+    "name": "某某",
+    "context": "",
+    "title": "必吃美食攻略",
+    "expected": null
+  },
+  {
+    "name": "某某",
+    "context": "人均30元，招牌菜下饭。",
+    "title": "必玩景点攻略",
+    "expected": "food"
+  },
+  {
+    "name": "简称",
+    "context": "",
+    "aliases": [
+      "测试饭铺"
+    ],
+    "expected": "food"
+  },
+  {
+    "name": "测试植物园",
+    "context": "",
+    "aliases": [
+      "测试咖啡馆"
+    ],
+    "expected": null
+  },
+  {
+    "name": "基诺山",
+    "aliases": [
+      "基诺山雨林徒步"
+    ],
+    "context": "雨林徒步4km亲子线与8km探险线可选，向导科普植物，体验溯溪与竹筏。必穿雨鞋，装备不能少。",
+    "expected": "experience"
+  },
+  {
+    "name": "傣哩哩",
+    "context": "主打餐饮，招牌菜供堂食。",
+    "title": "西双版纳美食推荐",
+    "expected": "food",
+    "provenance": "合成分类测试"
+  }
+]

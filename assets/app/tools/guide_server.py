@@ -389,16 +389,22 @@ class Handler(BaseHTTPRequestHandler):
                 if path.startswith('/_AMapService/'):
                     body, content = map_service.proxy_amap(url.path, url.query, 'http://' + self.headers['Host'] + '/')
                     return self.reply(200, body, content)
-                if path == '/api/map/poi':
+                if path in ('/api/map/poi', '/api/map/city'):
                     now = time.monotonic()
-                    with map_service.LOCK:
-                        last = map_service.LAST_REQUEST.get(self.client_address[0])
-                        map_service.LAST_REQUEST[self.client_address[0]] = now
-                    if last is not None and now - last < .4:
-                        raise map_service.ApiError('搜索过于频繁，请稍后重试。', 429)
+                    if path == '/api/map/poi':
+                        with map_service.LOCK:
+                            last = map_service.LAST_REQUEST.get(self.client_address[0])
+                            map_service.LAST_REQUEST[self.client_address[0]] = now
+                        if last is not None and now - last < .4:
+                            raise map_service.ApiError('搜索过于频繁，请稍后重试。', 429)
                     query = up.parse_qs(url.query, max_num_fields=20)
+                    if path == '/api/map/city':
+                        return self.reply(200, map_service.resolve_city(query.get('city', [''])[0], query.get('countryCode', [''])[0]))
                     cid = query.get('cityId', [''])[0] or map_service.ALIASES.get(query.get('city', [''])[0], '')
-                    return self.reply(200, map_service.search(query.get('q', [''])[0], cid))
+                    if cid in map_service.CITIES:
+                        return self.reply(200, map_service.search(query.get('q', [''])[0], cid))
+                    center = [float(query['longitude'][0]), float(query['latitude'][0])] if 'longitude' in query and 'latitude' in query else None
+                    return self.reply(200, map_service.search(query.get('q', [''])[0], cid, query.get('city', [''])[0], query.get('countryCode', [''])[0], center))
                 return self.reply(404, {'error':'not_found'})
             except map_service.ApiError as error:
                 return self.reply(error.status, {'candidates':[], 'message':error.message})

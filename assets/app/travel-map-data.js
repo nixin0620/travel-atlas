@@ -80,7 +80,7 @@
    coordinateEvidence:place.coordinateEvidence,poiId:place.poiId||'',address:place.address||'',locationPending:!verified};
  }
  function snapshot(input){
-  const trip=input.trip||{},state=input.state||{entries:[],locations:{}},cities=new Map((trip.destinations||[]).map(c=>[c.id,{id:c.id,name:c.name}]));
+  const trip=input.trip||{},state=input.state||{entries:[],locations:{}},cities=new Map((trip.destinations||[]).map(c=>[c.id,{id:c.id,name:c.name,countryCode:c.countryCode,weather:c.weather}]));
   const days=(trip.days||[]).map(d=>({...clone(d),cityIds:[...new Set([d.cityId,...(d.locationIds||[])].filter(Boolean))]}));
   const records=[],orders=new Map((input.orderByDay||[]).map(day=>[day.dayId,new Map(day.ids.map((id,index)=>[id,index]))]));
   const visitOrder=(dayId,id,slot,index,edge)=>orders.get(dayId)?.get(id)??(edge==='start'?-1:edge==='end'?900000:Math.max(0,slots.indexOf(slot))*100000+index);
