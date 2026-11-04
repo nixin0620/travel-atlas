@@ -63,12 +63,14 @@
     state.dirty = true; state.generation++; state.updatedAt = new Date().toISOString(); persist(); emit();
   }
   function setItem(key, value) {
+    if (bootError) throw bootError;
     value = String(value);
     if (!state) { native.setItem(key, value); return; }
     if (state.values[key] === value) return;
     state.values[key] = value; changed();
   }
   function removeItem(key) {
+    if (bootError) throw bootError;
     if (!state) { native.removeItem(key); return; }
     if (!Object.hasOwn(state.values, key)) return;
     delete state.values[key]; changed();
@@ -99,16 +101,29 @@
         });
       }
       if (preview && !state) {
-        const initial = await preview.load();
+        let initial = await preview.load();
+        // Preserve scoped legacy localStorage too, including explicit empty values.
+        // Never copy a different app's or the personal author's unscoped data.
+        for (let i = 0; i < window.localStorage.length; i++) {
+          const key = window.localStorage.key(i), prefix = preview.scope + ':';
+          if (key?.startsWith(prefix)) initial.values[key.slice(prefix.length)] = window.localStorage.getItem(key);
+        }
+        if (document.documentElement?.dataset.travelInitialContent && !window.TravelInitialContent) throw Error('初始旅行组件未能载入，请重新载入重试。');
+        if (window.TravelInitialContent) initial = window.TravelInitialContent.prepare(initial);
+        let installed;
         // Install once, transactionally. Another tab may have saved while we loaded.
-        await transaction('readwrite', s => {
+        await transaction('readwrite', (s, set, abort) => {
           const request = s.get(namespace + ':saved');
           request.onsuccess = () => {
-            state = request.result || initial;
-            if (!request.result) s.put(initial, namespace + ':saved');
-            s.put(state, workKey());
+            try {
+              installed = request.result || initial;
+              if (!request.result) s.put(initial, namespace + ':saved');
+              s.put(installed, workKey());
+            } catch (error) { abort(error); }
           };
         });
+        // Failed writes must not expose a partial seed to UI callbacks or retries.
+        state = installed;
       }
       previewRevision = state?.previewRevision || 0;
     } catch (e) { bootError = e; }
